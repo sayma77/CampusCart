@@ -1,4 +1,4 @@
-package com.noobs.campuscart.controller;
+package com.noobs.CampusCart.controller;
 
 import com.noobs.CampusCart.model.Item;
 import com.noobs.CampusCart.model.User;
