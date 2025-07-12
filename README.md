@@ -47,6 +47,8 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 
 **Key contributors**:
 - [Sayma Akter](https://github.com/sayma77)
+- [Sadia Ishrat Jahan](https://github.com/SadiaIshrat)
+
 
 
 ## License
