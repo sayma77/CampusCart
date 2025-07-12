@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="layout :: head">
     <title>CampusCart - Home</title>
 </head>
-<body>
-    <h1>Welcome to <span th:text="${platformName}">CampusCart</span>!</h1>
-
-    <p th:if="${user != null}">
-        Logged in as: <strong th:text="${user.name}">User Name</strong>
-    </p>
-
-    <ul>
-        <li th:each="item : ${items}">
-            <span th:text="${item.name}">Item Name</span> -
-            <span th:text="${item.price}">Price</span>
-        </li>
-    </ul>
+<body th:replace="layout :: layout">
+    <main>
+        <h1>Welcome to <span th:text="${platformName}">CampusCart</span>!</h1>
+        <p th:if="${user != null}">
+            Logged in as: <strong th:text="${user.name}">User Name</strong>
+        </p>
+        <ul>
+            <li th:each="item : ${items}">
+                <span th:text="${item.name}">Item Name</span> -
+                <span th:text="${item.price}">Price</span>
+            </li>
+        </ul>
+    </main>
 </body>
 </html>

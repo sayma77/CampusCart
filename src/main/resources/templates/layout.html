@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org ">
+<head th:fragment="head">
+    <title>CampusCart</title>
+    <link href="/css/output.css" rel="stylesheet">
+    <!-- add tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- add daisyui -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- add livereload for dev -->
+    <script src="http://localhost:35729/livereload.js"></script>
+</head>
+
+<body th:fragment="layout" class="min-h-screen bg-gray-100 flex flex-col">
+
+    <!-- Navbar fragment -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- Main content -->
+    <div class="h-full flex flex-col flex-1">
+        <div th:replace="~{::main}"></div>
+    </div>
+
+    <!-- Footer fragment -->
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

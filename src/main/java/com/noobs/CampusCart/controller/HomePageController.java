@@ -1,12 +1,13 @@
 package com.noobs.CampusCart.controller;
 
-import com.noobs.CampusCart.model.Item;
-import com.noobs.CampusCart.model.User;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
+import com.noobs.CampusCart.model.Item;
+import com.noobs.CampusCart.model.User;
 
 @Controller
 public class HomePageController {
@@ -18,6 +19,6 @@ public class HomePageController {
             new Item("Textbook", 250),
             new Item("Lamp", 500)
         ));
-        return "home"; // refers to home.html in templates/
+        return "home";
     }
 }
