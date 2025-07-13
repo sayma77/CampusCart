@@ -22,18 +22,18 @@ CampusCart is an online marketplace application designed specifically for the st
 ## Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/CampusCart.git
-    ```
+   ```bash
+   git clone https://github.com/yourusername/CampusCart.git
+   ```
 2. Navigate to the project directory:
-    ```bash
-    cd CampusCart
-    ```
+   ```bash
+   cd CampusCart
+   ```
 3. Configure the database in `application.properties`.
 4. Build and run the application:
-    ```bash
-    ./gradlew bootRun
-    ```
+   ```bash
+   ./gradlew bootRun
+   ```
 
 ## Usage
 
@@ -46,12 +46,14 @@ CampusCart is an online marketplace application designed specifically for the st
 Contributions are welcome! Please fork the repository and submit a pull request.
 
 **Key contributors**:
+
 - [Sayma Akter](https://github.com/sayma77)
 - [Sadia Ishrat Jahan](https://github.com/SadiaIshrat)
-
-
+- [Nusrat Jahan Nupur](https://github.com/rat4772)
+- [Wafeea Anisha](https://github.com/wiiffiie)
 
 ## License
+
 This project is licensed under the [GPL-3.0 License](LICENSE).
 
 ## Contact
