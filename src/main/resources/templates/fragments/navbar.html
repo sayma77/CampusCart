@@ -9,16 +9,16 @@
       <li class="mx-4"><a href="/" class="hover:underline">Contact us</a></li>
 
       <!-- Only show when user is not logged in -->
-      <li sec:authorize="!()">
+      <li sec:authorize="!isAuthenticated()">
         <a href="/signin" class="hover:underline">Login</a>
       </li>
 
       <!-- Only show when user is logged in -->
-      <li sec:authorize="isAuthenticated()">
+      <!-- <li sec:authorize="isAuthenticated()">
         <button class="hover:underline text-red-400" onsubmit="logout()">
           Logout
         </button>
-      </li>
+      </li> -->
 
       <button
         id="darkToggle"
