@@ -5,9 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginPageController {
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
+public class SigninPageController {
+    @GetMapping("/signin")
+    public String signin(Model model) {
+        return "signin";
     }
 }

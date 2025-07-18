@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layout :: head">
+    <title>CampusCart - Signup</title>
+  </head>
+  <body th:replace="layout :: layout">
+    <main class="min-h-screen flex items-center justify-center bg-base-200">
+      <div class="w-full max-w-sm p-6 bg-base-100 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+        <form class="form-control gap-4">
+          <label class="label" for="email">
+            <span class="label-text">Email</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="example@cuet.ac.bd"
+            class="input input-bordered"
+            required
+          />
+
+          <label class="block mb-2 font-semibold" for="username"
+            >Username</label
+          >
+          <input
+            id="username"
+            name="username"
+            placeholder="username"
+            type="text"
+            required
+            class="w-full p-2 border border-gray-300 rounded mb-4"
+          />
+
+          <label class="label" for="password">
+            <span class="label-text">Password</span>
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            class="input input-bordered"
+            required
+          />
+          <label class="label" for="confirm-password">
+            <span class="label-text">Confirm Password</span>
+          </label>
+
+          <input
+            type="password"
+            id="confirm-password"
+            name="confirm-password"
+            placeholder="••••••••"
+            class="input input-bordered"
+            required
+          />
+
+          <a href="/login" class="text-sm text-blue-500 underline"
+            >already have an account?</a
+          >
+
+          <button
+            type="submit"
+            class="btn btn-primary mt-4 w-[90%] rounded-xl mx-auto block"
+          >
+            Signup
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      const form = document.getElementById("signupForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = {
+          username: form.username.value,
+          email: form.email.value,
+          password: form.password.value,
+          confirm_password: form.password.value,
+        };
+
+        if (data.password !== data.confirm_password) {
+          showMessage("Passwords don't match", "error");
+          return;
+        }
+
+        try {
+          const res = await fetch("/api/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            showMessage(errorData.message || "Signup failed", "error");
+            return;
+          }
+
+          const result = await res.json();
+          showMessage("Signup successful! Token: " + result.token, "success");
+          localStorage.setItem("token", result.token);
+          form.reset();
+          // redirect to home page
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 1500);
+        } catch (err) {
+          showMessage("Network error", "error");
+        }
+      });
+    </script>
+  </body>
+</html>

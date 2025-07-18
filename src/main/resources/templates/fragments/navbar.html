@@ -7,7 +7,19 @@
       <li class="mx-4"><a href="/" class="hover:underline">Marketplace</a></li>
       <li class="mx-4"><a href="/" class="hover:underline">About us</a></li>
       <li class="mx-4"><a href="/" class="hover:underline">Contact us</a></li>
-      <li class="mx-4"><a href="/login" class="hover:underline">Login</a></li>
+
+      <!-- Only show when user is not logged in -->
+      <li sec:authorize="!()">
+        <a href="/signin" class="hover:underline">Login</a>
+      </li>
+
+      <!-- Only show when user is logged in -->
+      <li sec:authorize="isAuthenticated()">
+        <button class="hover:underline text-red-400" onsubmit="logout()">
+          Logout
+        </button>
+      </li>
+
       <button
         id="darkToggle"
         class="text-xl focus:outline-none transition duration-300"

@@ -18,7 +18,8 @@
 
     <script th:src="@{/js/tailwind-config.js}"></script>
     <script th:src="@{/js/theme-toggle.js}"></script>
-
+    <script th:src="@{/js/message-box.js}"></script>
+    <script th:src="@{/js/auth.js}"></script>
     <!-- add livereload for dev -->
     <script src="http://localhost:35729/livereload.js"></script>
   </head>
@@ -29,6 +30,12 @@
   >
     <!-- Navbar fragment -->
     <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- message box -->
+    <p
+      id="message"
+      class="mt-4 text-center font-semibold p-2 rounded transition-colors duration-300 hidden"
+    ></p>
 
     <!-- Main content -->
     <div class="h-full flex flex-col flex-1">
