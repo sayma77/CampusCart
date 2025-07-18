@@ -1,20 +1,156 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: head">
-    <title>CampusCart - Home</title>
-</head>
-<body th:replace="layout :: layout">
+  <head th:replace="~{layout :: head}"> </head>
+
+  <body
+    th:replace="~{layout :: layout}"
+    class="bg-white text-gray-800 dark:bg-gray-900 dark:text-white"
+  >
     <main>
-        <h1>Welcome to <span th:text="${platformName}">CampusCart</span>!</h1>
-        <p th:if="${user != null}">
-            Logged in as: <strong th:text="${user.name}">User Name</strong>
+      <!-- <button id="darkToggle" class="text-xl m-2">
+        <span id="theme-icon">🌞</span>
+      </button> -->
+      <section
+        class="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-400 text-white py-20 px-6 text-center shadow-lg rounded-b-3xl"
+      >
+        <h1 class="text-5xl font-extrabold mb-4 drop-shadow-lg">
+          Welcome to <span class="text-yellow-300">CampusCart</span>!
+        </h1>
+        <p class="text-lg md:text-xl mb-8 max-w-xl mx-auto drop-shadow-md">
+          Buy, Sell, Rent &amp; Lend items within
+          <span class="font-semibold">CUET</span>
         </p>
-        <ul>
-            <li th:each="item : ${items}">
-                <span th:text="${item.name}">Item Name</span> -
-                <span th:text="${item.price}">Price</span>
-            </li>
-        </ul>
+        <a
+          href="/"
+          class="inline-block bg-yellow-300 text-indigo-900 font-bold px-8 py-3 rounded-lg shadow-lg hover:bg-yellow-400 transition duration-300"
+        >
+          Explore Marketplace
+        </a>
+      </section>
+
+      <section class="py-12 px-4 max-w-6xl mx-auto">
+        <h2 class="text-4xl font-semibold text-center mb-8">Categories</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div
+            class="bg-white dark:bg-gray-200 shadow-md p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-blue-100"
+          >
+            <h3 class="text-xl font-bold mb-2">Academic</h3>
+            <p>Books, Notes, Stationery</p>
+          </div>
+          <div
+            class="bg-white dark:bg-gray-200 shadow-md p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-blue-100"
+          >
+            <h3 class="text-xl font-bold mb-2">Tech</h3>
+            <p>Laptops, Gadgets, Accessories</p>
+          </div>
+          <div
+            class="bg-white dark:bg-gray-200 shadow-md p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-blue-100"
+          >
+            <h3 class="text-xl font-bold mb-2">Hostel</h3>
+            <p>Fans, Furniture, Cooking Gear</p>
+          </div>
+        </div>
+      </section>
+      <section class="bg-white py-16 px-6 md:px-16">
+        <div
+          class="max-w-6xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12"
+        >
+          <img
+            th:src="@{/images/home-page-academic-books.jpg}"
+            alt="academic books image"
+            class="w-[80%] md:w-[40%] md:translate-y-8 rounded-md shadow-md"
+          />
+          <div class="md:w-1/2">
+            <h2
+              class="text-4xl font-extrabold text-blue-900 mb-6 tracking-tight"
+            >
+              📚 Academic Essentials
+            </h2>
+
+            <div
+              class="bg-gradient-to-br from-blue-50 to-white p-8 rounded-2xl shadow-xl border border-blue-100"
+            >
+              <p class="text-lg text-gray-800 leading-relaxed tracking-wide">
+                CampusCart's Academic section is your go-to place for affordable
+                textbooks, reference materials, class notes, calculators, and
+                essential stationery. Students often complete semesters with
+                items they no longer need. why not pass them on?
+                <br /><br />
+                By buying and selling academic materials within CUET, we reduce
+                waste, support our peers, and save money. It’s smart,
+                sustainable, and student-friendly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 px-6 md:px-16 bg-white">
+        <div class="max-w-6xl mx-auto flex justify-end">
+          <!-- Text on the right -->
+          <div class="md:w-1/2">
+            <h2
+              class="text-4xl font-extrabold text-purple-800 mb-6 tracking-tight"
+            >
+              💻 Tech Gear & Gadgets
+            </h2>
+
+            <div
+              class="bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl shadow-xl border border-purple-100"
+            >
+              <p class="text-lg text-gray-800 leading-relaxed tracking-wide">
+                From laptops and keyboards to smartwatches and headphones, the
+                Tech section is tailored for CUET students looking to upgrade or
+                offload their gadgets. Whether you're a CSE student selling an
+                extra mouse or someone looking for a budget-friendly tablet,
+                this category helps tech circulate where it's needed.
+                <br /><br />
+                It's practical, fast, and supports the digital needs of our
+                campus.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="py-16 px-6 md:px-16 bg-gray-50">
+        <div
+          class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-10"
+        >
+          <!-- Text on the left -->
+          <div class="md:w-1/2">
+            <h2
+              class="text-4xl font-extrabold text-green-800 mb-6 tracking-tight"
+            >
+              🏠 Hostel Essentials
+            </h2>
+
+            <div
+              class="bg-gradient-to-br from-green-50 to-white p-8 rounded-2xl shadow-xl border border-green-100"
+            >
+              <p class="text-lg text-gray-800 leading-relaxed tracking-wide">
+                Moving in or out of CUET hostels? The Hostel section includes
+                room fans, induction cookers, buckets, racks, and basic
+                furniture - all the daily essentials to survive and thrive in
+                hostel life.
+                <br /><br />
+                Ideal for freshers setting up quickly and seniors passing down
+                items, this category keeps costs low and makes student life
+                simpler.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- <p th:if="${user != null}">
+        Logged in as : <strong th:text="${user.name}">User Name</strong>
+      </p>
+      <ul>
+        <li th:each="item : ${items}">
+          <span th:text="${item.name}">Item Name</span> -
+          <span th:text="${item.price}">Price</span>
+        </li>
+      </ul> -->
     </main>
-</body>
+    <script></script>
+  </body>
 </html>

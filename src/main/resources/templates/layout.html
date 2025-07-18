@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org ">
-<head th:fragment="head">
+  <head th:fragment="head">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CampusCart</title>
-    <link href="/css/output.css" rel="stylesheet">
+    <!-- <link href="/css/output.css" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="/css/styles.css" />
+
+    <!-- add daisyui -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
     <!-- add tailwind -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- add daisyui -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script th:src="@{/js/tailwind-config.js}"></script>
+    <script th:src="@{/js/theme-toggle.js}"></script>
+
     <!-- add livereload for dev -->
     <script src="http://localhost:35729/livereload.js"></script>
-</head>
+  </head>
 
-<body th:fragment="layout" class="min-h-screen bg-gray-100 flex flex-col">
-
+  <body
+    th:fragment="layout"
+    class="min-h-screen bg-gray-100 flex flex-col bg-white text-gray-800"
+  >
     <!-- Navbar fragment -->
-    <div th:replace="fragments/navbar :: navbar"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <!-- Main content -->
     <div class="h-full flex flex-col flex-1">
-        <div th:replace="~{::main}"></div>
+      <div th:replace="~{::main}"></div>
     </div>
 
     <!-- Footer fragment -->
-    <div th:replace="fragments/footer :: footer"></div>
-</body>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+  </body>
 </html>
