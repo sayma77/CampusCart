@@ -1,31 +1,29 @@
 <div th:fragment="navbar">
-  <nav
-    class="bg-blue-900 p-2 text-white flex flex-row justify-between sticky opacity-90 backdrop-blur-lg"
-  >
-    <a href="/" class="font-serif text-xl">CampusCart</a>
-    <ul class="flex flex-row justify-evenly">
-      <li class="mx-4"><a href="/" class="hover:underline">Marketplace</a></li>
-      <li class="mx-4"><a href="/" class="hover:underline">About us</a></li>
-      <li class="mx-4"><a href="/" class="hover:underline">Contact us</a></li>
+  <nav class="bg-gradient-to-r from-blue-700 via-purple-600 to-purple-500 p-4 text-white shadow-md backdrop-blur-md bg-opacity-90 sticky top-0 z-50">
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <a href="/" class="text-2xl font-semibold tracking-wide font-serif">CampusCart</a>
 
-      <!-- Only show when user is not logged in -->
-      <li sec:authorize="!isAuthenticated()">
-        <a href="/signin" class="hover:underline">Login</a>
-      </li>
+      <!-- Navigation Links -->
+      <ul class="flex space-x-6 items-center text-sm md:text-base">
+        <li><a href="/" class="hover:text-yellow-300 transition">Marketplace</a></li>
+        <li><a href="/about" class="hover:text-yellow-300 transition">About us</a></li>
+        <li><a href="/contact" class="hover:text-yellow-300 transition">Contact us</a></li>
 
-      <!-- Only show when user is logged in -->
-      <!-- <li sec:authorize="isAuthenticated()">
-        <button class="hover:underline text-red-400" onsubmit="logout()">
-          Logout
+        <!-- Only show when user is not logged in -->
+        <li sec:authorize="!isAuthenticated()">
+          <a href="/signin" class="hover:text-yellow-300 transition">Login</a>
+        </li>
+
+        <!-- Dark Mode Toggle -->
+        <button
+          id="darkToggle"
+          class="text-xl focus:outline-none hover:text-yellow-300 transition"
+          title="Toggle Dark Mode"
+        >
+          <span id="theme-icon">🌞</span>
         </button>
-      </li> -->
-
-      <button
-        id="darkToggle"
-        class="text-xl focus:outline-none transition duration-300"
-      >
-        <span id="theme-icon">🌞</span>
-      </button>
-    </ul>
+      </ul>
+    </div>
   </nav>
 </div>
