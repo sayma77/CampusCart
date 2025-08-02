@@ -7,7 +7,6 @@ CampusCart is an online marketplace application designed specifically for the st
 - **User Registration and Authentication**: Secure login and registration for CUET students.
 - **Product Listings**: Students can list items for sale or exchange.
 - **Search and Filter**: Easily find products using search and filter options.
-- **Messaging System**: Communicate with buyers and sellers directly.
 - **Category Management**: Organize products into categories for better navigation.
 - **Admin Dashboard**: Manage users, products, and platform settings.
 
