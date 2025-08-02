@@ -57,4 +57,4 @@ This project is licensed under the [GPL-3.0 License](LICENSE).
 
 ## Contact
 
-For any queries or suggestions, please contact [sayma7508@gmail.com].
+For any queries or suggestions, please contact [sayma7504@gmail.com].
