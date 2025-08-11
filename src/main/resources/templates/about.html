@@ -1,46 +1,330 @@
-<!-- about.html with Tailwind CSS -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Us | CampusCart</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - CUET Campus Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <nav>
-    <a href="/">Home</a>
-    <a href="/about">About Us</a>
-</nav>
-  <header class="bg-blue-800 text-white py-4 text-center">
-    <h1 class="text-3xl font-bold">About CampusCart</h1>
-  </header>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-blue-600">CUET Marketplace</h1>
+                    </div>
+                    <div class="hidden md:block ml-10">
+                        <div class="flex items-baseline space-x-8">
+                            <a href="/" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                            <a href="/browse" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Browse</a>
+                            <a href="/sell" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Sell</a>
+                            <a href="/about" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium border-b-2 border-blue-600">About</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span th:if="${user}" class="text-sm text-gray-600">Welcome, <span th:text="${user.name}">Student</span></span>
+                    <button th:unless="${user}" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-  <main class="max-w-4xl mx-auto p-6">
-    <section class="mb-6">
-      <h2 class="text-2xl font-semibold text-blue-800">Who We Are</h2>
-      <p class="mt-2 text-gray-700">
-        CampusCart is a CUET-based online marketplace for students to buy, sell, or exchange goods and services on campus.
-      </p>
-    </section>
+    <!-- Main Content -->
+    <main class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="bg-white py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-5xl font-bold text-gray-900 mb-8">About Us</h1>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Connecting CUET students through a trusted campus marketplace for academic resources, 
+                    technology, and essential items.
+                </p>
+            </div>
+        </section>
 
-    <section class="mb-6">
-      <h2 class="text-2xl font-semibold text-blue-800">Our Mission</h2>
-      <p class="mt-2 text-gray-700">
-        Our mission is to make student life easier by providing a simple and secure platform tailored for CUETians.
-      </p>
-    </section>
+        <!-- Mission Section -->
+        <section class="bg-gradient-to-r from-blue-600 to-blue-700 py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-6">OUR MISSION</h2>
+                        <div class="space-y-4 text-blue-100">
+                            <p class="leading-relaxed">
+                                To create a sustainable and accessible marketplace that empowers CUET students 
+                                to maximize the value of their academic and personal resources through 
+                                peer-to-peer transactions.
+                            </p>
+                            <p class="leading-relaxed">
+                                We believe in fostering a collaborative community where students can easily 
+                                buy, sell, rent, and lend items, reducing waste and promoting economic 
+                                sustainability within our campus ecosystem.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                        <div class="grid grid-cols-2 gap-6 text-center">
+                            <div>
+                                <div class="text-3xl font-bold text-white" th:text="${totalUsers ?: '500+'}">500+</div>
+                                <div class="text-blue-200 text-sm">Active Students</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-white" th:text="${totalItems ?: '1200+'}">1200+</div>
+                                <div class="text-blue-200 text-sm">Items Listed</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-white" th:text="${totalTransactions ?: '800+'}">800+</div>
+                                <div class="text-blue-200 text-sm">Successful Deals</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold text-white">4.8★</div>
+                                <div class="text-blue-200 text-sm">User Rating</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section class="mb-6">
-      <h2 class="text-2xl font-semibold text-blue-800">Meet the Developers</h2>
-      <p class="mt-2 text-gray-700">
-        Built by CSE students of CUET, CampusCart reflects our passion for solving real-world problems using technology.
-      </p>
-    </section>
-  </main>
+        <!-- Vision Section -->
+        <section class="relative py-20 bg-gray-900">
+            <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 to-gray-900/70"></div>
+            <div class="absolute inset-0 bg-cover bg-center opacity-30" 
+                 style="background-image: url('https://images.pexels.com/photos/1205651/pexels-photo-1205651.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+            </div>
+            <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1">
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <div class="text-2xl mb-2">📚</div>
+                                <div class="text-white text-sm font-medium">Academic</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <div class="text-2xl mb-2">💻</div>
+                                <div class="text-white text-sm font-medium">Technology</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <div class="text-2xl mb-2">🏠</div>
+                                <div class="text-white text-sm font-medium">Hostel Items</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <div class="text-2xl mb-2">🔬</div>
+                                <div class="text-white text-sm font-medium">Lab Equipment</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <div class="text-2xl mb-2">⚽</div>
+                                <div class="text-white text-sm font-medium">Sports</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center border border-white/20 hover:bg-white/20 transition-all duration-300">
+                                <div class="text-2xl mb-2">🎨</div>
+                                <div class="text-white text-sm font-medium">Creative</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <h2 class="text-3xl font-bold text-white mb-6">OUR VISION</h2>
+                        <div class="space-y-4 text-gray-300">
+                            <p class="leading-relaxed">
+                                To become the premier digital hub for CUET's student community, where 
+                                every academic need can be met through peer connections and collaborative sharing.
+                            </p>
+                            <p class="leading-relaxed">
+                                We envision a future where students seamlessly access textbooks, 
+                                lab equipment, tech gadgets, and hostel essentials through our platform, 
+                                creating a self-sustaining ecosystem of resource sharing.
+                            </p>
+                            <p class="leading-relaxed">
+                                Our goal is to eliminate barriers to academic success by making 
+                                essential items affordable and accessible to every CUET student.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <footer class="bg-gray-200 text-center py-4 text-sm text-gray-600">
-    &copy; 2025 CampusCart | Made with ❤️ by CUETians
-  </footer>
+        <!-- Values Section -->
+        <section class="bg-white py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">OUR VALUES</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        The principles that guide our mission to serve the CUET student community
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors">
+                            <div class="text-2xl">🤝</div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Trust & Safety</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Building a secure environment where students can trade with confidence through verified profiles and community ratings.
+                        </p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors">
+                            <div class="text-2xl">💰</div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Affordability</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Making academic resources accessible to all students by promoting fair pricing and budget-friendly options.
+                        </p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-purple-200 transition-colors">
+                            <div class="text-2xl">♻️</div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Sustainability</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Promoting the reuse and recycling of academic materials to reduce waste and environmental impact.
+                        </p>
+                    </div>
+                    
+                    <div class="text-center p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 group">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-200 transition-colors">
+                            <div class="text-2xl">🎯</div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Simplicity</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Providing an intuitive platform that makes buying, selling, and renting items effortless for busy students.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="bg-gray-50 py-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
+                    <p class="text-gray-600">CUET students building for CUET students</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center group">
+                        <div class="relative mb-6">
+                            <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-blue-400 to-blue-600 overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1" 
+                                     alt="Founder" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Rahul Ahmed</h3>
+                        <p class="text-blue-600 text-sm font-medium mb-2">Founder & CEO</p>
+                        <p class="text-gray-600 text-sm">CSE, Final Year</p>
+                    </div>
+                    
+                    <div class="text-center group">
+                        <div class="relative mb-6">
+                            <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-green-400 to-green-600 overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                <img src="https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1" 
+                                     alt="CTO" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Fatima Khan</h3>
+                        <p class="text-green-600 text-sm font-medium mb-2">CTO</p>
+                        <p class="text-gray-600 text-sm">CSE, Final Year</p>
+                    </div>
+                    
+                    <div class="text-center group">
+                        <div class="relative mb-6">
+                            <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-purple-400 to-purple-600 overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                <img src="https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1" 
+                                     alt="Head of Operations" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Tanvir Hasan</h3>
+                        <p class="text-purple-600 text-sm font-medium mb-2">Head of Operations</p>
+                        <p class="text-gray-600 text-sm">EEE, 3rd Year</p>
+                    </div>
+                    
+                    <div class="text-center group">
+                        <div class="relative mb-6">
+                            <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-orange-400 to-orange-600 overflow-hidden shadow-lg group-hover:shadow-xl transition-all duration-300">
+                                <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=1" 
+                                     alt="Community Manager" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Aisha Rahman</h3>
+                        <p class="text-orange-600 text-sm font-medium mb-2">Community Manager</p>
+                        <p class="text-gray-600 text-sm">BBA, 2nd Year</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="bg-gradient-to-r from-blue-600 to-purple-600 py-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold text-white mb-6">Ready to Join Our Community?</h2>
+                <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+                    Start buying, selling, and sharing with your fellow CUET students today.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/signup" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg">
+                        Get Started Today
+                    </a>
+                    <a href="/browse" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-all">
+                        Browse Items
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">CUET Marketplace</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Connecting students, sharing resources, building community.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Platform</h4>
+                    <div class="space-y-2 text-sm">
+                        <a href="/browse" class="block text-gray-400 hover:text-white transition-colors">Browse Items</a>
+                        <a href="/sell" class="block text-gray-400 hover:text-white transition-colors">Sell Items</a>
+                        <a href="/rent" class="block text-gray-400 hover:text-white transition-colors">Rent Items</a>
+                        <a href="/safety" class="block text-gray-400 hover:text-white transition-colors">Safety Guidelines</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <div class="space-y-2 text-sm">
+                        <a href="/help" class="block text-gray-400 hover:text-white transition-colors">Help Center</a>
+                        <a href="/contact" class="block text-gray-400 hover:text-white transition-colors">Contact Us</a>
+                        <a href="/terms" class="block text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                        <a href="/privacy" class="block text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="space-y-2 text-sm">
+                        <p class="text-gray-400">Email: support@cuetmarketplace.com</p>
+                        <p class="text-gray-400">Campus: CUET, Chittagong</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; <span th:text="${#dates.year(#dates.createNow())}">2024</span> CUET Marketplace. Built with ❤️ by CUET students.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
