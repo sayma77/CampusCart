@@ -6,10 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class PageController {
+public class ContactUsPageController {
 
     @GetMapping("/contactus")
     public String contactUsPage(Model model) {
-        return "contactus"; // looks for contactus.html in templates folder
+        return "contactus"; 
     }
 }
