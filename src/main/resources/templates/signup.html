@@ -5,68 +5,70 @@
   </head>
   <body th:replace="layout :: layout">
     <main class="min-h-screen flex items-center justify-center bg-base-200">
-      <div class="w-full max-w-sm p-6 bg-base-100 rounded-2xl shadow-lg">
-        <h2 class="text-2xl font-bold text-center mb-6">Signup</h2>
-        <form class="form-control gap-4">
-          <label class="label" for="email">
-            <span class="label-text">Email</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="example@cuet.ac.bd"
-            class="input input-bordered"
-            required
-          />
-
-          <label class="block mb-2 font-semibold" for="username"
-            >Username</label
+      <div class="flex w-full max-w-4xl shadow-xl rounded-2xl overflow-hidden">
+        <div class="w-1/3 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-400 text-white py-20 px-6 text-center shadow-lg rounded-bl-3xl flex flex-col justify-center items-center">
+          <h2 class="text-2xl font-bold mb-4">Welcome Back!</h2>
+          <p class="text-center mb-6">Already have an account? Login here!</p>
+          <a
+            href="/signin"
+            class="bg-white text-indigo-500 font-semibold px-6 py-2 rounded-full 
+                   transition-transform duration-300 hover:scale-105 hover:shadow-lg"
           >
-          <input
-            id="username"
-            name="username"
-            placeholder="username"
-            type="text"
-            required
-            class="w-full p-2 border border-gray-300 rounded mb-4"
-          />
+            Sign In
+          </a>
+        </div>
+        <div class="w-2/3 bg-white p-10">
+          <h2 class="text-3xl font-bold text-gray-800 mb-6">Create an Account</h2>
 
-          <label class="label" for="password">
-            <span class="label-text">Password</span>
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="••••••••"
-            class="input input-bordered"
-            required
-          />
-          <label class="label" for="confirm-password">
-            <span class="label-text">Confirm Password</span>
-          </label>
-
-          <input
-            type="password"
-            id="confirm-password"
-            name="confirm-password"
-            placeholder="••••••••"
-            class="input input-bordered"
-            required
-          />
-
-          <a href="/signin" class="text-sm text-blue-500 underline"
-            >already have an account?</a
-          >
-
-          <button
-            type="submit"
-            class="btn btn-primary mt-4 w-[90%] rounded-xl mx-auto block"
-          >
-            Signup
-          </button>
-        </form>
+          <form id="signupForm" class="space-y-4">
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              class="input input-bordered w-full"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="@student.cuet.ac.bd"
+              class="input input-bordered w-full"
+              required
+              pattern="^[a-zA-Z0-9._%+-]+@student\.cuet\.ac\.bd$"
+              title="Only CUET email is allowed"
+            />
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone Number"
+              class="input input-bordered w-full"
+              required
+              pattern="^01[3-9]\d{8}$"
+              title="Enter a valid Bangladeshi phone number"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Create password"
+              class="input input-bordered w-full"
+              required
+            />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              class="input input-bordered w-full"
+              required
+            />
+            <button
+              class="bg-violet-500 text-white rounded-full px-6 py-2 font-semibold w-full 
+                     hover:bg-violet-600 transition-transform duration-300 
+                     hover:scale-105 hover:shadow-lg"
+            >
+              Sign Up
+            </button>
+          </form>
+        </div>
       </div>
     </main>
 
@@ -76,17 +78,20 @@
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const data = {
-          username: form.username.value,
-          email: form.email.value,
-          password: form.password.value,
-          confirm_password: form.password.value,
-        };
+        const password = form.password.value;
+        const confirmPassword = form.confirmPassword.value;
 
-        if (data.password !== data.confirm_password) {
-          showMessage("Passwords don't match", "error");
+        if (password !== confirmPassword) {
+          alert("Passwords do not match.");
           return;
         }
+
+        const data = {
+          name: form.name.value,
+          email: form.email.value,
+          phone: form.phone.value,
+          password: password,
+        };
 
         try {
           const res = await fetch("/api/auth/signup", {
@@ -97,20 +102,15 @@
 
           if (!res.ok) {
             const errorData = await res.json();
-            showMessage(errorData.message || "Signup failed", "error");
+            alert(errorData.message || "Signup failed");
             return;
           }
 
-          const result = await res.json();
-          showMessage("Signup successful! Token: " + result.token, "success");
-          localStorage.setItem("token", result.token);
+          alert("Signup successful! Redirecting to login...");
           form.reset();
-          // redirect to home page
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 1500);
+          setTimeout(() => (window.location.href = "/signin"), 1500);
         } catch (err) {
-          showMessage("Network error", "error");
+          alert("Network error");
         }
       });
     </script>

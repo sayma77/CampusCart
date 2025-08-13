@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/css/styles.css" />
 
     <!-- add daisyui -->
+
+    <link rel="stylesheet" href="/css/theme.css" />
+
     <link
       href="https://cdn.jsdelivr.net/npm/daisyui@5"
       rel="stylesheet"
@@ -16,10 +19,24 @@
     <!-- add tailwind -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-    <script th:src="@{/js/tailwind-config.js}"></script>
+    <!-- <style type="text/tailwindcss">
+      @theme {
+        --color-navbarBg: #b18484,
+        --color-textPrimary: #3c0a2b,
+        --color-textSecondary: #f7f4f6,
+        --color-background: #f6f4f7,
+        --color-primary: #7c5a5a,
+        --color-secondary: #f1d0d0,
+        --color-accent: #f3e2e2,
+      }
+    </style> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
     <script th:src="@{/js/theme-toggle.js}"></script>
     <script th:src="@{/js/message-box.js}"></script>
     <script th:src="@{/js/auth.js}"></script>
+
     <!-- add livereload for dev -->
     <script src="http://localhost:35729/livereload.js"></script>
   </head>

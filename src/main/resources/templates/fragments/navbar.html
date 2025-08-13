@@ -1,31 +1,46 @@
 <div th:fragment="navbar">
   <nav
-    class="bg-blue-900 p-2 text-white flex flex-row justify-between sticky opacity-90 backdrop-blur-lg"
+    class="bg-accent p-4 text-primary shadow-md backdrop-blur-md bg-opacity-90 sticky top-0 z-50"
   >
-    <a href="/" class="font-serif text-xl">CampusCart</a>
-    <ul class="flex flex-row justify-evenly">
-      <li class="mx-4"><a href="/" class="hover:underline">Marketplace</a></li>
-      <li class="mx-4"><a href="/" class="hover:underline">About us</a></li>
-      <li class="mx-4"><a href="/contactus" class="hover:underline">Contact us</a></li>
-
-      <!-- Only show when user is not logged in -->
-      <li sec:authorize="!isAuthenticated()">
-        <a href="/signin" class="hover:underline">Login</a>
-      </li>
-
-      <!-- Only show when user is logged in -->
-      <!-- <li sec:authorize="isAuthenticated()">
-        <button class="hover:underline text-red-400" onsubmit="logout()">
-          Logout
-        </button>
-      </li> -->
-
-      <button
-        id="darkToggle"
-        class="text-xl focus:outline-none transition duration-300"
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="text-2xl font-semibold tracking-wide font-serif hover:text-color-secondary transition-colors"
+        >CampusCart</a
       >
-        <span id="theme-icon">🌞</span>
-      </button>
-    </ul>
+
+      <!-- Navigation Links -->
+      <ul class="flex space-x-6 items-center text-sm md:text-base">
+        <li>
+          <a
+            href="/marketplace"
+            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
+            >Marketplace</a
+          >
+        </li>
+        <li>
+          <a
+            href="/about"
+            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
+            >About us</a
+          >
+        </li>
+        <li>
+          <a
+            href="/"
+            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
+            >Contact us</a
+          >
+        </li>
+        <li sec:authorize="!isAuthenticated()">
+          <a
+            href="/signin"
+            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
+            >Login</a
+          >
+        </li>
+      </ul>
+    </div>
   </nav>
 </div>
