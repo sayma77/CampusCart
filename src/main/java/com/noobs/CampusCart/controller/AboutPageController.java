@@ -8,6 +8,6 @@ public class AboutPageController {
 
     @GetMapping("/about")
     public String aboutPage() {
-        return "about"; // This will load about.html
+        return "about"; 
     }
 }
