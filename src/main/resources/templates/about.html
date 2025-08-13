@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
   <head th:replace="~{layout :: head}"> </head>
-  <body
-    th:replace="~{layout :: layout}"
-    class="bg-white text-gray-800 dark:bg-gray-900 dark:text-white"
-  >
+  <body th:replace="~{layout :: layout}" class="bg-base-100 text-gray-800">
     <main class="max-w-4xl mx-auto p-6">
-      <section class="mb-6">
-        <h2 class="text-2xl font-semibold text-blue-800">Who We Are</h2>
-        <p class="mt-2 text-gray-700">
+      <!-- Who We Are -->
+      <section class="mb-8">
+        <h2 class="text-3xl font-bold text-primary mb-2">Who We Are</h2>
+        <p class="text-base text-gray-800">
           CampusCart is a CUET-based online marketplace for students to buy,
           sell, or exchange goods and services on campus.
         </p>
       </section>
 
-      <section class="mb-6">
-        <h2 class="text-2xl font-semibold text-blue-800">Our Mission</h2>
-        <p class="mt-2 text-gray-700">
+      <!-- Our Mission -->
+      <section class="mb-8">
+        <h2 class="text-3xl font-bold text-primary mb-2">Our Mission</h2>
+        <p class="text-base text-gray-800">
           Our mission is to make student life easier by providing a simple and
           secure platform tailored for CUETians.
         </p>
       </section>
 
-      <section class="mb-6">
-        <h2 class="text-2xl font-semibold text-blue-800">
+      <!-- Meet the Developers -->
+      <section class="mb-8">
+        <h2 class="text-3xl font-bold text-primary mb-2">
           Meet the Developers
         </h2>
-        <p class="mt-2 text-gray-700">
+        <p class="text-base text-gray-800">
           Built by CSE students of CUET, CampusCart reflects our passion for
           solving real-world problems using technology.
         </p>
+      </section>
+
+      <!-- Call-to-Action / Highlight -->
+      <section class="mt-12 p-6 bg-accent rounded-lg text-accent-content">
+        <h3 class="text-2xl font-semibold text-[#D4A373] mb-2">
+          Join the Community!
+        </h3>
+        <p class="text-gray-800">
+          Sign up now and be a part of the CampusCart journey.
+        </p>
+        <a
+          href="/signup"
+          class="inline-block mt-4 px-4 py-2 bg-primary text-primary-content rounded-lg hover:bg-[#a7727d] transition-colors"
+        >
+          Sign Up
+        </a>
       </section>
     </main>
   </body>
