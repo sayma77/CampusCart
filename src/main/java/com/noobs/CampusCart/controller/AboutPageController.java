@@ -8,7 +8,7 @@ public class AboutPageController {
 
     @GetMapping("/about")
     public String aboutPage() {
-        return "about";  // This should map to about.html in templates
+        return "about"; 
     }
 }
 
