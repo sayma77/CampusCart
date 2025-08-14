@@ -1,78 +1,117 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post an Item - Campus Cart</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-    <div class="max-w-3xl mx-auto p-6">
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <h2 class="text-2xl font-bold mb-1">Post an Item</h2>
-            <p class="text-gray-500 mb-6">Share an item with your university community</p>
-            
-            <form th:action="@{/sell}" th:object="${product}" method="post" class="space-y-5">
+  <head th:replace="~{layout :: head}"> </head>
+  <body th:replace="~{layout :: layout}" class="bg-base-100 text-gray-800">
+    <main>
+      <div class="max-w-3xl mx-auto p-6">
+        <div class="bg-base shadow-md rounded-lg p-6 border border-[#D4A373]">
+          <h2 class="text-2xl font-bold mb-1 text-primary">Post an Item</h2>
+          <p class="text-[#D4A373] mb-6">
+            Share an item with your university community
+          </p>
 
-                <!-- Title -->
-                <div>
-                    <label class="block font-medium">Title <span class="text-red-500">*</span></label>
-                    <input type="text" th:field="*{title}" placeholder="What are you offering?" required
-                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
-                </div>
+          <form
+            th:action="@{/sell}"
+            th:object="${product}"
+            method="post"
+            class="space-y-5"
+          >
+            <!-- Title -->
+            <div>
+              <label class="block font-medium text-primary"
+                >Title <span class="text-red-500">*</span></label
+              >
+              <input
+                type="text"
+                th:field="*{title}"
+                placeholder="What are you offering?"
+                required
+                class="w-full border border-[#D4A373] rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-primary"
+              />
+            </div>
 
-                <!-- Description -->
-                <div>
-                    <label class="block font-medium">Description <span class="text-red-500">*</span></label>
-                    <textarea th:field="*{description}" rows="4" placeholder="Describe your item in detail..." required
-                              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"></textarea>
-                </div>
+            <!-- Description -->
+            <div>
+              <label class="block font-medium text-primary"
+                >Description <span class="text-red-500">*</span></label
+              >
+              <textarea
+                th:field="*{description}"
+                rows="4"
+                placeholder="Describe your item in detail..."
+                required
+                class="w-full border border-[#D4A373] rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-primary"
+              ></textarea>
+            </div>
 
-                <!-- Price -->
-                <div>
-                    <label class="block font-medium">Price (৳ Taka)</label>
-                    <input type="number" th:field="*{price}" placeholder="0.00" min="0" step="0.01"
-                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
-                </div>
+            <!-- Price -->
+            <div>
+              <label class="block font-medium text-primary"
+                >Price (৳ Taka)</label
+              >
+              <input
+                type="number"
+                th:field="*{price}"
+                placeholder="0.00"
+                min="0"
+                step="0.01"
+                class="w-full border border-[#D4A373] rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-primary"
+              />
+            </div>
 
-                <!-- Image -->
-                <div>
-                    <label class="block font-medium">Image URL</label>
-                    <input type="url" th:field="*{imageUrl}" id="imageUrl" placeholder="Paste image URL" required oninput="previewImage()"
-                           class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300">
-                    <p class="text-gray-400 text-sm mt-1">Paste one image URL for your listing.</p>
-                    <div id="imagePreview" class="mt-3"></div>
-                </div>
+            <!-- Image -->
+            <div>
+              <label class="block font-medium text-primary">Image URL</label>
+              <input
+                type="url"
+                th:field="*{imageUrl}"
+                id="imageUrl"
+                placeholder="Paste image URL"
+                required
+                oninput="previewImage()"
+                class="w-full border border-[#D4A373] rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-primary"
+              />
+              <p class="text-sm mt-1 text-primary/70">
+                Paste one image URL for your listing.
+              </p>
+              <div id="imagePreview" class="mt-3"></div>
+            </div>
 
-                <!-- Buttons -->
-                <div class="flex gap-3">
-                    <button type="button" onclick="history.back()" 
-                            class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg">
-                        Cancel
-                    </button>
-                    <button type="submit" 
-                            class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
-                        Post Item
-                    </button>
-                </div>
-
-            </form>
+            <!-- Buttons -->
+            <div class="flex gap-3">
+              <button
+                type="button"
+                onclick="history.back()"
+                class="w-full bg-accent hover:bg-[#e8d4d4] text-primary py-2 px-4 rounded-lg border border-[#D4A373]"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="w-full bg-primary hover:bg-[#6b4d4d] text-primary-content py-2 px-4 rounded-lg"
+              >
+                Post Item
+              </button>
+            </div>
+          </form>
         </div>
-    </div>
+      </div>
 
-    <script>
+      <script>
         function previewImage() {
-            const url = document.getElementById('imageUrl').value.trim();
-            const preview = document.getElementById('imagePreview');
-            preview.innerHTML = '';
-            if (url) {
-                const img = document.createElement('img');
-                img.src = url;
-                img.alt = 'Preview';
-                img.className = 'w-32 h-32 object-cover rounded';
-                preview.appendChild(img);
-            }
+          const url = document.getElementById("imageUrl").value.trim();
+          const preview = document.getElementById("imagePreview");
+          preview.innerHTML = "";
+          if (url) {
+            const img = document.createElement("img");
+            img.src = url;
+            img.alt = "Preview";
+            img.className =
+              "w-32 h-32 object-cover rounded border border-[#D4A373]";
+            preview.appendChild(img);
+          }
         }
-    </script>
-</body>
+      </script>
+    </main>
+  </body>
 </html>
