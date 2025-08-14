@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - CampusCart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .cart-item { border-bottom: 1px solid #ddd; padding: 15px 0; }
+        .cart-img { width: 100px; height: auto; border-radius: 8px; }
+        .cart-title { font-size: 1.1rem; font-weight: 500; }
+        .cart-condition { font-size: 0.9rem; color: #6c757d; }
+        .cart-seller { font-size: 0.85rem; color: #495057; }
+        .price { font-weight: bold; font-size: 1rem; }
+        .subtotal-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .motivational {
+            background-color: #e9f7ef;
+            border-left: 4px solid #28a745;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .subtotal-box h5 { font-size: 1.25rem; }
+    </style>
+</head>
+<body>
+<div class="container my-4">
+    <h2 class="mb-4">🛒 Your Shopping Cart</h2>
+    <div class="row">
+        <!-- Cart Items -->
+        <div class="col-lg-8">
+            <div th:each="item : ${cartItems}" class="cart-item row align-items-center">
+                <div class="col-3">
+                    <img th:src="@{${item.image}}" class="cart-img" alt="Product Image">
+                </div>
+                <div class="col-6">
+                    <div class="cart-title" th:text="${item.title}">Product Title</div>
+                    <div class="cart-condition" th:text="${item.condition}">Condition</div>
+                    <div class="cart-seller" th:text="${item.seller}">Seller</div>
+                    <div class="cart-type text-primary" th:text="'Type: ' + ${item.type}">Type</div>
+                </div>
+                <div class="col-3 text-end">
+                    <div class="price" th:text="${currency} + ${item.price}">৳ 0</div>
+                    <div class="text-muted">Qty: <span th:text="${item.quantity}">1</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+            <div class="subtotal-box">
+                <h5 class="fw-bold mb-3">📝 Order Summary</h5>
+
+                <!-- Subtotal -->
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span th:text="${currency} + ${subtotal}">৳ 0</span>
+                </div>
+
+                <!-- Estimated Shipping -->
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Estimated Delivery:</span>
+                    <span>2-3 days 🚚</span>
+                </div>
+
+                <hr>
+
+                <!-- Total -->
+                <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+                    <span>Total:</span>
+                    <span th:text="${currency} + ${subtotal}">৳ 0</span>
+                </div>
+
+                <!-- Motivational message -->
+                <div class="motivational text-center">
+                    <p class="mb-1">🎉 Great choice! Your items will reach you soon.</p>
+                    <p class="mb-0" style="font-size:0.9rem;">Enjoy fast delivery within 2-3 days. Happy Shopping!</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <button class="btn btn-success w-100 mb-2">✅ Proceed to Checkout</button>
+                <a href="/marketplace" class="btn btn-outline-secondary w-100">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
