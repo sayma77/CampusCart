@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CampusCart Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <style>
       .cart-badge {
         animation: bounce 0.5s ease-in-out;
       }
       @keyframes bounce {
-        0%, 20%, 53%, 80%, 100% {
+        0%,
+        20%,
+        53%,
+        80%,
+        100% {
           transform: translateY(0);
         }
-        40%, 43% {
+        40%,
+        43% {
           transform: translateY(-10px);
         }
         70% {
@@ -26,99 +34,113 @@
       }
     </style>
   </head>
-  <body class="bg-white text-gray-800">
+  <body class="bg-white text-[#4a3b3b]">
     <!-- Marketplace Navbar -->
-    <nav class="bg-white shadow sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <nav class="bg-[#A7727D] shadow sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between"
+      >
         <div class="flex items-center space-x-4">
-          <a href="/" class="text-xl font-bold text-indigo-900">CampusCart</a>
+          <a href="/" class="text-xl font-bold text-[#F8EAD8]">CampusCart</a>
         </div>
 
         <div class="flex-1 mx-4 relative">
-          <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+          <i
+            class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-[#D4A373]"
+          ></i>
           <input
             type="text"
             id="searchInput"
             placeholder="Search for products..."
-            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring focus:border-yellow-300"
+            class="w-full pl-10 pr-4 py-2 border border-[#EDDBC7] rounded-full focus:outline-none focus:ring-2 focus:ring-[#D4A373] focus:border-[#D4A373] bg-[#FDF8F2] text-[#4a3b3b]"
           />
         </div>
 
         <div class="flex items-center space-x-4">
           <a
             href="/sell"
-            class="bg-yellow-300 text-indigo-900 px-4 py-2 rounded-full text-sm font-semibold hover:bg-yellow-400 transition"
+            class="bg-[#D4A373] text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#c28b5f] transition"
           >
             <i class="fas fa-plus mr-1"></i>Sell Item
           </a>
           <a href="/cart" class="relative">
-            <i class="fas fa-shopping-cart w-5 h-5 text-gray-500 hover:text-indigo-900"></i>
-            <span id="cartBadge" class="absolute -top-2 -right-2 bg-yellow-300 text-indigo-900 text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold hidden">0</span>
+            <i
+              class="fas fa-shopping-cart w-5 h-5 text-[#F8EAD8] hover:text-white"
+            ></i>
+            <span
+              id="cartBadge"
+              class="absolute -top-2 -right-2 bg-[#D4A373] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold hidden"
+              >0</span
+            >
           </a>
           <a href="/account">
-            <i class="fas fa-user w-5 h-5 text-gray-500 hover:text-indigo-900"></i>
+            <i class="fas fa-user w-5 h-5 text-[#F8EAD8] hover:text-white"></i>
           </a>
         </div>
       </div>
     </nav>
 
     <!-- Header -->
-    <section class="text-center py-8">
-      <h1 class="text-3xl font-bold text-indigo-900">CampusCart Marketplace</h1>
-      <p class="text-gray-500 mt-2 max-w-2xl mx-auto">
+    <section class="text-center py-8 bg-[#FFFDF9]">
+      <h1 class="text-3xl font-bold text-[#A7727D]">CampusCart Marketplace</h1>
+      <p class="text-[#7c6a6a] mt-2 max-w-2xl mx-auto">
         Your premium campus marketplace for Cuetians. Discover quality products
         from fellow students at unbeatable prices.
       </p>
     </section>
 
     <!-- Shop by Category -->
-    <section class="max-w-7xl mx-auto px-4 py-4 bg-white shadow rounded-xl mb-6">
-      <h2 class="text-xl font-semibold mb-4">Shop by Category</h2>
+    <section
+      class="max-w-7xl mx-auto px-4 py-4 bg-[#FDF8F2] shadow rounded-xl mb-6"
+    >
+      <h2 class="text-xl font-semibold text-[#A7727D] mb-4">
+        Shop by Category
+      </h2>
       <div class="grid grid-cols-4 sm:grid-cols-8 gap-3">
         <button
-          class="category-btn border-2 border-yellow-300 text-indigo-900 px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-100 transition"
+          class="category-btn border-2 border-[#D4A373] text-[#A7727D] px-4 py-2 rounded-xl text-sm font-medium hover:bg-[#FFF7EC] transition"
           data-category="all"
         >
           <i class="fas fa-th-large mr-1"></i>All Categories
         </button>
         <button
-          class="category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition"
+          class="category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition"
           data-category="electronics"
         >
           <i class="fas fa-mobile-alt mr-1"></i>Electronics
         </button>
         <button
-          class="category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition"
+          class="category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition"
           data-category="books"
         >
           <i class="fas fa-book mr-1"></i>Books
         </button>
         <button
-          class="category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition"
+          class="category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition"
           data-category="stationery"
         >
           <i class="fas fa-pen mr-1"></i>Stationery
         </button>
         <button
-          class="category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition"
+          class="category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition"
           data-category="appliances"
         >
           <i class="fas fa-blender mr-1"></i>Appliances
         </button>
         <button
-          class="category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition"
+          class="category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition"
           data-category="furniture"
         >
           <i class="fas fa-chair mr-1"></i>Furniture
         </button>
         <button
-          class="category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition"
+          class="category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition"
           data-category="clothing"
         >
           <i class="fas fa-tshirt mr-1"></i>Clothing
         </button>
         <button
-          class="category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition"
+          class="category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition"
           data-category="sports"
         >
           <i class="fas fa-futbol mr-1"></i>Sports
@@ -127,23 +149,25 @@
     </section>
 
     <!-- Choose Type -->
-    <section class="max-w-7xl mx-auto px-4 py-4 bg-white shadow rounded-xl mb-6">
-      <h2 class="text-xl font-semibold mb-4">Choose Type</h2>
+    <section
+      class="max-w-7xl mx-auto px-4 py-4 bg-[#FDF8F2] shadow rounded-xl mb-6"
+    >
+      <h2 class="text-xl font-semibold text-[#A7727D] mb-4">Choose Type</h2>
       <div class="grid grid-cols-3 gap-4">
         <button
-          class="type-btn border-2 border-yellow-300 text-indigo-900 py-3 rounded-xl hover:bg-yellow-100 transition"
+          class="type-btn border-2 border-[#D4A373] text-[#A7727D] py-3 rounded-xl hover:bg-[#FFF7EC] transition"
           data-type="all"
         >
           <i class="fas fa-shopping-bag mr-2"></i>All Items
         </button>
         <button
-          class="type-btn bg-gray-100 py-3 rounded-xl hover:bg-blue-100 transition"
+          class="type-btn bg-[#FFF7EC] py-3 rounded-xl hover:bg-[#FDF0E2] transition"
           data-type="sale"
         >
           <i class="fas fa-credit-card mr-2"></i>Buy Items
         </button>
         <button
-          class="type-btn bg-gray-100 py-3 rounded-xl hover:bg-blue-100 transition"
+          class="type-btn bg-[#FFF7EC] py-3 rounded-xl hover:bg-[#FDF0E2] transition"
           data-type="rent"
         >
           <i class="fas fa-clock mr-2"></i>Rent Items
@@ -154,244 +178,240 @@
     <!-- Product Grid -->
     <section class="max-w-7xl mx-auto px-4 py-4">
       <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold text-indigo-900">All Products</h2>
-        <span class="text-sm text-gray-500" id="productCount">8 products found</span>
+        <h2 class="text-xl font-semibold text-[#A7727D]">All Products</h2>
+        <span class="text-sm text-[#7c6a6a]" id="productCount"
+          >8 products found</span
+        >
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productGrid">
-        <!-- Product cards will be populated by JavaScript -->
-      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        id="productGrid"
+      ></div>
     </section>
-
+    <div th:fragment="footer">
+        <footer class="bg-gray-200 text-center p-2">© 2025 CampusCart</footer>
+    </div>
     <script>
-      // Sample product data
       const products = [
         {
           id: 1,
           title: "Casio fx Calculator",
           price: 1200,
           condition: "Like New",
-          image: "https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/6238297/pexels-photo-6238297.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "Rahul Kumar",
           hallName: "CSE Hall",
           postedTime: "2 days ago",
           category: "electronics",
           type: "sale",
-          rating: 4.6
+          rating: 4.6,
         },
         {
           id: 2,
           title: "Data Structures Book",
           price: 800,
           condition: "Good",
-          image: "https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "Priya Sharma",
           hallName: "IT Hall",
           postedTime: "1 day ago",
           category: "books",
           type: "sale",
-          rating: 4.2
+          rating: 4.2,
         },
         {
           id: 3,
           title: "Gaming Laptop",
           price: 2500,
           condition: "Excellent",
-          image: "https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "Alex Johnson",
           hallName: "Main Hall",
           postedTime: "3 hours ago",
           category: "electronics",
           type: "rent",
-          rating: 4.8
+          rating: 4.8,
         },
         {
           id: 4,
           title: "Study Desk",
           price: 1500,
           condition: "Fair",
-          image: "https://images.pexels.com/photos/447592/pexels-photo-447592.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/447592/pexels-photo-447592.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "Maria Garcia",
           hallName: "West Hall",
           postedTime: "5 days ago",
           category: "furniture",
           type: "sale",
-          rating: 4.0
+          rating: 4.0,
         },
         {
           id: 5,
           title: "Winter Jacket",
           price: 600,
           condition: "Like New",
-          image: "https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "John Doe",
           hallName: "North Hall",
           postedTime: "1 week ago",
           category: "clothing",
           type: "sale",
-          rating: 4.4
+          rating: 4.4,
         },
         {
           id: 6,
           title: "Tennis Racket",
           price: 300,
           condition: "Good",
-          image: "https://images.pexels.com/photos/209977/pexels-photo-209977.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/209977/pexels-photo-209977.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "Sarah Wilson",
           hallName: "Sports Complex",
           postedTime: "4 days ago",
           category: "sports",
           type: "rent",
-          rating: 4.3
+          rating: 4.3,
         },
         {
           id: 7,
           title: "MacBook Pro",
           price: 3500,
           condition: "Excellent",
-          image: "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "David Chen",
           hallName: "CS Hall",
           postedTime: "1 hour ago",
           category: "electronics",
           type: "both",
-          rating: 4.9
+          rating: 4.9,
         },
         {
           id: 8,
           title: "Chemistry Textbook",
           price: 450,
           condition: "Good",
-          image: "https://images.pexels.com/photos/256541/pexels-photo-256541.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
+          image:
+            "https://images.pexels.com/photos/256541/pexels-photo-256541.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
           sellerName: "Emma Watson",
           hallName: "Science Hall",
           postedTime: "6 hours ago",
           category: "books",
           type: "both",
-          rating: 4.1
-        }
+          rating: 4.1,
+        },
       ];
 
       let filteredProducts = [...products];
-      let selectedCategory = 'all';
-      let selectedType = 'all';
+      let selectedCategory = "all";
+      let selectedType = "all";
       let cartItems = [];
 
-      // Render products
       function renderProducts() {
-        const productGrid = document.getElementById('productGrid');
-        const productCount = document.getElementById('productCount');
-        
-        productGrid.innerHTML = '';
-        
-        filteredProducts.forEach(product => {
-          const productCard = `
-            <div class="bg-white rounded-xl shadow p-4 hover:shadow-lg transition">
+        const grid = document.getElementById("productGrid");
+        const count = document.getElementById("productCount");
+        grid.innerHTML = "";
+
+        filteredProducts.forEach((p) => {
+          grid.innerHTML += `
+            <div class="bg-[#FFF7EC] rounded-xl shadow p-4 hover:shadow-lg transition">
               <div class="relative">
-                <img
-                  src="${product.image}"
-                  class="w-full h-40 object-cover rounded-md"
-                  alt="${product.title}"
-                />
-                <span class="absolute top-2 left-2 bg-yellow-300 text-indigo-900 text-xs px-2 py-1 rounded font-semibold">
-                  ${product.condition}
-                </span>
+                <img src="${p.image}" class="w-full h-40 object-cover rounded-md" alt="${p.title}" />
+                <span class="absolute top-2 left-2 bg-[#D4A373] text-white text-xs px-2 py-1 rounded font-semibold">${p.condition}</span>
               </div>
-              <h3 class="mt-3 font-bold text-gray-800">${product.title}</h3>
-              <p class="text-green-600 font-semibold">৳${product.price}</p>
-              <div class="text-xs text-gray-500 mt-1">
-                ${product.rating} ⭐ · ${product.sellerName} · ${product.hallName} · ${product.postedTime}
+              <h3 class="mt-3 font-bold text-[#4a3b3b]">${p.title}</h3>
+              <p class="text-green-700 font-semibold">৳${p.price}</p>
+              <div class="text-xs text-[#7c6a6a] mt-1">
+                ${p.rating} ⭐ · ${p.sellerName} · ${p.hallName} · ${p.postedTime}
               </div>
-              <button
-                class="mt-3 w-full bg-yellow-300 text-indigo-900 py-2 rounded font-semibold hover:bg-yellow-400 transition"
-                onclick="addToCart(${product.id})"
-              >
+              <button class="mt-3 w-full bg-[#D4A373] text-white py-2 rounded font-semibold hover:bg-[#c28b5f] transition" onclick="addToCart(${p.id})">
                 <i class="fas fa-cart-plus mr-1"></i>Add to Cart
               </button>
             </div>
           `;
-          productGrid.innerHTML += productCard;
         });
-        
-        productCount.textContent = `${filteredProducts.length} products found`;
+
+        count.textContent = `${filteredProducts.length} products found`;
       }
 
-      // Filter products
       function filterProducts() {
-        const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-        
-        filteredProducts = products.filter(product => {
-          const matchesSearch = product.title.toLowerCase().includes(searchTerm) ||
-                               product.sellerName.toLowerCase().includes(searchTerm);
-          const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-          const matchesType = selectedType === 'all' || 
-                             product.type === selectedType || 
-                             product.type === 'both';
-          
-          return matchesSearch && matchesCategory && matchesType;
+        const search = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        filteredProducts = products.filter((p) => {
+          const matchSearch =
+            p.title.toLowerCase().includes(search) ||
+            p.sellerName.toLowerCase().includes(search);
+          const matchCat =
+            selectedCategory === "all" || p.category === selectedCategory;
+          const matchType =
+            selectedType === "all" ||
+            p.type === selectedType ||
+            p.type === "both";
+          return matchSearch && matchCat && matchType;
         });
-        
         renderProducts();
       }
 
-      // Add to cart
-      function addToCart(productId) {
-        if (!cartItems.includes(productId)) {
-          cartItems.push(productId);
+      function addToCart(id) {
+        if (!cartItems.includes(id)) {
+          cartItems.push(id);
           updateCartBadge();
         }
       }
 
-      // Update cart badge
       function updateCartBadge() {
-        const cartBadge = document.getElementById('cartBadge');
+        const badge = document.getElementById("cartBadge");
         if (cartItems.length > 0) {
-          cartBadge.textContent = cartItems.length;
-          cartBadge.classList.remove('hidden');
-          cartBadge.classList.add('cart-badge');
+          badge.textContent = cartItems.length;
+          badge.classList.remove("hidden");
+          badge.classList.add("cart-badge");
         } else {
-          cartBadge.classList.add('hidden');
+          badge.classList.add("hidden");
         }
       }
 
-      // Category button handlers
-      document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          // Reset all category buttons
-          document.querySelectorAll('.category-btn').forEach(b => {
-            b.className = 'category-btn bg-gray-100 px-4 py-2 rounded-xl text-sm hover:bg-blue-100 transition';
-          });
-          
-          // Highlight selected button
-          this.className = 'category-btn border-2 border-yellow-300 text-indigo-900 px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-100 transition';
-          
+      document.querySelectorAll(".category-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document
+            .querySelectorAll(".category-btn")
+            .forEach(
+              (b) =>
+                (b.className =
+                  "category-btn bg-[#FFF7EC] px-4 py-2 rounded-xl text-sm hover:bg-[#FDF0E2] transition")
+            );
+          this.className =
+            "category-btn border-2 border-[#D4A373] text-[#A7727D] px-4 py-2 rounded-xl text-sm font-medium hover:bg-[#FFF7EC] transition";
           selectedCategory = this.dataset.category;
           filterProducts();
         });
       });
 
-      // Type button handlers
-      document.querySelectorAll('.type-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          // Reset all type buttons
-          document.querySelectorAll('.type-btn').forEach(b => {
-            b.className = 'type-btn bg-gray-100 py-3 rounded-xl hover:bg-blue-100 transition';
-          });
-          
-          // Highlight selected button
-          this.className = 'type-btn border-2 border-yellow-300 text-indigo-900 py-3 rounded-xl hover:bg-yellow-100 transition';
-          
+      document.querySelectorAll(".type-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          document
+            .querySelectorAll(".type-btn")
+            .forEach(
+              (b) =>
+                (b.className =
+                  "type-btn bg-[#FFF7EC] py-3 rounded-xl hover:bg-[#FDF0E2] transition")
+            );
+          this.className =
+            "type-btn border-2 border-[#D4A373] text-[#A7727D] py-3 rounded-xl hover:bg-[#FFF7EC] transition";
           selectedType = this.dataset.type;
           filterProducts();
         });
       });
 
-      // Search input handler
-      document.getElementById('searchInput').addEventListener('input', filterProducts);
-
-      // Initialize
-      document.addEventListener('DOMContentLoaded', function() {
-        renderProducts();
-      });
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", filterProducts);
+      document.addEventListener("DOMContentLoaded", renderProducts);
     </script>
   </body>
 </html>
