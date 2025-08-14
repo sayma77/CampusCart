@@ -1,22 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: head"></head>
-<title>Contact Us - CampusCart</title>
+<html lang="en">
+  <head th:replace="~{layout :: head}"></head>
+  <body
+    th:replace="~{layout :: layout}"
+    class="bg-white text-gray-800 dark:bg-gray-900 dark:text-white"
+  >
+<main class="contact-page">
 <style>
-    body {
+    .contact-page {
         font-family: Arial, sans-serif;
         background-color: var(--color-base-100);
-        color: #4a3b3b; /* darker text for readability */
+        color: #4a3b3b;
         text-align: center;
     }
 
-    h1 {
+    .contact-page h1 {
         color: var(--color-primary);
         margin-top: 30px;
         font-size: 2.5rem;
     }
 
-    .container {
+    .contact-page .container {
         display: flex;
         justify-content: center;
         gap: 20px;
@@ -24,7 +28,7 @@
         flex-wrap: wrap;
     }
 
-    .card {
+    .contact-page .card {
         background: var(--color-accent);
         border-radius: var(--radius-box);
         padding: 20px;
@@ -33,20 +37,20 @@
         transition: transform 0.2s;
     }
 
-    .card:hover {
+    .contact-page .card:hover {
         transform: translateY(-5px);
     }
 
-    .card h3 {
+    .contact-page .card h3 {
         margin-top: 10px;
         color: var(--color-primary);
     }
 
-    .card p {
+    .contact-page .card p {
         color: #4a3b3b;
     }
 
-    .btn {
+    .contact-page .btn {
         background-color: var(--color-primary);
         color: var(--color-primary-content);
         padding: 10px 20px;
@@ -57,38 +61,31 @@
         transition: background-color 0.3s;
     }
 
-    .btn:hover {
-        background-color: #a7727d; /* slightly lighter primary */
+    .contact-page .btn:hover {
+        background-color: #a7727d;
     }
 
     /* Icons */
-    .card div {
-        display: flex;
-        justify-content: center;  /* Horizontal center */
-        align-items: center;      /* Vertical center */
-        height: 50px;             /* Ensures some space */
-        margin-bottom: 10px;
-    }
-    .card-icon {
+    .contact-page .card div {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 50px; /* Adjust for vertical centering */
+        height: 50px;
+        margin-bottom: 10px;
     }
 
-    .card-icon svg {
+    .contact-page .card-icon svg {
         width: 36px;
         height: 36px;
     }
 
-    .card-icon.emoji {
-        font-size: 2rem; /* Bigger emojis */
+    .contact-page .card-icon.emoji {
+        font-size: 2rem;
     }
-
-
 </style>
+
 </head>
-<body>
+
 
 <h1>Contact Us</h1>
 
