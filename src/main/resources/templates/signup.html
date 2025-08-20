@@ -30,7 +30,7 @@
             Already have an account? Login here!
           </p>
           <a
-            href="/signin"
+            href="/login"
             class="bg-primary text-white font-semibold px-6 py-2 rounded-full transition-transform duration-300 hover:scale-105 hover:shadow-md"
           >
             Sign In
@@ -43,17 +43,23 @@
             Create an Account
           </h2>
 
-          <form id="signupForm" class="space-y-4">
+          <!-- Thymeleaf form -->
+          <form
+            th:action="@{/signup}"
+            th:object="${user}"
+            method="post"
+            class="space-y-4"
+          >
             <input
               type="text"
-              name="name"
-              placeholder="Full Name"
+              th:field="*{username}"
+              placeholder="Username"
               class="input input-bordered w-full rounded-lg border-primary focus:ring-2 focus:ring-primary"
               required
             />
             <input
               type="email"
-              name="email"
+              th:field="*{email}"
               placeholder="@student.cuet.ac.bd"
               class="input input-bordered w-full rounded-lg border-primary focus:ring-2 focus:ring-primary"
               required
@@ -62,7 +68,7 @@
             />
             <input
               type="tel"
-              name="phone"
+              th:field="*{phone}"
               placeholder="Phone Number"
               class="input input-bordered w-full rounded-lg border-primary focus:ring-2 focus:ring-primary"
               required
@@ -71,7 +77,7 @@
             />
             <input
               type="password"
-              name="password"
+              th:field="*{password}"
               placeholder="Create password"
               class="input input-bordered w-full rounded-lg border-primary focus:ring-2 focus:ring-primary"
               required
@@ -83,7 +89,12 @@
               class="input input-bordered w-full rounded-lg border-primary focus:ring-2 focus:ring-primary"
               required
             />
+
+            <!-- Display server-side error -->
+            <p th:if="${error}" th:text="${error}" class="text-red-500"></p>
+
             <button
+              type="submit"
               class="bg-primary text-white rounded-full px-6 py-2 font-semibold w-full hover:bg-[#8d5c66] transition-transform duration-300 hover:scale-105 hover:shadow-lg"
             >
               Sign Up
@@ -93,45 +104,15 @@
       </div>
     </main>
 
+    <!-- Optional client-side password match check -->
     <script>
-      const form = document.getElementById("signupForm");
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
+      const form = document.querySelector("form");
+      form.addEventListener("submit", (e) => {
         const password = form.password.value;
         const confirmPassword = form.confirmPassword.value;
-
         if (password !== confirmPassword) {
+          e.preventDefault();
           alert("Passwords do not match.");
-          return;
-        }
-
-        const data = {
-          name: form.name.value,
-          email: form.email.value,
-          phone: form.phone.value,
-          password: password,
-        };
-
-        try {
-          const res = await fetch("/api/auth/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          });
-
-          if (!res.ok) {
-            const errorData = await res.json();
-            alert(errorData.message || "Signup failed");
-            return;
-          }
-
-          alert("Signup successful! Redirecting to login...");
-          form.reset();
-          setTimeout(() => (window.location.href = "/signin"), 1500);
-        } catch (err) {
-          alert("Network error");
         }
       });
     </script>

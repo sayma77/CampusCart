@@ -40,6 +40,17 @@
             >Login</a
           >
         </li>
+        <li sec:authorize="isAuthenticated()">
+          <a
+            href="/profile"
+            class="flex items-center space-x-2 hover:text-[#D4A373] transition-colors"
+          >
+            <i class="fa-solid fa-user text-lg"></i>
+            <!-- Font Awesome icon -->
+
+            <!-- optional: shows username -->
+          </a>
+        </li>
       </ul>
     </div>
   </nav>

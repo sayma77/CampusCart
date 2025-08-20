@@ -5,38 +5,44 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import lombok.RequiredArgsConstructor;
+import com.noobs.CampusCart.service.CustomUserDetailsService;
 
 @Configuration
-@EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtFilter;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
-            // .requestMatchers("/", "/sign**", "/api/auth/**", "**").permitAll()
-            // .anyRequest().authenticated()
-        )
-        .sessionManagement(session -> session
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        )
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-        .build();
+                .csrf(csrf -> csrf.disable()) // optional: enable for production
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/marketplace", "/about", "/contactus", "/cart", "/sell", "/profile").permitAll()
+                .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                .loginPage("/signin")
+                .loginProcessingUrl("/login") // where POST should go
+                .usernameParameter("email") // match form input name
+                .passwordParameter("password")
+                .defaultSuccessUrl("/marketplace", true)
+                .permitAll()
+                )
+                .logout(logout -> logout
+                .logoutUrl("/signout")
+                .logoutSuccessUrl("/signin?signout")
+                .invalidateHttpSession(true) // Clear session
+                .deleteCookies("JSESSIONID")
+                )
+                .build();
     }
 
     @Bean
@@ -48,5 +54,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
 }
