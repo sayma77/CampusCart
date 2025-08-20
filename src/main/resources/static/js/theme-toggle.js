@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const themeIcon = document.getElementById("theme-icon");
     const htmlEl = document.documentElement;
 
-    if (localStorage.theme === "dark") {
+    // initial load (check localStorage or system preference)
+    if (localStorage.theme === "dark" ||
+       (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
         htmlEl.classList.add("dark");
         themeIcon.textContent = "🌙";
     } else {
@@ -11,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         themeIcon.textContent = "🌞";
     }
 
+    // toggle on click
     toggleBtn.addEventListener("click", () => {
         htmlEl.classList.toggle("dark");
         const isDark = htmlEl.classList.contains("dark");
