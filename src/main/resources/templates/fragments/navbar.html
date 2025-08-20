@@ -41,15 +41,34 @@
           >
         </li>
         <li sec:authorize="isAuthenticated()">
-          <a
-            href="/profile"
-            class="flex items-center space-x-2 hover:text-[#D4A373] transition-colors"
-          >
-            <i class="fa-solid fa-user text-lg"></i>
-            <!-- Font Awesome icon -->
-
-            <!-- optional: shows username -->
-          </a>
+          <div class="dropdown">
+            <div
+              tabindex="0"
+              role="button"
+              class="hover:cursor-pointer transform transition-transform duration-300 hover:scale-110"
+            >
+              <i class="fa-solid fa-user text-lg"></i>
+            </div>
+            <ul
+              tabindex="0"
+              class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 -translate-x-16 shadow-sm"
+            >
+              <li>
+                <a
+                  href="/profile"
+                  class="flex items-center hover:text-[#D4A373] transition-colors"
+                  >Profile</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/signout"
+                  class="flex items-center hover:text-[#D4A373] transition-colors"
+                  >Logout</a
+                >
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
     </div>
