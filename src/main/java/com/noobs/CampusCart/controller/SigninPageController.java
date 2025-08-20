@@ -60,7 +60,7 @@ public class SigninPageController {
             return ResponseEntity.ok(Map.of(
                     "status", "success",
                     "message", "Signin successful",
-                    "redirect", "/home"
+                    "redirect", "/"
             ));
         }
 
