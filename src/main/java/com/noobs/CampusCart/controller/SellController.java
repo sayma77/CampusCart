@@ -11,7 +11,7 @@ public class SellController {
     // Show the Sell Form
     @GetMapping("/sell")
     public String showSellForm(Model model) {
-        model.addAttribute("product", new Product(null, "", "", 0, ""));
+        model.addAttribute("product", new Product());
         return "sell";
     }
 
@@ -25,4 +25,3 @@ public class SellController {
         return "redirect:/marketplace";
     }
 }
-

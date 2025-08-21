@@ -1,0 +1,34 @@
+package com.noobs.CampusCart.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import com.noobs.CampusCart.model.Product;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
+    // All products with user and category
+    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u")
+    List<Product> findAllWithUserAndCategory();
+
+    // By category
+    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE c.categoryId = :categoryId")
+    List<Product> findByCategoryIdWithUserAndCategory(@Param("categoryId") Long categoryId);
+
+    // By type
+    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE LOWER(p.sellOrRent) = LOWER(:type)")
+    List<Product> findByTypeWithUserAndCategory(@Param("type") String type);
+
+    // By category AND type
+    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE c.categoryId = :categoryId AND LOWER(p.sellOrRent) = LOWER(:type)")
+    List<Product> findByCategoryAndTypeWithUserAndCategory(@Param("categoryId") Long categoryId, @Param("type") String type);
+
+    // Search by name (case-insensitive)
+    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Product> findByNameContainingWithUserAndCategory(@Param("keyword") String keyword);
+}
