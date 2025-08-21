@@ -52,6 +52,13 @@
           >
             <input
               type="text"
+              th:field="*{name}"
+              placeholder="Name"
+              class="input input-bordered w-full rounded-lg border-primary focus:ring-2 focus:ring-primary"
+              required
+            />
+            <input
+              type="text"
               th:field="*{username}"
               placeholder="Username"
               class="input input-bordered w-full rounded-lg border-primary focus:ring-2 focus:ring-primary"

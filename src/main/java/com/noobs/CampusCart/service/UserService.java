@@ -21,18 +21,21 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Email not found"));
+    }
+
     public User updateProfile(String currentUsername, User updatedUser) {
-        User user = getUserByUsername(currentUsername);
+        User user = getUserByEmail(currentUsername);
 
         // update editable fields
-        if (updatedUser.getEmail() != null && !updatedUser.getEmail().isEmpty()) {
-            user.setEmail(updatedUser.getEmail());
+        if (updatedUser.getName() != null && !updatedUser.getName().isEmpty()) {
+            user.setName(updatedUser.getName());
         }
-
-        if (updatedUser.getUsername() != null && !updatedUser.getUsername().isEmpty()) {
-            user.setUsername(updatedUser.getUsername());
-        }
-
+        // if (updatedUser.getUsername() != null && !updatedUser.getUsername().isEmpty()) {
+        //     user.setUsername(updatedUser.getUsername());
+        // }
         if (updatedUser.getLocation() != null && !updatedUser.getLocation().isEmpty()) {
             user.setLocation(updatedUser.getLocation());
         }

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,8 @@ import com.noobs.CampusCart.service.UserService;
 @Controller
 public class ProfilePageController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProfilePageController.class);
+
     private final UserService userService;
 
     public ProfilePageController(UserService userService) {
@@ -26,11 +30,14 @@ public class ProfilePageController {
     }
 
     @GetMapping("/profile")
-    public String profilePage(Model model) {
-        Map<String, String> user = new HashMap<>();
-        user.put("username", "warniya siddique");
-        user.put("email", "u2204026@student.cuet.ac.bd");
-        user.put("location", "Shamshen Nahar Hall");
+    public String profilePage(Model model, Principal principal) {
+        String useremail = principal.getName();
+        User user = userService.getUserByEmail(useremail);
+        Map<String, String> user_data = new HashMap<>();
+        user_data.put("name", user.getName());
+        user_data.put("username", user.getUsername());
+        user_data.put("email", user.getEmail());
+        user_data.put("location", user.getLocation());
 
         // Dummy orders list (replace later with actual DB orders)
         List<Map<String, String>> userOrders = new ArrayList<>();
@@ -76,41 +83,42 @@ public class ProfilePageController {
         userOrders.add(order5);
 
         // Add more dummy orders if needed...
-        model.addAttribute("user", user);
+        model.addAttribute("user", user_data);
         model.addAttribute("userOrders", userOrders);
 
         return "profile";
     }
 
     @PostMapping("/profile/update")
-    public String updateProfile(@RequestParam String email,
-            @RequestParam String username,
-            @RequestParam String location,
-            @RequestParam(required = false) String password,
+    public String updateProfile(
+            @RequestParam("name") String name,
+            @RequestParam("email") String email,
+            @RequestParam("username") String username,
+            @RequestParam("location") String location,
+            @RequestParam(value = "password", required = false) String password,
             Principal principal,
             RedirectAttributes redirectAttributes) {
+
         // Fetch existing user
-        User existingUser = userService.getUserByUsername(principal.getName());
+        User user = userService.getUserByEmail(principal.getName());
 
         // Update only fields that are non-empty
-        if (email != null && !email.isEmpty()) {
-            existingUser.setEmail(email);
+        if (name != null && !name.isEmpty()) {
+            user.setName(name);
         }
-
-        if (username != null && !username.isEmpty()) {
-            existingUser.setUsername(username);
-        }
-
+        // if (username != null && !username.isEmpty()) {
+        //     user.setUsername(username);
+        // }
         if (location != null && !location.isEmpty()) {
-            existingUser.setLocation(location);
+            user.setLocation(location);
         }
 
         if (password != null && !password.isEmpty()) {
-            existingUser.setPassword(password); // will be encoded in service
+            user.setPassword(password); // will be encoded in service
         }
 
         // Save updates using service
-        userService.updateProfile(principal.getName(), existingUser);
+        userService.updateProfile(principal.getName(), user);
 
         redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
         return "redirect:/profile";

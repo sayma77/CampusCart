@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class User {
 
     @Id
@@ -30,6 +32,7 @@ public class User {
     
     @Column(unique = true)
     private String email;
+    private String name;
 
     private String phone;
     private String password;
