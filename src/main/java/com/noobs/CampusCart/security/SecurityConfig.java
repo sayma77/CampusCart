@@ -25,7 +25,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // optional: enable for production
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/marketplace", "/about", "/contactus", "/cart", "/sell", "/profile").permitAll()
+                .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/about", "/contactus").permitAll()
                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
