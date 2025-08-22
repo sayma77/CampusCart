@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,16 +29,16 @@ public class User {
 
     @Column(unique = true)
     private String username;
-    
+
     @Column(unique = true)
     private String email;
     private String name;
 
     private String phone;
     private String password;
-    private String location;
+
     private String role = "USER";
-    
+
     @Column(name = "hall")
     private String hall;
 }

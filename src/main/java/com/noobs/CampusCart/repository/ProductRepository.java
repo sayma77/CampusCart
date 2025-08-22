@@ -13,22 +13,22 @@ import com.noobs.CampusCart.model.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // All products with user and category
-    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user")
     List<Product> findAllWithUserAndCategory();
 
     // By category
-    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE c.categoryId = :categoryId")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.id = :categoryId")
     List<Product> findByCategoryIdWithUserAndCategory(@Param("categoryId") Long categoryId);
 
-    // By type
-    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE LOWER(p.sellOrRent) = LOWER(:type)")
+    // By type (sell or rent)
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.sellOrRent) = LOWER(:type)")
     List<Product> findByTypeWithUserAndCategory(@Param("type") String type);
 
     // By category AND type
-    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE c.categoryId = :categoryId AND LOWER(p.sellOrRent) = LOWER(:type)")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.id = :categoryId AND LOWER(p.sellOrRent) = LOWER(:type)")
     List<Product> findByCategoryAndTypeWithUserAndCategory(@Param("categoryId") Long categoryId, @Param("type") String type);
 
     // Search by name (case-insensitive)
-    @Query("SELECT p FROM Product p JOIN FETCH p.category c JOIN FETCH p.user u WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Product> findByNameContainingWithUserAndCategory(@Param("keyword") String keyword);
 }

@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,11 +24,11 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Long categoryId;
-    
+    private Long id;
+
     @Column(name = "name")
     private String name;
-    
+
     @Column(name = "description")
     private String description;
 }

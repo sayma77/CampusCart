@@ -37,7 +37,7 @@ public class ProfilePageController {
         user_data.put("name", user.getName());
         user_data.put("username", user.getUsername());
         user_data.put("email", user.getEmail());
-        user_data.put("location", user.getLocation());
+        user_data.put("hall", user.getHall());
 
         // Dummy orders list (replace later with actual DB orders)
         List<Map<String, String>> userOrders = new ArrayList<>();
@@ -94,7 +94,7 @@ public class ProfilePageController {
             @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("username") String username,
-            @RequestParam("location") String location,
+            @RequestParam("hall") String hall,
             @RequestParam(value = "password", required = false) String password,
             Principal principal,
             RedirectAttributes redirectAttributes) {
@@ -109,8 +109,8 @@ public class ProfilePageController {
         // if (username != null && !username.isEmpty()) {
         //     user.setUsername(username);
         // }
-        if (location != null && !location.isEmpty()) {
-            user.setLocation(location);
+        if (hall != null && !hall.isEmpty()) {
+            user.setHall(hall);
         }
 
         if (password != null && !password.isEmpty()) {

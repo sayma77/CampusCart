@@ -36,8 +36,8 @@ public class UserService {
         // if (updatedUser.getUsername() != null && !updatedUser.getUsername().isEmpty()) {
         //     user.setUsername(updatedUser.getUsername());
         // }
-        if (updatedUser.getLocation() != null && !updatedUser.getLocation().isEmpty()) {
-            user.setLocation(updatedUser.getLocation());
+        if (updatedUser.getHall() != null && !updatedUser.getHall().isEmpty()) {
+            user.setHall(updatedUser.getHall());
         }
 
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {

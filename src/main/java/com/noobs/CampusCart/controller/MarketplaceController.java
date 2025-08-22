@@ -34,20 +34,16 @@ public class MarketplaceController {
         // Search has highest priority
         if (search != null && !search.trim().isEmpty()) {
             products = productService.searchProductsByName(search.trim());
-        }
-        // Combined category and type filter
+        } // Combined category and type filter
         else if (categoryId != null && type != null && !type.equals("all")) {
             products = productService.getProductsByCategoryAndType(categoryId, type);
-        }
-        // Category filter only
+        } // Category filter only
         else if (categoryId != null) {
             products = productService.getProductsByCategory(categoryId);
-        }
-        // Type filter only
+        } // Type filter only
         else if (type != null && !type.equals("all")) {
             products = productService.getProductsBySellOrRent(type);
-        }
-        // No filters - show all products
+        } // No filters - show all products
         else {
             products = productService.getAllProducts();
         }
