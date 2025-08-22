@@ -11,7 +11,7 @@
           </p>
 
           <!-- Sell Form Section --> 
-          <main class="min-h-screen flex items-center justify-center bg-[#FFFDF9] py-12"> 
+          <div class="min-h-screen flex items-center justify-center bg-[#FFFDF9] py-12"> 
             <div class="w-full max-w-2xl bg-[#FFF7EC] shadow rounded-xl p-8"> 
               <h1 class="text-2xl font-bold text-[#A7727D] mb-6">Post a Product for Sale or Rent</h1> 
               <form method="post" th:action="@{/sell}" th:object="${product}" class="space-y-4"> 
@@ -52,7 +52,7 @@
                   </button> 
                 </form> 
               </div> 
-            </main>
+            </div>
 
       <script>
         function previewImage() {
