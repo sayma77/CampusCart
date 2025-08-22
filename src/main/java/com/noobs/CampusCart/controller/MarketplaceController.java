@@ -24,8 +24,8 @@ public class MarketplaceController {
 
     @GetMapping("/marketplace")
     public String showMarketplace(
-            @RequestParam(name = "categoryId", required = false) Long categoryId,
-            @RequestParam(name = "type", required = false) String type,
+            @RequestParam(name = "category", required = false) String category,
+            @RequestParam(name = "type", required = false, defaultValue = "all") String type,
             @RequestParam(name = "search", required = false) String search,
             Model model) {
 
@@ -35,11 +35,11 @@ public class MarketplaceController {
         if (search != null && !search.trim().isEmpty()) {
             products = productService.searchProductsByName(search.trim());
         } // Combined category and type filter
-        else if (categoryId != null && type != null && !type.equals("all")) {
-            products = productService.getProductsByCategoryAndType(categoryId, type);
+        else if (category != null && !category.trim().equals("") && type != null && !type.equals("all")) {
+            products = productService.getProductsByCategoryAndType(category, type);
         } // Category filter only
-        else if (categoryId != null) {
-            products = productService.getProductsByCategory(categoryId);
+        else if (category != null && !category.trim().equals("")) {
+            products = productService.getProductsByCategory(category);
         } // Type filter only
         else if (type != null && !type.equals("all")) {
             products = productService.getProductsBySellOrRent(type);
@@ -47,14 +47,13 @@ public class MarketplaceController {
         else {
             products = productService.getAllProducts();
         }
-
         // Get all categories for filter options
         List<Category> categories = categoryService.getAllCategories();
 
         // Add model attributes
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
-        model.addAttribute("selectedCategory", categoryId);
+        model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedType", type);
         model.addAttribute("search", search);
 
