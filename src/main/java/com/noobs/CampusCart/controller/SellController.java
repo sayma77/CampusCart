@@ -1,6 +1,7 @@
 package com.noobs.CampusCart.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CategoryRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.repository.UserRepository;
-import com.noobs.CampusCart.service.CategoryService;
 
 @Controller
 public class SellController {
@@ -30,27 +30,15 @@ public class SellController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private CategoryService categoryService;
-
     // Show the Sell Form
     @GetMapping("/sell")
     public String showSellForm(Model model) {
+        List<Category> all_cat = categoryRepository.findAll();
         model.addAttribute("product", new Product());
-        model.addAttribute("categories", categoryService.getAllCategories()); // for dropdown
+        model.addAttribute("categories", all_cat);
         return "sell";
     }
 
-    // Handle Form Submission
-    // @PostMapping("/sell")
-    // public String postItem(@ModelAttribute Product product, User user) {
-    //     // TODO: Save product to database or service
-    //     product.setUserId(user.getId());
-    //     productRepository.save(product);
-    //     System.out.println("New product posted: " + product);
-    //     // Redirect to marketplace after posting
-    //     return "redirect:/marketplace";
-    // }
     @PostMapping("/sell")
     public String postItem(
             @RequestParam("name") String name,
