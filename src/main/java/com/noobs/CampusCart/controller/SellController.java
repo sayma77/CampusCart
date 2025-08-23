@@ -1,8 +1,8 @@
 package com.noobs.CampusCart.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,46 +11,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
-import com.noobs.CampusCart.repository.UserRepository;
 import com.noobs.CampusCart.service.CategoryService;
 import com.noobs.CampusCart.service.ProductService;
+import com.noobs.CampusCart.service.UserService;
 
 @Controller
 public class SellController {
 
     @Autowired
     private ProductService productService;
+
     @Autowired
     private CategoryService categoryService;
-    @Autowired
-    private UserRepository userRepository;
 
+    @Autowired
+    private UserService userService; // you'll need this to fetch user by email
+
+    // Show the Sell Form
     @GetMapping("/sell")
     public String showSellForm(Model model) {
         model.addAttribute("product", new Product());
-        model.addAttribute("categories", categoryService.getAllCategories()); // <-- add this
+        model.addAttribute("categories", categoryService.getAllCategories()); // for dropdown
         return "sell";
     }
-
 
     // Handle Form Submission
     @PostMapping("/sell")
     public String postItem(@ModelAttribute Product product) {
 
-        // Get authenticated user's email
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName(); // email is used as username in your security config
-
-        // Fetch the User entity to get its ID
-        User user = userRepository.findByEmail(email).orElse(null);
-        if (user != null) {
-            product.setUserId(user.getId());
+        // Get currently logged-in user's email
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String email = null;
+        if (principal instanceof UserDetails) {
+            email = ((UserDetails) principal).getUsername(); // email is username in your setup
         }
 
-        // Save product
-        productService.save(product);
+        if (email != null) {
+            User user = userService.getUserByEmail(email);
+            product.setUserId(user.getId()); // set user id of the poster
+        }
 
-        // Redirect to marketplace after posting
+        productService.save(product); // save the product with userId
+
         return "redirect:/marketplace";
     }
 }
