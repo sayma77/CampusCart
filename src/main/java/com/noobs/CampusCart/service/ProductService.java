@@ -18,7 +18,8 @@ public class ProductService {
         return productRepository.findAllWithUserAndCategory();
     }
 
-    public List<Product> getProductsByCategory(String categoryId) {
+    // Accept categoryId as Long
+    public List<Product> getProductsByCategory(Long categoryId) {
         return productRepository.findByCategoryIdWithUserAndCategory(categoryId);
     }
 
@@ -26,11 +27,15 @@ public class ProductService {
         return productRepository.findByTypeWithUserAndCategory(type);
     }
 
-    public List<Product> getProductsByCategoryAndType(String categoryId, String type) {
+    public List<Product> getProductsByCategoryAndType(Long categoryId, String type) {
         return productRepository.findByCategoryAndTypeWithUserAndCategory(categoryId, type);
     }
 
     public List<Product> searchProductsByName(String keyword) {
         return productRepository.findByNameContainingWithUserAndCategory(keyword);
+    }
+
+    public void save(Product product) {
+        productRepository.save(product);
     }
 }

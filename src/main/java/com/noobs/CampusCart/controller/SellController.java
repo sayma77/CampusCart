@@ -16,6 +16,7 @@ import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CategoryRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.repository.UserRepository;
+import com.noobs.CampusCart.service.CategoryService;
 
 @Controller
 public class SellController {
@@ -29,10 +30,14 @@ public class SellController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
     // Show the Sell Form
     @GetMapping("/sell")
     public String showSellForm(Model model) {
         model.addAttribute("product", new Product());
+        model.addAttribute("categories", categoryService.getAllCategories()); // for dropdown
         return "sell";
     }
 
@@ -63,6 +68,7 @@ public class SellController {
         Product product = new Product(null, name, price, status, image, sellOrRent, user.getId(), category.getId(), null, null);
         productRepository.save(product);
         redirectAttributes.addFlashAttribute("success", "Product Added!");
+
         return "redirect:/marketplace";
     }
 }

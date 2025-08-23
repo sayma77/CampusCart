@@ -24,36 +24,43 @@ public class MarketplaceController {
 
     @GetMapping("/marketplace")
     public String showMarketplace(
-            @RequestParam(name = "category", required = false) String category,
+            @RequestParam(name = "category", required = false) String categoryIdStr,
             @RequestParam(name = "type", required = false, defaultValue = "all") String type,
             @RequestParam(name = "search", required = false) String search,
             Model model) {
 
         List<Product> products;
+        Long categoryId = null;
+
+        // Convert categoryIdStr to Long
+        if (categoryIdStr != null && !categoryIdStr.trim().isEmpty()) {
+            try {
+                categoryId = Long.parseLong(categoryIdStr);
+            } catch (NumberFormatException e) {
+                categoryId = null;
+            }
+        }
 
         // Search has highest priority
         if (search != null && !search.trim().isEmpty()) {
             products = productService.searchProductsByName(search.trim());
-        } // Combined category and type filter
-        else if (category != null && !category.trim().equals("") && type != null && !type.equals("all")) {
-            products = productService.getProductsByCategoryAndType(category, type);
-        } // Category filter only
-        else if (category != null && !category.trim().equals("")) {
-            products = productService.getProductsByCategory(category);
-        } // Type filter only
-        else if (type != null && !type.equals("all")) {
+        } else if (categoryId != null && type != null && !type.equals("all")) {
+            products = productService.getProductsByCategoryAndType(categoryId, type);
+        } else if (categoryId != null) {
+            products = productService.getProductsByCategory(categoryId);
+        } else if (type != null && !type.equals("all")) {
             products = productService.getProductsBySellOrRent(type);
-        } // No filters - show all products
-        else {
+        } else {
             products = productService.getAllProducts();
         }
+
         // Get all categories for filter options
         List<Category> categories = categoryService.getAllCategories();
 
         // Add model attributes
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
-        model.addAttribute("selectedCategory", category);
+        model.addAttribute("selectedCategory", categoryId);
         model.addAttribute("selectedType", type);
         model.addAttribute("search", search);
 
