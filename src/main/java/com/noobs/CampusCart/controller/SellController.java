@@ -1,57 +1,61 @@
 package com.noobs.CampusCart.controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.noobs.CampusCart.model.Category;
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
-import com.noobs.CampusCart.service.CategoryService;
-import com.noobs.CampusCart.service.ProductService;
-import com.noobs.CampusCart.service.UserService;
+import com.noobs.CampusCart.repository.CategoryRepository;
+import com.noobs.CampusCart.repository.ProductRepository;
+import com.noobs.CampusCart.repository.UserRepository;
 
 @Controller
 public class SellController {
 
     @Autowired
-    private ProductService productService;
+    private ProductRepository productRepository;
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    private UserService userService; // you'll need this to fetch user by email
+    private UserRepository userRepository;
 
     // Show the Sell Form
     @GetMapping("/sell")
     public String showSellForm(Model model) {
+        List<Category> all_cat = categoryRepository.findAll();
         model.addAttribute("product", new Product());
-        model.addAttribute("categories", categoryService.getAllCategories()); // for dropdown
+        model.addAttribute("categories", all_cat);
         return "sell";
     }
 
-    // Handle Form Submission
     @PostMapping("/sell")
-    public String postItem(@ModelAttribute Product product) {
+    public String postItem(
+            @RequestParam("name") String name,
+            @RequestParam("price") Double price,
+            @RequestParam("status") String status,
+            @RequestParam("sellOrRent") String sellOrRent,
+            @RequestParam("category") String category_name,
+            @RequestParam("image") String image,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
 
-        // Get currently logged-in user's email
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String email = null;
-        if (principal instanceof UserDetails) {
-            email = ((UserDetails) principal).getUsername(); // email is username in your setup
-        }
+        Category category = categoryRepository.findByName(category_name).get();
+        User user = userRepository.findByEmail(principal.getName()).get();
 
-        if (email != null) {
-            User user = userService.getUserByEmail(email);
-            product.setUserId(user.getId()); // set user id of the poster
-        }
-
-        productService.save(product); // save the product with userId
+        Product product = new Product(null, name, price, status, image, sellOrRent, user.getId(), category.getId(), null, null);
+        productRepository.save(product);
+        redirectAttributes.addFlashAttribute("success", "Product Added!");
 
         return "redirect:/marketplace";
     }
