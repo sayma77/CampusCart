@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 import com.noobs.CampusCart.model.Category;
 import com.noobs.CampusCart.model.Product;
@@ -14,7 +15,8 @@ import com.noobs.CampusCart.repository.CategoryRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.repository.UserRepository;
 
-@Component
+@Configuration
+@Profile("dev")
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
@@ -32,6 +34,9 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // ----- Users -----
+        if (userRepository.count() != 0 || categoryRepository.count() != 0 || productRepository.count() != 0) {
+            return;
+        }
         User u1 = new User(null, "alice123", "alice@cuet.ac.bd", "Alice Akter", "01710000001", passwordEncoder.encode("password1"), "USER", "qk_hall");
         User u2 = new User(null, "bob456", "bob@cuet.ac.bd", "Bob Karim", "01710000002", passwordEncoder.encode("password2"), "USER", "north_hall");
         User u3 = new User(null, "carol789", "carol@cuet.ac.bd", "Carol Rahman", "01710000003", passwordEncoder.encode("password3"), "USER", "south_hall");
@@ -40,7 +45,6 @@ public class DataLoader implements CommandLineRunner {
         User u6 = new User(null, "asdf", "asdf@mail.com", "asdf asdf", "01710000006", passwordEncoder.encode("asdf"), "USER", "shamshen_nahar_hall");
         User u7 = new User(null, "Sadia", "u2204006@student.cuet.ac.bd", "Sadia", "01586238018", passwordEncoder.encode("project"), "USER", "Taposhi Rabeya Hall");
         userRepository.saveAll(List.of(u1, u2, u3, u4, u5, u6, u7));
-
         // ----- Categories -----
         Category c1 = new Category(null, "Electronics", "Devices, gadgets and accessories");
         Category c2 = new Category(null, "Books", "Textbooks, novels, and reference books");
@@ -50,7 +54,6 @@ public class DataLoader implements CommandLineRunner {
         Category c6 = new Category(null, "Hall Essentials", "Items commonly needed for dorms or halls, like bedding and kitchenware");
 
         categoryRepository.saveAll(List.of(c1, c2, c3, c4, c5, c6));
-
         // ----- Products -----
         Product p1 = new Product(null, "Laptop", 500.0, "Good", "/images/laptop.jpg", "sell", u1.getId(), c1.getId(), null, null);
         Product p2 = new Product(null, "Smartphone", 300.0, "Fair", "/images/smartphone.jpg", "sell", u2.getId(), c1.getId(), null, null);

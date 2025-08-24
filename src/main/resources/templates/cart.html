@@ -22,7 +22,7 @@
               <!-- Product Image -->
               <div class="w-24 h-24 flex-shrink-0">
                 <img
-                  th:src="@{${item.image}}"
+                  th:src="@{${item.product.image}}"
                   alt="Product Image"
                   class="w-full h-full object-cover rounded-lg shadow"
                 />
@@ -32,19 +32,25 @@
               <div class="ml-4 flex-1">
                 <div
                   class="text-lg font-medium text-[var(--color-primary)]"
-                  th:text="${item.title}"
+                  th:text="${item.product.name}"
                 >
                   Product Title
                 </div>
-                <div class="text-sm text-gray-600" th:text="${item.condition}">
+                <div
+                  class="text-sm text-gray-600"
+                  th:text="${item.product.status}"
+                >
                   Condition
                 </div>
-                <div class="text-sm text-gray-700" th:text="${item.seller}">
+                <div
+                  class="text-sm text-gray-700"
+                  th:text="${item.product.user.name}"
+                >
                   Seller
                 </div>
                 <div
                   class="text-sm text-[var(--color-highlight)]"
-                  th:text="'Type: ' + ${item.type}"
+                  th:text="'Type: ' + ${item.product.sellOrRent}"
                 >
                   Type
                 </div>
@@ -54,7 +60,7 @@
               <div class="text-right">
                 <div
                   class="text-base font-semibold text-[var(--color-primary)]"
-                  th:text="${currency} + ${item.price}"
+                  th:text="${currency} + ${item.product.price}"
                 >
                   ৳ 0
                 </div>

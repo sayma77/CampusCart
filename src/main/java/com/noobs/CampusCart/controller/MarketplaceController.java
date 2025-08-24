@@ -1,5 +1,6 @@
 package com.noobs.CampusCart.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.noobs.CampusCart.model.CartItem;
 import com.noobs.CampusCart.model.Category;
 import com.noobs.CampusCart.model.Product;
+import com.noobs.CampusCart.model.User;
+import com.noobs.CampusCart.repository.*;
+import com.noobs.CampusCart.service.CartService;
 import com.noobs.CampusCart.service.CategoryService;
 import com.noobs.CampusCart.service.ProductService;
 
@@ -17,20 +22,28 @@ import com.noobs.CampusCart.service.ProductService;
 public class MarketplaceController {
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ProductService productService;
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private CartService cartService;
 
     @GetMapping("/marketplace")
     public String showMarketplace(
             @RequestParam(name = "category", required = false) String category,
             @RequestParam(name = "type", required = false, defaultValue = "all") String type,
             @RequestParam(name = "search", required = false) String search,
+            Principal principal,
             Model model) {
 
         List<Product> products;
 
+        User user = userRepository.findByEmail(principal.getName()).orElse(null);
         // Search has highest priority
         if (search != null && !search.trim().isEmpty()) {
             products = productService.searchProductsByName(search.trim());
@@ -50,12 +63,16 @@ public class MarketplaceController {
         // Get all categories for filter options
         List<Category> categories = categoryService.getAllCategories();
 
-        // Add model attributes
+        int cart_count = 0;
+        if (user != null) {
+            cart_count = cartService.getItemsInCart(user).stream().mapToInt(CartItem::getQuantity).sum();
+        }
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedType", type);
         model.addAttribute("search", search);
+        model.addAttribute("cart_item_count", cart_count);
 
         return "marketplace";
     }

@@ -1,78 +1,74 @@
 package com.noobs.CampusCart.controller;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.noobs.CampusCart.model.CartItem;
+import com.noobs.CampusCart.model.Product;
+import com.noobs.CampusCart.model.User;
+import com.noobs.CampusCart.repository.CartItemRepository;
+import com.noobs.CampusCart.repository.ProductRepository;
+import com.noobs.CampusCart.repository.UserRepository;
+import com.noobs.CampusCart.utils.AppLogger;
 
 @Controller
 public class CartPageController {
 
-    @GetMapping("/cart")
-    public String cartPage(Model model) {
-        List<Object> cartItems = List.of(
-            new Object() {
-                public String type = "BUY";
-                public String condition = "Good Condition";
-                public String title = "Casio fx-991ES PLUS Calculator";
-                public String author = "Scientific Calculator";
-                public String seller = "Rahul Ahmed (EEE-19)";
-                public int price = 1800;
-                public int quantity = 1;
-                public String image = "https://www.casio-intl.com/asia/en/calc/products/images/fx-991ESPLUS-2.jpg";
-            },
-            new Object() {
-                public String type = "RENT";
-                public String condition = "Like New";
-                public String title = "Steel T-Scale (120 cm)";
-                public String author = "For Engineering Drawing";
-                public String seller = "Fatima Khan (ARCH-21)";
-                public int price = 150;
-                public int quantity = 1;
-                public String image = "https://waykenrm.com/wp-content/uploads/2021/12/engineering-drawing.jpg";
-            },
-            new Object() {
-                public String type = "BUY";
-                public String condition = "Brand New";
-                public String title = "Set Square Set (30°/60°/90°)";
-                public String author = "Transparent Plastic";
-                public String seller = "Arif Hassan (CSE-20)";
-                public int price = 80;
-                public int quantity = 1;
-                public String image = "https://www.cavalierart.com.au/wp-content/uploads/2009/05/setsquare_kent12.jpg";
-            },
-            new Object() {
-                public String type = "BUY";
-                public String condition = "Good Condition";
-                public String title = "Introduction to Algorithms (CLRS)";
-                public String author = "by Thomas H. Cormen";
-                public String seller = "Mitu Sultana (CSE-19)";
-                public int price = 1200;
-                public int quantity = 1;
-                public String image = "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1387741681i/108986.jpg";
-            }
-        );
+    @Autowired
+    private UserRepository userRepository;
 
-        int subtotal = cartItems.stream()
-            .mapToInt(i -> {
-                try {
-                    return (int) i.getClass().getField("price").get(i) *
-                           (int) i.getClass().getField("quantity").get(i);
-                } catch (Exception e) {
-                    return 0;
-                }
-            })
-            .sum();
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @GetMapping("/cart")
+    public String viewCart(Model model, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName()).get();
+        List<CartItem> cartItems = cartItemRepository.findByUser(user);
+
+        double subtotal = cartItems.stream()
+                .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
+                .sum();
 
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("subtotal", subtotal);
-        model.addAttribute("currency", "৳"); // Taka symbol
-
+        model.addAttribute("currency", "৳"); // optional helper
         return "cart";
     }
+
+    @PostMapping("/cart")
+    public String addToCart(
+            @RequestParam("productId") Long productId,
+            @RequestParam(value = "quantity", defaultValue = "1") int quantity,
+            Principal principal
+    ) {
+
+        // Get logged-in user
+        User user = userRepository.findByEmail(principal.getName()).get();
+        // Find product
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        // Check if already in cart
+        CartItem existingItem = cartItemRepository.findByUserAndProduct(user, product).orElse(null);
+        if (existingItem != null) {
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            cartItemRepository.save(existingItem);
+        } else {
+            CartItem newItem = new CartItem(null, quantity, LocalDateTime.now(), product, user);
+            cartItemRepository.save(newItem);
+        }
+        return "redirect:/marketplace";
+    }
+
 }
-
-
-
-
