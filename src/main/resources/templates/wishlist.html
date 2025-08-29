@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{layout :: head}"></head>
+
+  <body
+    th:replace="~{layout :: layout}"
+    class="bg-gradient-to-br from-gray-50 to-gray-100 text-[var(--color-base-content)]"
+  >
+    <main class="min-h-screen py-8">
+      <div class="container mx-auto px-6 lg:px-15">
+        <h2 class="text-3xl font-bold mb-8 text-[var(--color-primary)] text-center lg:text-left">
+          Your Wishlist
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Wishlist Items -->
+          <div class="lg:col-span-2 space-y-4">
+            <div
+              th:each="item : ${wishlistItems}"
+              class="flex items-center bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-4 border border-gray-100"
+            >
+              <!-- Product Image -->
+              <div class="w-20 h-20 lg:w-24 lg:h-24 flex-shrink-0">
+                <img
+                  th:src="@{${item.product.image}}"
+                  alt="Product Image"
+                  class="w-full h-full object-cover rounded-xl shadow-sm"
+                />
+              </div>
+
+              <!-- Product Details -->
+              <div class="ml-4 lg:ml-6 flex-1">
+                <div
+                  class="text-lg lg:text-xl font-semibold text-[var(--color-primary)] mb-1"
+                  th:text="${item.product.name}"
+                >
+                  Product Title
+                </div>
+                <div
+                  class="text-sm text-gray-500 mb-1"
+                  th:text="${item.product.status}"
+                >
+                  Condition
+                </div>
+                <div
+                  class="text-sm text-gray-600 mb-1"
+                  th:text="${item.product.user.name}"
+                >
+                  Seller
+                </div>
+                <div
+                  class="text-sm text-[var(--color-highlight)] font-medium"
+                  th:text="'Type: ' + ${item.product.sellOrRent}"
+                >
+                  Type
+                </div>
+              </div>
+
+              <!-- Price + Actions -->
+              <div class="text-right">
+                <div
+                  class="text-lg lg:text-xl font-bold text-[var(--color-primary)] mb-3"
+                  th:text=" ৳ + ${item.product.price}"
+                >
+                  ৳ 0
+                </div>
+                <div class="space-y-1">
+                  <button
+                    class="text-sm bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg hover:bg-[#D4A373] transition-all duration-200 hover:scale-105 shadow-sm"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wishlist Summary -->
+          <div
+            class="bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col justify-between border border-gray-100 hover:shadow-2xl transition-shadow duration-300"
+          >
+            <div>
+              <h5
+                class="text-xl font-bold mb-6 text-[var(--color-primary)] text-center"
+              >
+                Wishlist Summary
+              </h5>
+
+              <!-- Total Items -->
+              <div class="flex justify-between mb-2">
+                <span>Total Items:</span>
+                <span th:text="${#lists.size(wishlistItems)}">0</span>
+              </div>
+
+              <!-- Motivational -->
+              <div
+                class="bg-[var(--color-accent)] border-0 border-[var(--color-highlight)] rounded-xl p-4 mb-6 text-center shadow-sm"
+              >
+                <p class="text-sm mb-1 text-[var(--color-primary)]">
+                  Save your favorites for later!
+                </p>
+                <p class="text-xs text-gray-600">
+                  Keep track of items you love and add them to your cart when
+                  ready.
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-2">
+              <button
+                class="w-full bg-[var(--color-primary)] text-white py-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#D4A373] hover:scale-105 shadow-md font-semibold"
+              >
+                Add All to Cart
+              </button>
+
+              <a
+                href="/marketplace"
+                class="block w-full text-center border-2 border-[var(--color-primary)] text-[var(--color-primary)] py-3 rounded-xl hover:bg-[var(--color-accent)] transition-all duration-200 hover:scale-105 font-medium"
+              >
+                Continue Shopping
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

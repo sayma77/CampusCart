@@ -17,6 +17,7 @@ import com.noobs.CampusCart.repository.*;
 import com.noobs.CampusCart.service.CartService;
 import com.noobs.CampusCart.service.CategoryService;
 import com.noobs.CampusCart.service.ProductService;
+import com.noobs.CampusCart.service.WishlistService;
 
 @Controller
 public class MarketplaceController {
@@ -32,6 +33,9 @@ public class MarketplaceController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private WishlistItemRepository wishlistRepo;
 
     @GetMapping("/marketplace")
     public String showMarketplace(
@@ -67,12 +71,19 @@ public class MarketplaceController {
         if (user != null) {
             cart_count = cartService.getItemsInCart(user).stream().mapToInt(CartItem::getQuantity).sum();
         }
+        int wishlist_count = 0;
+        if (user != null) {
+            wishlist_count = wishlistRepo.findByUser(user).size();
+        }
+
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         model.addAttribute("selectedCategory", category);
         model.addAttribute("selectedType", type);
         model.addAttribute("search", search);
         model.addAttribute("cart_item_count", cart_count);
+        model.addAttribute("wishlist_count", wishlist_count);
+
 
         return "marketplace";
     }
