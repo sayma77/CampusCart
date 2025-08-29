@@ -35,6 +35,10 @@ public class CartService {
         cartItemRepository.save(item);
     }
 
+    public void removeFromCart(User user, Product product) {
+        cartItemRepository.findByUserAndProduct(user, product).ifPresent(cartItemRepository::delete);
+    }
+
     public List<CartItem> getItemsInCart(User user) {
         List<CartItem> items = cartItemRepository.findByUser(user);
         return items;

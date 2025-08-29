@@ -51,8 +51,7 @@ public class CartPageController {
     public String addToCart(
             @RequestParam("productId") Long productId,
             @RequestParam(value = "quantity", defaultValue = "1") int quantity,
-            Principal principal
-    ) {
+            Principal principal) {
 
         // Get logged-in user
         User user = userRepository.findByEmail(principal.getName()).get();
@@ -69,6 +68,21 @@ public class CartPageController {
             cartItemRepository.save(newItem);
         }
         return "redirect:/marketplace";
+    }
+
+    @PostMapping("/cart/remove")
+    public String removeFromcart(
+            @RequestParam("productId") Long productId,
+            Principal principal) {
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        cartItemRepository.findByUserAndProduct(user, product)
+                .ifPresent(cartItemRepository::delete);
+
+        return "redirect:/cart";
     }
 
 }

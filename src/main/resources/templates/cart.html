@@ -67,6 +67,20 @@
                 <div class="text-sm text-gray-500">
                   Qty: <span th:text="${item.quantity}">1</span>
                 </div>
+                <form th:action="@{/cart/remove}" method="post">
+                  <input
+                    type="hidden"
+                    name="productId"
+                    th:value="${item.product.id}"
+                  />
+                  <button type="submit" title="Remove from cart">
+                    <img
+                      src="/icons/trash-2.svg"
+                      alt="Delete"
+                      class="h-6 w-6"
+                    />
+                  </button>
+                </form>
               </div>
             </div>
           </div>
