@@ -59,17 +59,19 @@
               <!-- Price + Quantity -->
               <div class="text-right">
                 <!-- Quantity Update Form -->
-                <form th:action="@{/cart/update}" method="post" class="flex items-center gap-2 mt-2">
+                <form th:action="@{/cart/update}" method="post" class="flex items-center gap-2 mt-2" id="updateForm">
                   <input type="hidden" name="productId" th:value="${item.product.id}" />
-
+                
                   <input 
                     type="number" 
                     name="quantity" 
                     min="1" 
                     th:value="${item.quantity}" 
                     class="w-16 border border-gray-300 rounded px-2 py-1 text-center"
+                    onchange="this.form.submit()"
                   />
-                </form>
+              </form>
+
                 <div
                   class="text-base font-semibold text-[var(--color-primary)]"
                   th:text="${currency} + ${item.product.price}"

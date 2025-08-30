@@ -63,12 +63,15 @@
                   ৳ 0
                 </div>
                 <div class="flex items-center gap-2">
-                  <button>
-                    <i
-                      class="mt-4 fas fa-shopping-cart w-8 h-8 text-[#D4A373] hover:text-primary"
-                    >
-                    </i>
-                  </button>
+                   <form th:action="@{/wishlist/add-to-cart}" method="post">
+                      <input type="hidden" name="productId" th:value="${item.product.id}" />
+                      <button type="submit">
+                        <i
+                          class="mt-4 fas fa-shopping-cart w-8 h-8 text-[#D4A373] hover:text-primary"
+                        >
+                        </i>
+                      </button>
+                   </form>
 
                   <form th:action="@{/wishlist/remove}" method="post">
                     <input
