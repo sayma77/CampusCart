@@ -49,3 +49,14 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+tasks.register("run") {
+    group = "application"
+    description = "Runs bootRun and watches for changes"
+    dependsOn "bootRun"
+    doLast {
+        exec {
+            commandLine "./gradlew", "build", "--continuous"
+        }
+    }
+}

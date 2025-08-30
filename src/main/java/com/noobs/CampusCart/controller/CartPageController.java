@@ -3,7 +3,6 @@ package com.noobs.CampusCart.controller;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CartItemRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.repository.UserRepository;
-import com.noobs.CampusCart.utils.AppLogger;
 
 @Controller
 public class CartPageController {
