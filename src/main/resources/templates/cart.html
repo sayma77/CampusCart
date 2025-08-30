@@ -58,29 +58,32 @@
 
               <!-- Price + Quantity -->
               <div class="text-right">
+                <!-- Quantity Update Form -->
+                <form th:action="@{/cart/update}" method="post" class="flex items-center gap-2 mt-2">
+                  <input type="hidden" name="productId" th:value="${item.product.id}" />
+
+                  <input 
+                    type="number" 
+                    name="quantity" 
+                    min="1" 
+                    th:value="${item.quantity}" 
+                    class="w-16 border border-gray-300 rounded px-2 py-1 text-center"
+                  />
+                </form>
                 <div
                   class="text-base font-semibold text-[var(--color-primary)]"
                   th:text="${currency} + ${item.product.price}"
                 >
                   ৳ 0
                 </div>
-                <div class="text-sm text-gray-500">
-                  Qty: <span th:text="${item.quantity}">1</span>
-                </div>
-                <form th:action="@{/cart/remove}" method="post">
-                  <input
-                    type="hidden"
-                    name="productId"
-                    th:value="${item.product.id}"
-                  />
+                <!-- Remove Button -->
+                <form th:action="@{/cart/remove}" method="post" class="mt-2">
+                  <input type="hidden" name="productId" th:value="${item.product.id}" />
                   <button type="submit" title="Remove from cart">
-                    <img
-                      src="/icons/trash-2.svg"
-                      alt="Delete"
-                      class="h-6 w-6"
-                    />
+                    <img src="/icons/trash-2.svg" alt="Delete" class="h-6 w-6" />
                   </button>
                 </form>
+
               </div>
             </div>
           </div>

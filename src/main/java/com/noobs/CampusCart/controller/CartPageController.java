@@ -69,6 +69,26 @@ public class CartPageController {
         }
         return "redirect:/marketplace";
     }
+    @PostMapping("/cart/update")
+    public String updateCartQuantity(
+        @RequestParam("productId") Long productId,
+        @RequestParam("quantity") int quantity,
+        Principal principal) {
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        cartItemRepository.findByUserAndProduct(user, product).ifPresent(item -> {
+            if (quantity > 0) {
+                item.setQuantity(quantity);
+                cartItemRepository.save(item);
+            } else {
+                // If user sets 0 or negative, remove item
+                cartItemRepository.delete(item);
+            }
+        });
+        return "redirect:/cart";
+    }
 
     @PostMapping("/cart/remove")
     public String removeFromcart(
