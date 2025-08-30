@@ -67,12 +67,15 @@
                   ৳ 0
                 </div>
                 <div class="flex items-center gap-3">
-                  <button
-                    class="text-sm bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg hover:bg-[#D4A373] transition-all duration-200 hover:scale-105 shadow-sm"
-                  >
-                    Add to Cart
-                  </button>
-
+                  <form th:action="@{/wishlist/add-to-cart}" method="post">
+                    <input type="hidden" name="productId" th:value="${item.product.id}" />
+                    <button
+                      type="submit"
+                      class="text-sm bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg hover:bg-[#D4A373] transition-all duration-200 hover:scale-105 shadow-sm"
+                    >
+                      Add to Cart
+                    </button>
+                  </form>
                   <form th:action="@{/wishlist/remove}" method="post">
                     <input
                       type="hidden"
@@ -102,13 +105,11 @@
               >
                 Wishlist Summary
               </h5>
-
               <!-- Total Items -->
               <div class="flex justify-between mb-2">
                 <span>Total Items:</span>
                 <span th:text="${#lists.size(wishlistItems)}">0</span>
               </div>
-
               <!-- Motivational -->
               <div
                 class="bg-[var(--color-accent)] border-0 border-[var(--color-highlight)] rounded-xl p-4 mb-6 text-center shadow-sm"
@@ -122,15 +123,16 @@
                 </p>
               </div>
             </div>
-
             <!-- Action Buttons -->
             <div class="space-y-2">
-              <button
-                class="w-full bg-[var(--color-primary)] text-white py-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#D4A373] hover:scale-105 shadow-md font-semibold"
-              >
-                Add All to Cart
-              </button>
-
+              <form th:action="@{/wishlist/add-all-to-cart}" method="post">
+                <button
+                  type="submit"
+                  class="w-full bg-[var(--color-primary)] text-white py-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#D4A373] hover:scale-105 shadow-md font-semibold"
+                >
+                  Add All to Cart
+                </button>
+              </form>
               <a
                 href="/marketplace"
                 class="block w-full text-center border-2 border-[var(--color-primary)] text-[var(--color-primary)] py-3 rounded-xl hover:bg-[var(--color-accent)] transition-all duration-200 hover:scale-105 font-medium"

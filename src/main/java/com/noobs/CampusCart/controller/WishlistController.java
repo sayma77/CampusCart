@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.noobs.CampusCart.model.CartItem;
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.model.WishlistItem;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.repository.UserRepository;
 import com.noobs.CampusCart.repository.WishlistItemRepository;
+import com.noobs.CampusCart.repository.CartItemRepository;
 
 @Controller
 public class WishlistController {
@@ -29,6 +31,10 @@ public class WishlistController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
 
     // Show wishlist page
     @GetMapping("/wishlist")
@@ -79,4 +85,50 @@ public class WishlistController {
 
         return "redirect:/wishlist";
     }
+    // Add single wishlist item to cart
+    @PostMapping("/wishlist/add-to-cart")
+        public String addToCartFromWishlist(
+                @RequestParam("productId") Long productId,
+                Principal principal
+        ) {
+        User user = userRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Add to cart
+        CartItem cartItem = new CartItem();
+        cartItem.setUser(user);
+        cartItem.setProduct(product);
+        cartItem.setQuantity(1);
+        cartItemRepository.save(cartItem);
+
+        // Remove from wishlist after adding to cart
+        wishlistRepository.findByUserAndProduct(user, product)
+                .ifPresent(wishlistRepository::delete);
+
+        return "redirect:/wishlist";
+        }
+        // Add all wishlist items to cart
+        @PostMapping("/wishlist/add-all-to-cart")
+        public String addAllToCartFromWishlist(Principal principal) {
+        User user = userRepository.findByEmail(principal.getName())
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<WishlistItem> wishlistItems = wishlistRepository.findByUser(user);
+
+        for (WishlistItem item : wishlistItems) {
+                CartItem cartItem = new CartItem();
+                cartItem.setUser(user);
+                cartItem.setProduct(item.getProduct());
+                cartItem.setQuantity(1);
+                cartItemRepository.save(cartItem);
+        }
+
+        // Clear wishlist
+        wishlistRepository.deleteAll(wishlistItems);
+
+        return "redirect:/wishlist";
+        }
+
 }
