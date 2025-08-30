@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.noobs.CampusCart.model.Order;
+import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.OrderRepository;
+import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.service.UserService;
 
 @Controller
@@ -24,6 +26,9 @@ public class ProfilePageController {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductRepository productRepository; 
 
     private final UserService userService;
 
@@ -36,32 +41,67 @@ public class ProfilePageController {
         @RequestParam(value = "filter", required = false, defaultValue = "all") String filter,
         Model model,
         Principal principal) {
-        String useremail = principal.getName();
-        User user = userService.getUserByEmail(useremail);
-
+        User user = userService.getUserByEmail(principal.getName());
         Map<String, String> user_data = new HashMap<>();
         user_data.put("name", user.getName());
         user_data.put("username", user.getUsername());
         user_data.put("email", user.getEmail());
         user_data.put("hall", user.getHall());
 
-        List<Order> orders = orderRepository.findByUser(user);
+        List<Order> orders = List.of();
+        List<Product> products = List.of();
 
-        //Filter orders by Buy/Sell/Rent if filter is set
-        if (!filter.equals("all")) {
-            orders = orders.stream()
-                    .filter(order -> order.getProducts().stream()
-                            .anyMatch(p -> p.getSellOrRent().equalsIgnoreCase(filter)))
-                    .toList();
+        switch (filter) {
+            case "buy":
+                orders = orderRepository.findByUser(user).stream()
+                        .map(order -> {
+                            order.setProducts(
+                                order.getProducts().stream()
+                                    .filter(p -> p.getSellOrRent().equalsIgnoreCase("sell"))
+                                    .toList()
+                            );
+                            return order;
+                        })
+                        .filter(o -> !o.getProducts().isEmpty())
+                        .toList();
+                break;
+
+            case "taken_rent":
+                orders = orderRepository.findByUser(user).stream()
+                        .map(order -> {
+                            order.setProducts(
+                                order.getProducts().stream()
+                                    .filter(p -> p.getSellOrRent().equalsIgnoreCase("rent"))
+                                    .toList()
+                            );
+                            return order;
+                        })
+                        .filter(o -> !o.getProducts().isEmpty())
+                        .toList();
+                break;
+
+            case "sell":
+                products = productRepository.findByUserAndSellOrRent(user, "sell");
+                break;
+
+            case "given_rent":
+                products = productRepository.findByUserAndSellOrRent(user, "rent");
+                break;
+
+            
         }
-        //Format date
+        
+
+        // Format dates for orders
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         for (Order order : orders) {
             order.setFormattedDate(order.getOrderDate().format(formatter));
         }
+
         model.addAttribute("user", user_data);
         model.addAttribute("orders", orders);
-        model.addAttribute("selectedFilter", filter); //keep track of active filter
+        model.addAttribute("products", products);
+        model.addAttribute("selectedFilter", filter);
         return "profile";
     }
 

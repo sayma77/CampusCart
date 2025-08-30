@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.noobs.CampusCart.model.Product;
+import com.noobs.CampusCart.model.User;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -31,4 +32,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Search by name (case-insensitive)
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Product> findByNameContainingWithUserAndCategory(@Param("keyword") String keyword);
+
+    // Find products posted by a specific user with a specific type (sell or rent)
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.user = :user AND LOWER(p.sellOrRent) = LOWER(:type)")
+    List<Product> findByUserAndSellOrRent(@Param("user") User user, @Param("type") String type);
+    
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.user = :user")
+    List<Product> findByUser(@Param("user") User user);
 }

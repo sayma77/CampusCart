@@ -195,121 +195,117 @@
 
           <!-- Orders/Items List -->
           <div class="lg:col-span-2">
-            <div class="bg-[#FDF6F0] rounded-2xl shadow-md p-6">
+              <div class="bg-[#FDF6F0] rounded-2xl shadow-md p-6">
               <div class="flex items-center justify-between mb-6">
                 <h3 class="text-lg font-semibold text-[#5a3b3b]">
                   My Orders & Items
                 </h3>
+                <!-- Filter Buttons -->
                 <div class="flex space-x-2">
-                  <a th:href="@{/profile(filter='all')}">
-                    <button th:classappend="${selectedFilter == 'all'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
-                            class="px-3 py-1 rounded-full text-sm font-medium shadow-sm">
-                      All
-                    </button>
-                  </a>
                   <a th:href="@{/profile(filter='buy')}">
-                    <button th:classappend="${selectedFilter == 'buy'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
-                            class="px-3 py-1 rounded-full text-sm shadow-sm">
+                    <button th:classappend="${selectedFilter == 'buy'} ? 'bg-primary text-white' : 'bg-[#E8D3D3] text-[#5a3b3b] hover:bg-white text-[#5a3b3b]'"
+                      class="px-3 py-1 rounded-full text-sm shadow-sm transition-all duration-300">
                       Buy
                     </button>
                   </a>
                   <a th:href="@{/profile(filter='sell')}">
-                    <button th:classappend="${selectedFilter == 'sell'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
-                            class="px-3 py-1 rounded-full text-sm shadow-sm">
+                    <button th:classappend="${selectedFilter == 'sell'} ? 'bg-primary text-white' : 'bg-[#E8D3D3] text-[#5a3b3b] hover:bg-white text-[#5a3b3b]'"
+                      class="px-3 py-1 rounded-full text-sm shadow-sm transition-all duration-300">
                       Sell
                     </button>
                   </a>
-                  <a th:href="@{/profile(filter='rent')}">
-                    <button th:classappend="${selectedFilter == 'rent'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
-                            class="px-3 py-1 rounded-full text-sm shadow-sm">
-                      Rent
+                  <a th:href="@{/profile(filter='taken_rent')}">
+                    <button th:classappend="${selectedFilter == 'taken_rent'} ? 'bg-primary text-white' : 'bg-[#E8D3D3] text-[#5a3b3b] hover:bg-white text-[#5a3b3b]'"
+                      class="px-3 py-1 rounded-full text-sm shadow-sm transition-all duration-300">
+                      Rent (Taken)
+                    </button>
+                  </a>
+                  <a th:href="@{/profile(filter='given_rent')}">
+                    <button th:classappend="${selectedFilter == 'given_rent'} ? 'bg-primary text-white' : 'bg-[#E8D3D3] text-[#5a3b3b] hover:bg-white text-[#5a3b3b]'"
+                      class="px-3 py-1 rounded-full text-sm shadow-sm transition-all duration-300">
+                      Rent (Given)
                     </button>
                   </a>
                 </div>
-
               </div>
-
-              <!-- Orders List -->
-              <div class="space-y-4" th:each="order : ${orders}">
-                <div
-                  class="transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-lg bg-white rounded-lg p-4"
-                >
-                  <div
-                    th:each="product : ${order.products}"
-                    class="flex items-center justify-between mb-2"
-                  >
-                    <div class="flex items-center space-x-4">
-                      <div
-                        class="w-16 h-16 bg-[#E8D3D3] rounded-lg flex items-center justify-center shadow-sm"
-                      >
-                        <i class="fas fa-box text-[#BBA2A2] text-xl"></i>
-                      </div>
-                      <div>
-                        <h4
-                          class="font-medium text-[#5a3b3b]"
-                          th:text="${product.name}"
-                        >
-                          Item Name
-                        </h4>
-                        <div class="flex items-center space-x-4 mt-2">
-                          <span
-                            class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#BBA2A2] text-white"
-                            th:text="${product.sellOrRent}"
-                            >TYPE</span
-                          >
-                          <span
-                            class="text-sm text-[#5a3b3b]"
-                            th:text="${order.formattedDate}"
-                          >
-                            Date
-                          </span>
+              <!-- Orders & Products List -->
+              <div class="space-y-4">
+                <!-- Orders (Buy / Rent Taken) -->
+                <div th:each="order : ${orders}">
+                  <div th:each="product : ${order.products}" class="transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-lg bg-white rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-[#E8D3D3] rounded-lg flex items-center justify-center shadow-sm">
+                          <i class="fas fa-box text-[#BBA2A2] text-xl"></i>
+                        </div>
+                        <div>
+                          <h4 class="font-medium text-[#5a3b3b]" th:text="${product.name}">Item Name</h4>
+                          <div class="flex items-center space-x-4 mt-2">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#BBA2A2] text-white"
+                                  th:text="${product.sellOrRent}">TYPE</span>
+                            <span class="text-sm text-[#5a3b3b]" th:text="${order.formattedDate}">Date</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="text-right">
-                      <p class="text-xl font-bold text-[#5a3b3b]">
-                        <span class="ml-0.5">৳</span
-                        ><span th:text="${product.price}">0</span>
-                      </p>
-                      <div class="flex items-center space-x-2 mt-2">
-                        <span
-                          class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#E8D3D3] text-[#5a3b3b]"
-                          th:text="${order.status}"
-                        >
-                          STATUS
-                        </span>
+                      <div class="text-right">
+                        <p class="text-xl font-bold text-[#5a3b3b]">
+                          <span class="ml-0.5">৳</span><span th:text="${product.price}">0</span>
+                        </p>
+                        <div class="flex items-center space-x-2 mt-2">
+                          <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#E8D3D3] text-[#5a3b3b]"
+                                th:text="${order.status}">STATUS</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Empty State -->
-              <div
-                th:if="${#lists.isEmpty(orders)}"
-                class="text-center py-12"
-              >
-                <i class="fas fa-shopping-bag text-[#5a3b3b] text-5xl mb-4"></i>
-                <h3 class="text-lg font-medium text-[#5a3b3b] mb-2">
-                  No orders yet
-                </h3>
-                <p class="text-[#5a3b3b] mb-4">
-                  Start buying, selling, or renting items on CampusCart
-                </p>
-                <a th:href="@{/marketplace}">
-                  <button
-                    class="bg-primary hover:bg-[#D4A373] text-white font-semibold py-2 px-4 rounded-lg transition-all shadow-sm"
-                  >
-                    Browse Items
-                  </button>
-                </a>
-
-              </div>
+                <!-- Products (Sell / Rent Given) -->
+                <div th:each="product : ${products}">
+                  <div class="transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-lg bg-white rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 bg-[#E8D3D3] rounded-lg flex items-center justify-center shadow-sm">
+                          <i class="fas fa-box text-[#BBA2A2] text-xl"></i>
+                        </div>
+                        <div>
+                          <h4 class="font-medium text-[#5a3b3b]" th:text="${product.name}">Item Name</h4>
+                          <div class="flex items-center space-x-4 mt-2">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-[#BBA2A2] text-white"
+                                  th:text="${product.sellOrRent}">TYPE</span>
+                            <span class="text-sm text-[#5a3b3b]" th:text="${product.category.name}">Category</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-right">
+                        <p class="text-xl font-bold text-[#5a3b3b]">
+                          <span class="ml-0.5">৳</span><span th:text="${product.price}">0</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(orders) and #lists.isEmpty(products)}" class="text-center py-12">
+                  <i class="fas fa-shopping-bag text-[#5a3b3b] text-5xl mb-4"></i>
+                  <h3 class="text-lg font-medium text-[#5a3b3b] mb-2">No orders or items yet</h3>
+                  <p class="text-[#5a3b3b] mb-6">Start buying, selling, or renting items on CampusCart</p>
+                  <div class="flex justify-center space-x-4">
+                    <a th:href="@{/marketplace}">
+                      <button class="bg-primary hover:bg-[#D4A373] text-white font-semibold py-2 px-4 rounded-lg transition-all shadow-sm">
+                        Browse Items
+                      </button>
+                    </a>
+                    <a th:href="@{/sell}">
+                      <button class="bg-primary hover:bg-[#D4A373] text-white font-semibold py-2 px-4 rounded-lg transition-all shadow-sm">
+                        Sell Item
+                      </button>
+                    </a>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
       </div>
-
       <script>
         document.addEventListener("DOMContentLoaded", function () {
           document.documentElement.style.scrollBehavior = "smooth";
