@@ -201,27 +201,32 @@
                   My Orders & Items
                 </h3>
                 <div class="flex space-x-2">
-                  <button
-                    class="px-3 py-1 bg-white text-[#BBA2A2] rounded-full text-sm font-medium shadow-sm"
-                  >
-                    All
-                  </button>
-                  <button
-                    class="px-3 py-1 bg-[#E8D3D3] text-[#5a3b3b] rounded-full text-sm shadow-sm"
-                  >
-                    Buy
-                  </button>
-                  <button
-                    class="px-3 py-1 bg-[#E8D3D3] text-[#5a3b3b] rounded-full text-sm shadow-sm"
-                  >
-                    Sell
-                  </button>
-                  <button
-                    class="px-3 py-1 bg-[#E8D3D3] text-[#5a3b3b] rounded-full text-sm shadow-sm"
-                  >
-                    Rent
-                  </button>
+                  <a th:href="@{/profile(filter='all')}">
+                    <button th:classappend="${selectedFilter == 'all'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
+                            class="px-3 py-1 rounded-full text-sm font-medium shadow-sm">
+                      All
+                    </button>
+                  </a>
+                  <a th:href="@{/profile(filter='buy')}">
+                    <button th:classappend="${selectedFilter == 'buy'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
+                            class="px-3 py-1 rounded-full text-sm shadow-sm">
+                      Buy
+                    </button>
+                  </a>
+                  <a th:href="@{/profile(filter='sell')}">
+                    <button th:classappend="${selectedFilter == 'sell'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
+                            class="px-3 py-1 rounded-full text-sm shadow-sm">
+                      Sell
+                    </button>
+                  </a>
+                  <a th:href="@{/profile(filter='rent')}">
+                    <button th:classappend="${selectedFilter == 'rent'} ? 'bg-white text-[#5a3b3b]' : 'bg-[#E8D3D3] text-[#5a3b3b]'" 
+                            class="px-3 py-1 rounded-full text-sm shadow-sm">
+                      Rent
+                    </button>
+                  </a>
                 </div>
+
               </div>
 
               <!-- Orders List -->

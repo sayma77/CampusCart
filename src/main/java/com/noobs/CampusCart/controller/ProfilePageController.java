@@ -32,9 +32,13 @@ public class ProfilePageController {
     }
 
     @GetMapping("/profile")
-    public String profilePage(Model model, Principal principal) {
+    public String profilePage(
+        @RequestParam(value = "filter", required = false, defaultValue = "all") String filter,
+        Model model,
+        Principal principal) {
         String useremail = principal.getName();
         User user = userService.getUserByEmail(useremail);
+
         Map<String, String> user_data = new HashMap<>();
         user_data.put("name", user.getName());
         user_data.put("username", user.getUsername());
@@ -43,17 +47,24 @@ public class ProfilePageController {
 
         List<Order> orders = orderRepository.findByUser(user);
 
+        //Filter orders by Buy/Sell/Rent if filter is set
+        if (!filter.equals("all")) {
+            orders = orders.stream()
+                    .filter(order -> order.getProducts().stream()
+                            .anyMatch(p -> p.getSellOrRent().equalsIgnoreCase(filter)))
+                    .toList();
+        }
+        //Format date
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
         for (Order order : orders) {
             order.setFormattedDate(order.getOrderDate().format(formatter));
         }
-
-        // Add more dummy orders if needed...
         model.addAttribute("user", user_data);
         model.addAttribute("orders", orders);
-
+        model.addAttribute("selectedFilter", filter); //keep track of active filter
         return "profile";
     }
+
 
     @PostMapping("/profile/update")
     public String updateProfile(
