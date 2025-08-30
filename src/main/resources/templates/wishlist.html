@@ -116,10 +116,14 @@
                 Wishlist Summary
               </h5>
               <!-- Total Items -->
-              <div class="flex justify-between mb-2">
+
+              <div
+                class="flex justify-between font-bold text-lg mb-4 text-[var(--color-primary)]"
+              >
                 <span>Total Items:</span>
                 <span th:text="${#lists.size(wishlistItems)}">0</span>
               </div>
+
               <!-- Motivational -->
               <div
                 class="bg-[var(--color-accent)] border-0 border-[var(--color-highlight)] rounded-xl p-4 mb-6 text-center shadow-sm"

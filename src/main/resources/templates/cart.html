@@ -65,7 +65,6 @@
                   <input 
                     type="number" 
                     name="quantity" 
-                    min="1" 
                     th:value="${item.quantity}" 
                     class="w-16 border border-gray-300 rounded px-2 py-1 text-center"
                     onchange="this.form.submit()"
@@ -118,20 +117,6 @@
               >
                 📝 Order Summary
               </h5>
-
-              <!-- Subtotal -->
-              <div class="flex justify-between mb-2">
-                <span>Subtotal:</span>
-                <span th:text="${currency} + ${subtotal}">৳ 0</span>
-              </div>
-
-              <!-- Estimated Delivery -->
-              <div class="flex justify-between mb-4">
-                <span>Estimated Delivery:</span>
-                <span>2-3 days 🚚</span>
-              </div>
-
-              <hr class="my-2 border-[var(--color-highlight)]" />
 
               <!-- Total -->
               <div
