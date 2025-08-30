@@ -63,12 +63,15 @@
                   ৳ 0
                 </div>
                 <div class="flex items-center gap-2">
-                  <button>
-                    <i
-                      class="mt-4 fas fa-shopping-cart w-8 h-8 text-[#D4A373] hover:text-primary"
-                    >
-                    </i>
-                  </button>
+                   <form th:action="@{/wishlist/add-to-cart}" method="post">
+                      <input type="hidden" name="productId" th:value="${item.product.id}" />
+                      <button type="submit">
+                        <i
+                          class="mt-4 fas fa-shopping-cart w-8 h-8 text-[#D4A373] hover:text-primary"
+                        >
+                        </i>
+                      </button>
+                   </form>
 
                   <form th:action="@{/wishlist/remove}" method="post">
                     <input
@@ -113,10 +116,14 @@
                 Wishlist Summary
               </h5>
               <!-- Total Items -->
-              <div class="flex justify-between mb-2">
+
+              <div
+                class="flex justify-between font-bold text-lg mb-4 text-[var(--color-primary)]"
+              >
                 <span>Total Items:</span>
                 <span th:text="${#lists.size(wishlistItems)}">0</span>
               </div>
+
               <!-- Motivational -->
               <div
                 class="bg-[var(--color-accent)] border-0 border-[var(--color-highlight)] rounded-xl p-4 mb-6 text-center shadow-sm"
