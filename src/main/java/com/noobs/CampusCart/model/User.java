@@ -37,7 +37,7 @@ public class User {
     private String phone;
     private String password;
 
-    private String role = "USER";
+    private String role;
 
     @Column(name = "hall")
     private String hall;

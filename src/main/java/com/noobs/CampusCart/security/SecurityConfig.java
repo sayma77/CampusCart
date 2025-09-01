@@ -25,23 +25,23 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // optional: enable for production
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/about", "/contactus").permitAll()
-                .anyRequest().authenticated()
-                )
+                        .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/about",
+                                "/contactus", "/admin/**", "/admin/js/**", "/admin/css/**", "/admin/images/**",
+                                "/admin")
+                        .permitAll()
+                        .anyRequest().authenticated())
                 .formLogin(form -> form
-                .loginPage("/signin")
-                .loginProcessingUrl("/login") // where POST should go
-                .usernameParameter("email") // match form input name
-                .passwordParameter("password")
-                .defaultSuccessUrl("/", true)
-                .permitAll()
-                )
+                        .loginPage("/signin")
+                        .loginProcessingUrl("/login") // where POST should go
+                        .usernameParameter("email") // match form input name
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll())
                 .logout(logout -> logout
-                .logoutUrl("/signout")
-                .logoutSuccessUrl("/signin?signout")
-                .invalidateHttpSession(true) // Clear session
-                .deleteCookies("JSESSIONID")
-                )
+                        .logoutUrl("/signout")
+                        .logoutSuccessUrl("/signin?signout")
+                        .invalidateHttpSession(true) // Clear session
+                        .deleteCookies("JSESSIONID"))
                 .build();
     }
 

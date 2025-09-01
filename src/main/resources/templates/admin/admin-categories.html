@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Management - CampusCart Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body>
+    <div th:insert="admin/admin-layout :: layout('categories', ~{::content})">
+        <div th:fragment="content" x-data="categoryManagement()">
+            <!-- Page Header -->
+            <div class="md:flex md:items-center md:justify-between mb-6">
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-2xl font-bold leading-7 text-gray-900">Category Management</h2>
+                    <p class="mt-1 text-sm text-gray-500">Organize products into categories</p>
+                </div>
+                <div class="mt-4 md:mt-0 md:ml-4">
+                    <button @click="showCategoryModal = true; editingCategory = null" 
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                        <i class="fas fa-plus -ml-1 mr-2 h-4 w-4"></i>
+                        Add Category
+                    </button>
+                </div>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div th:each="category : ${categories}" class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <!-- <div th:class="'h-12 w-12 rounded-lg flex items-center justify-center ' + ${category.colorClass}">
+                                <i th:class="'fas ' + ${category.icon} + ' text-white text-xl'"></i>
+                            </div> -->
+                            <div class="flex space-x-2">
+                                <button @click="editCategory(category)" 
+                                        th:attr="data-category-id=${category.id}"
+                                        class="text-blue-600 hover:text-blue-800">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button @click="deleteCategory(category.id)" 
+                                        class="text-red-600 hover:text-red-800">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <h3 th:text="${category.name}" class="text-lg font-semibold text-gray-900 mb-2">Electronics</h3>
+                        <p th:text="${category.description}" class="text-sm text-gray-600 mb-4">Gadgets and electronic devices</p>
+                        
+                        <div class="flex items-center justify-between">
+                            <!-- <span th:text="${category.productCount} + ' products'" class="text-sm text-gray-500">145 products</span>
+                            <span th:class="'px-2 py-1 text-xs font-medium rounded-full ' + 
+                                           (${category.active} ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800')"
+                                  th:text="${category.active} ? 'Active' : 'Inactive'">Active</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Modal -->
+            <div x-show="showCategoryModal" x-cloak
+                 class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50"
+                 @click.self="showCategoryModal = false">
+                <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                    <div class="mt-3">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4" x-text="editingCategory ? 'Edit Category' : 'Add New Category'">Add New Category</h3>
+                        
+                        <form @submit.prevent="saveCategory()">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Category Name</label>
+                                    <input type="text" x-model="categoryForm.name" required
+                                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                    <textarea x-model="categoryForm.description" rows="3"
+                                              class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Icon Class</label>
+                                    <input type="text" x-model="categoryForm.icon" placeholder="fa-laptop"
+                                           class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <p class="text-xs text-gray-500 mt-1">Font Awesome icon class (e.g., fa-laptop)</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                                    <select x-model="categoryForm.colorClass"
+                                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                        <option value="bg-blue-500">Blue</option>
+                                        <option value="bg-green-500">Green</option>
+                                        <option value="bg-purple-500">Purple</option>
+                                        <option value="bg-red-500">Red</option>
+                                        <option value="bg-yellow-500">Yellow</option>
+                                        <option value="bg-indigo-500">Indigo</option>
+                                    </select>
+                                </div>
+                                <div class="flex items-center">
+                                    <input type="checkbox" x-model="categoryForm.active" id="categoryActive"
+                                           class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                    <label for="categoryActive" class="ml-2 block text-sm text-gray-700">Active</label>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end space-x-3 mt-6">
+                                <button type="button" @click="showCategoryModal = false"
+                                        class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                                    Cancel
+                                </button>
+                                <button type="submit"
+                                        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                                    <span x-text="editingCategory ? 'Update' : 'Create'">Create</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function categoryManagement() {
+            return {
+                showCategoryModal: false,
+                editingCategory: null,
+                categoryForm: {
+                    name: '',
+                    description: '',
+                    icon: '',
+                    colorClass: 'bg-blue-500',
+                    active: true
+                },
+                
+                editCategory(category) {
+                    this.editingCategory = category;
+                    this.categoryForm = { ...category };
+                    this.showCategoryModal = true;
+                },
+                
+                saveCategory() {
+                    console.log('Saving category:', this.categoryForm);
+                    this.showCategoryModal = false;
+                    this.resetForm();
+                },
+                
+                deleteCategory(categoryId) {
+                    if (confirm('Are you sure you want to delete this category? This will affect all products in this category.')) {
+                        console.log('Deleting category:', categoryId);
+                    }
+                },
+                
+                resetForm() {
+                    this.categoryForm = {
+                        name: '',
+                        description: '',
+                        icon: '',
+                        colorClass: 'bg-blue-500',
+                        active: true
+                    };
+                    this.editingCategory = null;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

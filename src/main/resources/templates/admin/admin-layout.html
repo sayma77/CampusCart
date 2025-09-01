@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - CampusCart Admin'">CampusCart Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body th:fragment="layout(page, contentFragment)" class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-blue-600">CampusCart</h1>
+                        <span class="text-xs text-gray-500">Admin Dashboard</span>
+                    </div>
+                </div>
+                
+                <!-- Notifications & Profile -->
+                <div class="flex items-center space-x-4">
+                    <!-- Notifications -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="relative p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-full">
+                            <i class="fas fa-bell h-5 w-5"></i>
+                            <span th:if="${notificationCount > 0}" th:text="${notificationCount}" 
+                                  class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                        </button>
+                        
+                        <!-- Notification Dropdown -->
+                        <div x-show="open" @click.away="open = false" x-transition 
+                             class="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg py-1 z-50">
+                            <div class="px-4 py-2 border-b border-gray-200">
+                                <h3 class="text-sm font-medium text-gray-900">Notifications</h3>
+                            </div>
+                            <div th:each="notification : ${notifications}" class="px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0">
+                                <p th:text="${notification.message}" class="text-sm text-gray-900">New user registration</p>
+                                <p th:text="${notification.timeAgo}" class="text-xs text-gray-500 mt-1">2 minutes ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Menu -->
+                    <!-- <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            <div class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
+                                <span th:text="${adminUser.initials}" class="text-white font-medium text-sm">AD</span>
+                            </div>
+                            <span th:text="${adminUser.name}" class="ml-2 text-gray-700">Admin User</span>
+                        </button>
+                        
+                        <div x-show="open" @click.away="open = false" x-transition 
+                             class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="/admin/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile Settings</a>
+                            <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex h-screen bg-gray-50">
+        <!-- Sidebar -->
+        <div class="hidden md:flex md:w-64 md:flex-col">
+            <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto bg-white border-r border-gray-200">
+                <nav class="mt-5 flex-1 px-2 space-y-1">
+                    <a th:href="@{/admin/dashboard}" 
+                       th:classappend="${activeTab == 'dashboard'} ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+                       class="group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <i class="fas fa-chart-line mr-3 h-5 w-5"></i>
+                        Dashboard
+                    </a>
+                    
+                    <a th:href="@{/admin/users}" 
+                       th:classappend="${activeTab == 'users'} ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+                       class="group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <i class="fas fa-users mr-3 h-5 w-5"></i>
+                        User Management
+                    </a>
+                    
+                    <a th:href="@{/admin/products}" 
+                       th:classappend="${activeTab == 'products'} ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+                       class="group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <i class="fas fa-box mr-3 h-5 w-5"></i>
+                        Product Management
+                    </a>
+                    
+                    <a th:href="@{/admin/orders}" 
+                       th:classappend="${activeTab == 'orders'} ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+                       class="group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <i class="fas fa-shopping-cart mr-3 h-5 w-5"></i>
+                        Order Management
+                    </a>
+                    
+                    <a th:href="@{/admin/categories}" 
+                       th:classappend="${activeTab == 'categories'} ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+                       class="group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <i class="fas fa-tags mr-3 h-5 w-5"></i>
+                        Categories
+                    </a>
+                    
+                    <a th:href="@{/admin/analytics}" 
+                       th:classappend="${activeTab == 'analytics'} ? 'bg-blue-100 text-blue-700' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'"
+                       class="group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                        <i class="fas fa-chart-bar mr-3 h-5 w-5"></i>
+                        Analytics
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+                <div class="py-6">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                        <div th:insert="${contentFragment}">
+                            <!-- Page content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile menu toggle -->
+    <div class="md:hidden fixed bottom-4 right-4">
+        <button x-data="{ open: false }" @click="open = !open" 
+                class="bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <i class="fas fa-bars h-5 w-5"></i>
+        </button>
+    </div>
+</body>
+</html>
