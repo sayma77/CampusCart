@@ -1,52 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head th:replace="~{layout :: head}"> </head>
-  <body th:replace="~{layout :: layout}" class="bg-base-100 text-gray-800">
-    <main class="max-w-4xl mx-auto p-6">
-      <!-- Who We Are -->
-      <section class="mb-8">
-        <h2 class="text-3xl font-bold text-primary mb-2">Who We Are</h2>
-        <p class="text-base text-gray-800">
-          CampusCart is a CUET-based online marketplace for students to buy,
-          sell, or exchange goods and services on campus.
-        </p>
-      </section>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{layout :: head}">
+    <title>About Us - CampusCart</title>
+  </head>
+  <body th:replace="~{layout :: layout}">
+    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-16">
+          <h1 class="text-4xl md:text-5xl font-bold text-primary dark:text-primary-50 mb-4">
+            About CampusCart
+          </h1>
+          <p class="text-xl text-primary-200 dark:text-primary-100 max-w-2xl mx-auto">
+            Built by CUET students, for CUET students. We understand campus life and created a platform that makes trading easier.
+          </p>
+        </div>
 
-      <!-- Our Mission -->
-      <section class="mb-8">
-        <h2 class="text-3xl font-bold text-primary mb-2">Our Mission</h2>
-        <p class="text-base text-gray-800">
-          Our mission is to make student life easier by providing a simple and
-          secure platform tailored for CUETians.
-        </p>
-      </section>
+        <!-- Mission Section -->
+        <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg mb-8 border border-primary-100/20 dark:border-accent/20">
+          <div class="flex items-center mb-6">
+            <i data-lucide="target" class="h-8 w-8 text-accent mr-4"></i>
+            <h2 class="text-2xl font-bold text-primary dark:text-primary-50">Our Mission</h2>
+          </div>
+          <p class="text-primary-200 dark:text-primary-100 text-lg leading-relaxed">
+            Our mission is to make student life easier by providing a simple and secure platform tailored for CUETians. 
+            We believe in creating a sustainable campus economy where students can buy, sell, and exchange goods and services 
+            within our trusted community.
+          </p>
+        </div>
 
-      <!-- Meet the Developers -->
-      <section class="mb-8">
-        <h2 class="text-3xl font-bold text-primary mb-2">
-          Meet the Developers
-        </h2>
-        <p class="text-base text-gray-800">
-          Built by CSE students of CUET, CampusCart reflects our passion for
-          solving real-world problems using technology.
-        </p>
-      </section>
+        <!-- Who We Are Section -->
+        <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg mb-8 border border-primary-100/20 dark:border-accent/20">
+          <div class="flex items-center mb-6">
+            <i data-lucide="users" class="h-8 w-8 text-accent mr-4"></i>
+            <h2 class="text-2xl font-bold text-primary dark:text-primary-50">Who We Are</h2>
+          </div>
+          <p class="text-primary-200 dark:text-primary-100 text-lg leading-relaxed mb-6">
+            CampusCart is a CUET-based online marketplace built by CSE students who understand the unique challenges 
+            and needs of campus life. Our platform reflects our passion for solving real-world problems using technology.
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-primary-50 dark:bg-accent/10 rounded-xl p-6">
+              <h3 class="font-semibold text-primary dark:text-accent mb-2">For Students</h3>
+              <p class="text-primary-200 dark:text-primary-100 text-sm">
+                We understand the financial constraints and unique needs of student life at CUET.
+              </p>
+            </div>
+            <div class="bg-primary-50 dark:bg-accent/10 rounded-xl p-6">
+              <h3 class="font-semibold text-primary dark:text-accent mb-2">By Students</h3>
+              <p class="text-primary-200 dark:text-primary-100 text-sm">
+                Built by CSE students who live the campus experience every day.
+              </p>
+            </div>
+          </div>
+        </div>
 
-      <!-- Call-to-Action / Highlight -->
-      <section class="mt-12 p-6 bg-accent rounded-lg text-accent-content">
-        <h3 class="text-2xl font-semibold text-[#D4A373] mb-2">
-          Join the Community!
-        </h3>
-        <p class="text-gray-800">
-          Sign up now and be a part of the CampusCart journey.
-        </p>
-        <a
-          href="/signup"
-          class="inline-block mt-4 px-4 py-2 bg-primary text-primary-content rounded-lg hover:bg-[#a7727d] transition-colors"
-        >
-          Sign Up
-        </a>
-      </section>
+        <!-- Call to Action -->
+        <div class="bg-gradient-to-r from-primary to-accent rounded-2xl p-8 text-center shadow-xl">
+          <h3 class="text-2xl font-bold text-white mb-4">Join the Community!</h3>
+          <p class="text-white/90 mb-6 text-lg">
+            Sign up now and be a part of the CampusCart journey. Start buying, selling, and connecting with fellow CUETians.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/signup" class="bg-white text-primary px-8 py-3 rounded-xl font-semibold hover:bg-primary-50 transition-all duration-300 transform hover:scale-105 shadow-lg">
+              Sign Up Now
+            </a>
+            <a href="/marketplace" class="border-2 border-white text-white px-8 py-3 rounded-xl font-semibold hover:bg-white hover:text-primary transition-all duration-300 transform hover:scale-105">
+              Explore Marketplace
+            </a>
+          </div>
+        </div>
+      </div>
     </main>
   </body>
 </html>

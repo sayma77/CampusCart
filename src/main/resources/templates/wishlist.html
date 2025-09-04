@@ -1,158 +1,151 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{layout :: head}"></head>
-  <body
-    th:replace="~{layout :: layout}"
-    class="bg-gradient-to-br from-gray-50 to-gray-100 text-[var(--color-base-content)]"
-  >
-    <main class="min-h-screen py-8">
-      <div class="container mx-auto px-6 lg:px-15">
-        <h2
-          class="text-3xl font-bold mb-8 text-[var(--color-primary)] text-center lg:text-left"
-        >
-          Your Wishlist
-        </h2>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Wishlist Items -->
-          <div class="lg:col-span-2 space-y-4">
-            <div
-              th:each="item : ${wishlistItems}"
-              class="flex items-center bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-4 border border-gray-100"
-            >
-              <!-- Product Image -->
-              <div class="w-20 h-20 lg:w-24 lg:h-24 flex-shrink-0">
-                <img
-                  th:src="@{${item.product.image}}"
-                  alt="Product Image"
-                  class="w-full h-full object-cover rounded-xl shadow-sm"
-                />
-              </div>
-              <!-- Product Details -->
-              <div class="ml-4 lg:ml-6 flex-1">
-                <div
-                  class="text-lg lg:text-xl font-semibold text-[var(--color-primary)] mb-1"
-                  th:text="${item.product.name}"
-                >
-                  Product Title
-                </div>
-                <div
-                  class="text-sm text-gray-500 mb-1"
-                  th:text="${item.product.status}"
-                >
-                  Condition
-                </div>
-                <div
-                  class="text-sm text-gray-600 mb-1"
-                  th:text="${item.product.user.name}"
-                >
-                  Seller
-                </div>
-                <div
-                  class="text-sm text-[var(--color-highlight)] font-medium"
-                  th:text="'Type: ' + ${item.product.sellOrRent}"
-                >
-                  Type
-                </div>
-              </div>
-              <!-- Price + Actions -->
-              <div class="text-right">
-                <div
-                  class="text-lg lg:text-xl font-bold text-[var(--color-primary)] mb-3"
-                  th:text=" ৳ + ${item.product.price}"
-                >
-                  ৳ 0
-                </div>
-                <div class="flex items-center gap-2">
-                   <form th:action="@{/wishlist/add-to-cart}" method="post">
-                      <input type="hidden" name="productId" th:value="${item.product.id}" />
-                      <button type="submit">
-                        <i
-                          class="mt-4 fas fa-shopping-cart w-8 h-8 text-[#D4A373] hover:text-primary"
-                        >
-                        </i>
-                      </button>
-                   </form>
+  <head th:replace="~{layout :: head}">
+    <title>Wishlist - CampusCart</title>
+  </head>
+  <body th:replace="~{layout :: layout}">
+    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+            Your Wishlist
+          </h1>
+          <p class="text-primary-200 dark:text-primary-100 text-lg">
+            Keep track of items you love and add them to your cart when ready
+          </p>
+        </div>
 
-                  <form th:action="@{/wishlist/remove}" method="post">
-                    <input
-                      type="hidden"
-                      name="productId"
-                      th:value="${item.product.id}"
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Wishlist Items -->
+          <div class="lg:col-span-2">
+            <div class="space-y-4">
+              <!-- Wishlist Item -->
+              <div th:each="item : ${wishlistItems}" class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-100/20 dark:border-accent/20">
+                <div class="flex items-center space-x-6">
+                  <!-- Product Image -->
+                  <div class="flex-shrink-0">
+                    <img
+                      th:src="@{${item.product.image}}"
+                      alt="Product Image"
+                      class="w-24 h-24 object-cover rounded-xl shadow-md"
+                      onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop'"
                     />
-                    <button type="submit" title="Remove from wishlist">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentcolor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="mt-2 mr-2 feather feather-trash-2 text-red-500 w-5 h-5 hover:text-red-700 transition-colors duration-300 ease-in-out"
-                      >
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path
-                          d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                        ></path>
-                        <line x1="10" y1="11" x2="10" y2="17"></line>
-                        <line x1="14" y1="11" x2="14" y2="17"></line>
-                      </svg>
-                    </button>
-                  </form>
+                  </div>
+                  
+                  <!-- Product Details -->
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-primary dark:text-primary-50 mb-2" th:text="${item.product.name}">
+                      Product Title
+                    </h3>
+                    <div class="space-y-1 text-sm text-primary-200 dark:text-primary-100">
+                      <div class="flex items-center">
+                        <i data-lucide="info" class="h-4 w-4 mr-2"></i>
+                        <span th:text="${item.product.status}">Condition</span>
+                      </div>
+                      <div class="flex items-center">
+                        <i data-lucide="user" class="h-4 w-4 mr-2"></i>
+                        <span th:text="${item.product.user.name}">Seller</span>
+                      </div>
+                      <div class="flex items-center">
+                        <i data-lucide="tag" class="h-4 w-4 mr-2"></i>
+                        <span th:text="${item.product.sellOrRent}">Type</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Price & Actions -->
+                  <div class="text-right">
+                    <p class="text-2xl font-bold text-accent mb-4">
+                      ৳<span th:text="${item.product.price}">0</span>
+                    </p>
+                    <div class="flex items-center gap-2">
+                      <!-- Add to Cart -->
+                      <form th:action="@{/wishlist/add-to-cart}" method="post">
+                        <input type="hidden" name="productId" th:value="${item.product.id}" />
+                        <button type="submit" class="bg-primary hover:bg-accent text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md">
+                          <i data-lucide="shopping-cart" class="h-5 w-5"></i>
+                        </button>
+                      </form>
+                      
+                      <!-- Remove from Wishlist -->
+                      <form th:action="@{/wishlist/remove}" method="post">
+                        <input type="hidden" name="productId" th:value="${item.product.id}" />
+                        <button type="submit" class="bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 p-2 rounded-lg transition-all duration-200 transform hover:scale-105">
+                          <i data-lucide="trash-2" class="h-5 w-5"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Empty State -->
+              <div th:if="${#lists.isEmpty(wishlistItems)}" class="text-center py-20">
+                <div class="bg-white dark:bg-surface-dark rounded-2xl p-12 shadow-lg border border-primary-100/20 dark:border-accent/20">
+                  <i data-lucide="heart" class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"></i>
+                  <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">
+                    Your wishlist is empty
+                  </h3>
+                  <p class="text-primary-200 dark:text-primary-100 mb-6">
+                    Start adding items you love to keep track of them
+                  </p>
+                  <a href="/marketplace" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                    Browse Marketplace
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Wishlist Summary -->
-          <div
-            class="bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col justify-between border border-gray-100 hover:shadow-2xl transition-shadow duration-300"
-          >
-            <div>
-              <h5
-                class="text-xl font-bold mb-6 text-[var(--color-primary)] text-center"
-              >
-                Wishlist Summary
-              </h5>
-              <!-- Total Items -->
 
-              <div
-                class="flex justify-between font-bold text-lg mb-4 text-[var(--color-primary)]"
-              >
-                <span>Total Items:</span>
-                <span th:text="${#lists.size(wishlistItems)}">0</span>
+          <!-- Wishlist Summary -->
+          <div class="lg:col-span-1">
+            <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20 sticky top-24">
+              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-6 text-center flex items-center justify-center">
+                <i data-lucide="heart" class="h-5 w-5 mr-2"></i>
+                Wishlist Summary
+              </h3>
+              
+              <!-- Total Items -->
+              <div class="bg-primary-50 dark:bg-accent/10 rounded-xl p-4 mb-6">
+                <div class="flex justify-between items-center">
+                  <span class="text-primary dark:text-accent font-medium">Total Items:</span>
+                  <span class="text-2xl font-bold text-accent" th:text="${#lists.size(wishlistItems)}">0</span>
+                </div>
               </div>
 
-              <!-- Motivational -->
-              <div
-                class="bg-[var(--color-accent)] border-0 border-[var(--color-highlight)] rounded-xl p-4 mb-6 text-center shadow-sm"
-              >
-                <p class="text-sm mb-1 text-[var(--color-primary)]">
+              <!-- Motivational Message -->
+              <div class="bg-gradient-to-r from-accent/10 to-primary/10 rounded-xl p-4 mb-6 text-center">
+                <i data-lucide="star" class="h-6 w-6 text-accent mx-auto mb-2"></i>
+                <p class="text-sm font-medium text-primary dark:text-accent mb-1">
                   Save your favorites for later!
                 </p>
-                <p class="text-xs text-gray-600">
-                  Keep track of items you love and add them to your cart when
-                  ready.
+                <p class="text-xs text-primary-200 dark:text-primary-100">
+                  Items in your wishlist won't disappear
                 </p>
               </div>
-            </div>
-            <!-- Action Buttons -->
-            <div class="space-y-2">
-              <form th:action="@{/wishlist/add-all-to-cart}" method="post">
-                <button
-                  type="submit"
-                  class="w-full bg-[var(--color-primary)] text-white py-3 rounded-xl transition-all duration-300 ease-in-out hover:bg-[#D4A373] hover:scale-105 shadow-md font-semibold"
+
+              <!-- Action Buttons -->
+              <div class="space-y-3">
+                <form th:action="@{/wishlist/add-all-to-cart}" method="post">
+                  <button
+                    type="submit"
+                    class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    th:disabled="${#lists.isEmpty(wishlistItems)}"
+                  >
+                    <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-2"></i>
+                    Add All to Cart
+                  </button>
+                </form>
+                
+                <a
+                  href="/marketplace"
+                  class="block w-full text-center border-2 border-primary dark:border-accent text-primary dark:text-accent py-3 rounded-xl hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-300 transform hover:scale-105 font-semibold"
                 >
-                  Add All to Cart
-                </button>
-              </form>
-              <a
-                href="/marketplace"
-                class="block w-full text-center border-2 border-[var(--color-primary)] text-[var(--color-primary)] py-3 rounded-xl hover:bg-[var(--color-accent)] transition-all duration-200 hover:scale-105 font-medium"
-              >
-                Continue Shopping
-              </a>
+                  <i data-lucide="search" class="h-4 w-4 inline mr-2"></i>
+                  Continue Shopping
+                </a>
+              </div>
             </div>
           </div>
         </div>

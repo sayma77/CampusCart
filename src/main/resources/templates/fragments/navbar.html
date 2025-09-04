@@ -1,81 +1,81 @@
 <div th:fragment="navbar">
-  <nav
-    class="bg-accent p-4 text-primary shadow-md backdrop-blur-md bg-opacity-90 sticky top-0 z-50"
-  >
-    <div class="container mx-auto flex justify-between items-center">
-      <!-- Logo -->
-      <a
-        href="/"
-        class="text-2xl font-semibold tracking-wide font-serif hover:text-color-secondary transition-colors"
-        >CampusCart</a
-      >
+  <nav class="bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md border-b border-primary-100/20 dark:border-accent/20 sticky top-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <!-- <i data-lucide="package" class="h-8 w-8 text-primary mr-2"></i> -->
+          <a href="/" class="text-xl font-bold text-primary dark:text-accent hover:text-accent transition-colors duration-200">
+            CampusCart
+          </a>
+        </div>
 
-      <!-- Navigation Links -->
-      <ul class="flex space-x-6 items-center text-sm md:text-base">
-        <li>
-          <a
-            href="/marketplace"
-            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
-            >Marketplace</a
-          >
-        </li>
-        <li>
-          <a
-            href="/about"
-            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
-            >About us</a
-          >
-        </li>
-        <li>
-          <a
-            href="/contactus"
-            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
-            >Contact us</a
-          >
-        </li>
-        <li sec:authorize="!isAuthenticated()">
-          <a
-            href="/signin"
-            class="transition-colors duration-300 hover:text-[#D4A373] hover:underline"
-            >Login</a
-          >
-        </li>
-        <li sec:authorize="isAuthenticated()">
-          <div class="dropdown">
-            <div
-              tabindex="0"
-              role="button"
-              class="hover:cursor-pointer transform transition-transform duration-300 hover:scale-110"
-            >
-              <i class="fa-solid fa-user text-lg"></i>
-            </div>
-            <ul
-              tabindex="0"
-              class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 -translate-x-16 shadow-sm"
-            >
-              <li>
-                <a
-                  href="/profile"
-                  class="flex items-center hover:text-[#D4A373] transition-colors"
-                  >Profile</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/signout"
-                  class="flex items-center hover:text-[#D4A373] transition-colors"
-                  >Logout</a
-                >
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <button id="darkToggle" class="px-2 py-1 rounded hover:opacity-80 transition">
-            <span id="theme-icon">🌞</span>
+        <!-- Navigation Links -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/marketplace" class="text-primary dark:text-primary-50 hover:text-accent transition-colors duration-200">
+            Marketplace
+          </a>
+          <a href="/about" class="text-primary dark:text-primary-50 hover:text-accent transition-colors duration-200">
+            About
+          </a>
+          <a href="/contactus" class="text-primary dark:text-primary-50 hover:text-accent transition-colors duration-200">
+            Contact
+          </a>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center space-x-4">
+          <!-- Theme Toggle -->
+          <button onclick="toggleTheme()" class="p-2 rounded-lg bg-primary-100/20 dark:bg-accent/20 hover:bg-primary-100/40 dark:hover:bg-accent/40 transition-all duration-200">
+            <i data-lucide="sun" class="h-5 w-5 text-primary dark:text-primary-50 dark:hidden"></i>
+            <i data-lucide="moon" class="h-5 w-5 text-primary dark:text-primary-50 hidden dark:block"></i>
           </button>
-        </li>
-      </ul>
+          
+          <!-- Sell Button -->
+          <a href="/sell" class="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg">
+            <i data-lucide="plus" class="h-4 w-4 inline mr-1"></i>
+            Sell Item
+          </a>
+          
+          <!-- User Actions -->
+          <div class="flex items-center space-x-2">
+            <!-- Wishlist -->
+            <a href="/wishlist" class="relative p-2 rounded-lg hover:bg-primary-100/20 dark:hover:bg-accent/20 transition-all duration-200">
+              <i data-lucide="heart" class="h-5 w-5 text-primary dark:text-primary-50"></i>
+              <span th:if="${wishlist_count > 0}" 
+                    class="absolute -top-1 -right-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
+                    th:text="${wishlist_count}"></span>
+            </a>
+            
+            <!-- Cart -->
+            <a href="/cart" class="relative p-2 rounded-lg hover:bg-primary-100/20 dark:hover:bg-accent/20 transition-all duration-200">
+              <i data-lucide="shopping-cart" class="h-5 w-5 text-primary dark:text-primary-50"></i>
+              <span th:if="${cart_item_count > 0}" 
+                    class="absolute -top-1 -right-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
+                    th:text="${cart_item_count}"></span>
+            </a>
+            
+            <!-- User Menu -->
+            <div class="relative group">
+              <button class="p-2 rounded-lg hover:bg-primary-100/20 dark:hover:bg-accent/20 transition-all duration-200 flex items-center space-x-1">
+                <i data-lucide="user" class="h-5 w-5 text-primary dark:text-primary-50"></i>
+                <span class="hidden md:inline text-primary dark:text-primary-50 font-medium" th:text="${#authentication.name}">User</span>
+                <i data-lucide="chevron-down" class="h-4 w-4 text-primary dark:text-primary-50"></i>
+              </button>
+              <!-- Dropdown Menu -->
+              <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-surface-dark rounded-lg shadow-lg border border-primary-100/20 dark:border-accent/20 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
+                <a href="/profile" class="block px-4 py-2 text-primary dark:text-primary-50 hover:bg-primary-100/20 dark:hover:bg-accent/20">Profile</a>
+                <!-- <a href="/orders" class="block px-4 py-2 text-primary dark:text-primary-50 hover:bg-primary-100/20 dark:hover:bg-accent/20">Orders</a> -->
+                <form th:action="@{/signout}" method="post">
+                  <button type="submit" class="w-full text-left px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-800 rounded-b-lg">
+                    Logout
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </div>

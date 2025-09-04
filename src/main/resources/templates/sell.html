@@ -1,172 +1,171 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="~{layout :: head}"> </head>
-  <body th:replace="~{layout :: layout}" class="bg-base-100 text-gray-800">
-    <main>
-      <div class="max-w-3xl mx-auto p-6">
-        <!-- Sell Form Section -->
-        <div class="min-h-screen flex items-start justify-center bg-[#FFFDF9]">
-          <div class="w-full max-w-2xl bg-[#FFF7EC] shadow rounded-xl p-8">
-            <h1 class="text-2xl font-bold text-[#A7727D] mb-6">
-              Post a Product for Sale or Rent
-            </h1>
-            <form
-              method="post"
-              th:action="@{/sell}"
-              th:object="${product}"
-              class="space-y-4"
+  <head th:replace="~{layout :: head}">
+    <title>Sell Item - CampusCart</title>
+  </head>
+  <body th:replace="~{layout :: layout}">
+    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-12">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+            List Your Item
+          </h1>
+          <p class="text-primary-200 dark:text-primary-100 text-lg">
+            Share your unused items with fellow CUET students and earn money
+          </p>
+        </div>
+
+        <!-- Sell Form -->
+        <div class="bg-white dark:bg-surface-dark shadow-xl rounded-2xl p-8 border border-primary-100/20 dark:border-accent/20">
+          <form method="post" th:action="@{/sell}" th:object="${product}" class="space-y-6">
+            <!-- Product Name -->
+            <div>
+              <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">
+                <i data-lucide="tag" class="h-4 w-4 inline mr-1"></i>
+                Product Name
+              </label>
+              <input
+                type="text"
+                th:field="*{name}"
+                placeholder="Enter product name"
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+                required
+              />
+            </div>
+
+            <!-- Price -->
+            <div>
+              <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">
+                <i data-lucide="dollar-sign" class="h-4 w-4 inline mr-1"></i>
+                Price (৳)
+              </label>
+              <input
+                type="number"
+                th:field="*{price}"
+                placeholder="Enter price"
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+                min="0"
+                required
+              />
+            </div>
+
+            <!-- Condition -->
+            <div>
+              <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">
+                <i data-lucide="info" class="h-4 w-4 inline mr-1"></i>
+                Condition
+              </label>
+              <input
+                type="text"
+                th:field="*{status}"
+                placeholder="New, Used, Like New, etc."
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+                required
+              />
+            </div>
+
+            <!-- Type Selection -->
+            <div>
+              <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">
+                <i data-lucide="layers" class="h-4 w-4 inline mr-1"></i>
+                Listing Type
+              </label>
+              <div class="grid grid-cols-2 gap-4">
+                <label class="relative cursor-pointer">
+                  <input type="radio" th:field="*{sellOrRent}" value="sell" class="sr-only peer" required />
+                  <div class="bg-primary-50 dark:bg-accent/20 border-2 border-primary-100 dark:border-accent/30 rounded-lg p-4 text-center peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white transition-all duration-200">
+                    <i data-lucide="credit-card" class="h-6 w-6 mx-auto mb-2"></i>
+                    <span class="font-medium">Sell</span>
+                  </div>
+                </label>
+                <label class="relative cursor-pointer">
+                  <input type="radio" th:field="*{sellOrRent}" value="rent" class="sr-only peer" required />
+                  <div class="bg-primary-50 dark:bg-accent/20 border-2 border-primary-100 dark:border-accent/30 rounded-lg p-4 text-center peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white transition-all duration-200">
+                    <i data-lucide="clock" class="h-6 w-6 mx-auto mb-2"></i>
+                    <span class="font-medium">Rent</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Category -->
+            <div>
+              <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">
+                <i data-lucide="grid-3x3" class="h-4 w-4 inline mr-1"></i>
+                Category
+              </label>
+              <div class="relative">
+                <select
+                  th:field="*{category}"
+                  class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200 appearance-none"
+                  required
+                >
+                  <option value="">Select Category</option>
+                  <option th:each="cat : ${categories}" th:value="${cat.name}" th:text="${cat.name}"></option>
+                </select>
+                <i data-lucide="chevron-down" class="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200 pointer-events-none"></i>
+              </div>
+            </div>
+
+            <!-- Image URL -->
+            <div>
+              <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">
+                <i data-lucide="image" class="h-4 w-4 inline mr-1"></i>
+                Image URL
+              </label>
+              <input
+                type="url"
+                th:field="*{image}"
+                placeholder="Enter image URL (optional)"
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+              />
+              <p class="text-xs text-primary-200 dark:text-primary-100 mt-1">
+                Tip: Use image hosting services like Imgur or direct image links
+              </p>
+            </div>
+
+            <!-- Hidden Fields -->
+            <input type="hidden" th:field="*{categoryId}" />
+            <input type="hidden" th:field="*{userId}" />
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
-              <!-- Product Name -->
-              <div>
-                <label class="block text-[#7c6a6a] mb-1">Product Name</label>
-                <input
-                  type="text"
-                  th:field="*{name}"
-                  placeholder="Enter product name"
-                  class="w-full px-4 py-2 border border-[#EDDBC7] rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373] transition duration-200"
-                  required
-                />
-              </div>
+              <i data-lucide="plus" class="h-5 w-5 inline mr-2"></i>
+              Post Item for Sale
+            </button>
+          </form>
+        </div>
 
-              <!-- Price -->
-              <div>
-                <label class="block text-[#7c6a6a] mb-1">Price (৳)</label>
-                <input
-                  type="number"
-                  th:field="*{price}"
-                  placeholder="Enter price"
-                  class="w-full px-4 py-2 border border-[#EDDBC7] rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373] transition duration-200"
-                  min="0"
-                  required
-                />
-              </div>
-
-              <!-- Condition -->
-              <div>
-                <label class="block text-[#7c6a6a] mb-1">Condition</label>
-                <input
-                  type="text"
-                  th:field="*{status}"
-                  placeholder="New, Used, etc."
-                  class="w-full px-4 py-2 border border-[#EDDBC7] rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373] transition duration-200"
-                  required
-                />
-              </div>
-
-              <!-- Sell or Rent -->
-              <div>
-                <label class="block text-[#7c6a6a] mb-1">Type</label>
-                <div class="relative">
-                  <select
-                    th:field="*{sellOrRent}"
-                    class="w-full appearance-none px-4 py-2 border border-[#EDDBC7] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D4A373] transition duration-200 cursor-pointer shadow-sm"
-                    required
-                  >
-                    <option value="">Select Type</option>
-                    <option value="sell">Sell</option>
-                    <option value="rent">Rent</option>
-                  </select>
-
-                  <!-- Custom Dropdown Icon -->
-                  <div
-                    class="absolute inset-y-0 right-3 flex items-center pointer-events-none"
-                  >
-                    <svg
-                      class="w-5 h-5 text-[#D4A373]"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Category -->
-              <div>
-                <label class="block text-[#7c6a6a] mb-1">Category</label>
-                <div class="relative">
-                  <select
-                    th:field="*{category}"
-                    class="w-full appearance-none px-4 py-2 border border-[#EDDBC7] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#D4A373] transition duration-200 cursor-pointer shadow-sm"
-                    required
-                  >
-                    <option value="">Select Category</option>
-                    <option
-                      th:each="cat : ${categories}"
-                      th:value="${cat.name}"
-                      th:text="${cat.name}"
-                    ></option>
-                  </select>
-
-                  <!-- Custom Dropdown Icon -->
-                  <div
-                    class="absolute inset-y-0 right-3 flex items-center pointer-events-none"
-                  >
-                    <svg
-                      class="w-5 h-5 text-[#D4A373]"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Image URL -->
-              <div>
-                <label class="block text-[#7c6a6a] mb-1">Image URL</label>
-                <input
-                  type="text"
-                  th:field="*{image}"
-                  placeholder="Enter image URL"
-                  class="w-full px-4 py-2 border border-[#EDDBC7] rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373] transition duration-200"
-                />
-              </div>
-
-              <!-- Hidden Fields -->
-              <input type="hidden" th:field="*{categoryId}" />
-              <input type="hidden" th:field="*{userId}" />
-              <!-- Submit Button -->
-              <button
-                type="submit"
-                class="w-full bg-[#D4A373] text-white py-2 rounded font-semibold hover:bg-[#c28b5f] transition"
-              >
-                <i class="fas fa-plus mr-1"></i>Post Item
-              </button>
-            </form>
-          </div>
+        <!-- Tips Section -->
+        <div class="mt-8 bg-primary-50 dark:bg-accent/10 rounded-2xl p-6 border border-primary-100/20 dark:border-accent/20">
+          <h3 class="text-lg font-semibold text-primary dark:text-primary-50 mb-4 flex items-center">
+            <i data-lucide="lightbulb" class="h-5 w-5 mr-2"></i>
+            Tips for Better Sales
+          </h3>
+          <ul class="space-y-2 text-primary-200 dark:text-primary-100">
+            <li class="flex items-center">
+              <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+              Use clear, high-quality photos
+            </li>
+            <li class="flex items-center">
+              <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+              Write detailed, honest descriptions
+            </li>
+            <li class="flex items-center">
+              <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+              Price competitively based on condition
+            </li>
+            <li class="flex items-center">
+              <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+              Respond quickly to interested buyers
+            </li>
+          </ul>
         </div>
       </div>
     </main>
-
-    <script>
-      function previewImage() {
-        const url = document.getElementById("imageUrl").value.trim();
-        const preview = document.getElementById("imagePreview");
-        preview.innerHTML = "";
-        if (url) {
-          const img = document.createElement("img");
-          img.src = url;
-          img.alt = "Preview";
-          img.className =
-            "w-32 h-32 object-cover rounded border border-[#D4A373]";
-          preview.appendChild(img);
-        }
-      }
-    </script>
   </body>
 </html>

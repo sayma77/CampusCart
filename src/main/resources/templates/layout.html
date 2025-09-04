@@ -1,71 +1,142 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org ">
+<html xmlns:th="http://www.thymeleaf.org">
   <head th:fragment="head">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CampusCart</title>
-    <!-- <link href="/css/output.css" rel="stylesheet" /> -->
+    <title>CampusCart - CUET Student Marketplace</title>
     <link rel="stylesheet" href="/css/styles.css" />
-
-    <!-- add daisyui -->
-
-    <link rel="stylesheet" href="/css/theme.css" />
-
-    <link
-      href="https://cdn.jsdelivr.net/npm/daisyui@5"
-      rel="stylesheet"
-      type="text/css"
-    />
-
-    <!-- Font Awesome for icons like user/profile, cart, etc. -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <!-- add tailwind -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-    <!-- <style type="text/tailwindcss">
-      @theme {
-        --color-navbarBg: #b18484,
-        --color-textPrimary: #3c0a2b,
-        --color-textSecondary: #f7f4f6,
-        --color-background: #f6f4f7,
-        --color-primary: #7c5a5a,
-        --color-secondary: #f1d0d0,
-        --color-accent: #f3e2e2,
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: '#3D52A0',
+                50: '#EDE8F5',
+                100: '#ADBBDA', 
+                200: '#8697C4',
+                300: '#7091E6',
+                400: '#3D52A0',
+                500: '#3D52A0',
+                600: '#2F4080',
+                700: '#233060',
+                800: '#172040',
+                900: '#0B1020'
+              },
+              accent: {
+                DEFAULT: '#7091E6',
+                50: '#EDE8F5',
+                100: '#ADBBDA',
+                200: '#8697C4', 
+                300: '#7091E6',
+                400: '#5A7BD9',
+                500: '#4365CC',
+                600: '#364FA6',
+                700: '#293980',
+                800: '#1C235A',
+                900: '#0F1234'
+              },
+              surface: {
+                light: '#FFFFFF',
+                dark: '#2A2E45'
+              },
+              background: {
+                light: '#EDE8F5',
+                dark: '#1C1F33'
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-in-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'bounce-gentle': 'bounceGentle 2s infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              bounceGentle: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-5px)' },
+              },
+            }
+          }
+        }
       }
-    </style> -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-    <script th:src="@{/js/theme-toggle.js}"></script>
-    <script th:src="@{/js/message-box.js}"></script>
-    <script th:src="@{/js/auth.js}"></script>
-
-    <!-- add livereload for dev -->
+    </script>
+    
+    <!-- Theme Toggle Script -->
+    <script>
+      // Theme initialization to prevent flash
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+    
+    <!-- LiveReload for development -->
     <script src="http://localhost:35729/livereload.js"></script>
   </head>
 
-  <body
-    th:fragment="layout"
-    class="min-h-screen flex flex-col bg-white text-gray-800 bg-base-100"
-  >
+  <body th:fragment="layout" class="min-h-screen flex flex-col bg-background-light dark:bg-background-dark text-primary dark:text-primary-50 transition-colors duration-300">
     <!-- Navbar fragment -->
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <!-- message box -->
-    <p
-      id="message"
-      class="mt-4 text-center font-semibold p-2 rounded transition-colors duration-300 hidden"
-    ></p>
+    <!-- Message box -->
+    <div id="message" class="mt-4 text-center font-semibold p-4 rounded-lg mx-4 transition-all duration-300 hidden"></div>
 
     <!-- Main content -->
-    <div class="h-full flex flex-col flex-1">
+    <div class="flex-1">
       <div th:replace="~{::main}"></div>
     </div>
 
     <!-- Footer fragment -->
     <div th:replace="~{fragments/footer :: footer}"></div>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>
+      lucide.createIcons();
+      
+      // Theme toggle functionality
+      function toggleTheme() {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+        // Reinitialize icons after theme change
+        setTimeout(() => lucide.createIcons(), 100);
+      }
+      
+      // Message box functionality
+      function showMessage(text, type = 'info') {
+        const messageBox = document.getElementById('message');
+        messageBox.textContent = text;
+        messageBox.className = `mt-4 text-center font-semibold p-4 rounded-lg mx-4 transition-all duration-300 ${
+          type === 'success' ? 'bg-green-100 text-green-800 border border-green-200' :
+          type === 'error' ? 'bg-red-100 text-red-800 border border-red-200' :
+          'bg-blue-100 text-blue-800 border border-blue-200'
+        }`;
+        messageBox.classList.remove('hidden');
+        setTimeout(() => messageBox.classList.add('hidden'), 5000);
+      }
+    </script>
   </body>
 </html>

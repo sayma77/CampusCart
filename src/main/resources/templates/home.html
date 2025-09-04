@@ -1,166 +1,250 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head th:replace="~{layout :: head}"></head>
-
-  <body th:replace="~{layout :: layout}" class="bg-base text-gray-800">
+  <body th:replace="~{layout :: layout}">
     <main>
       <!-- Hero Section -->
-      <section
-        class="relative flex flex-col md:flex-row items-center justify-between py-45 px-8 rounded-b-3xl shadow-md hover:shadow-lg gap-6 md:gap-10 bg-cover bg-center bg-no-repeat"
-        style="background-image: url('/images/hp1.jpg')"
-      >
-        <!-- Overlay for better text visibility -->
-        <div
-          class="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30 rounded-b-3xl"
-        ></div>
-
-        <div
-          class="relative flex-1 text-center md:text-left max-w-xl space-y-6 pl-20 z-10"
-        >
-          <h1
-            class="text-4xl md:text-5xl font-extrabold text-white drop-shadow-md"
-          >
-            Welcome to <span class="text-[#D4A373]">CampusCart</span
-            ><span class="text-white">!</span>
-          </h1>
-          <p class="mt-3 text-lg md:text-xl text-white/90">
-            Your one-stop Marketplace for all campus needs. Buy, sell, and trade
-            with your peers easily and safely within
-            <span class="font-semibold text-white">CUET</span>.
-          </p>
-
-          <a
-            href="/marketplace"
-            class="inline-block mt-4 px-9 py-5 bg-primary text-white text-lg font-bold rounded-lg shadow-md transition transform duration-300 hover:bg-[#D4A373] hover:shadow-lg hover:scale-105 focus:outline-none"
-          >
-            Explore Marketplace
-          </a>
+      <section class="relative overflow-hidden bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold text-primary dark:text-primary-50 mb-6 leading-tight">
+              Welcome to <span class="text-accent">Campus</span>Cart
+            </h1>
+            <p class="text-xl text-primary-200 dark:text-primary-100 mb-8 max-w-3xl mx-auto">
+              Your premium campus marketplace for CUET students. Buy, sell, and trade with your peers easily and safely.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/marketplace" class="bg-primary hover:bg-accent text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                Explore Marketplace
+              </a>
+            </div>
+          </div>
         </div>
+
+        <!-- Decorative elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-accent/10 rounded-full blur-xl"></div>
+        <div class="absolute bottom-20 right-10 w-32 h-32 bg-primary-200/10 rounded-full blur-xl"></div>
       </section>
 
       <!-- Categories Section -->
-      <section class="py-12 px-4 max-w-6xl mx-auto bg-base">
-        <h2 class="text-4xl font-semibold text-center mb-8 text-primary">
-          Categories
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <article
-            class="bg-white shadow-md p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-accent"
-          >
-            <h3 class="text-xl font-bold mb-2 text-primary">Academic</h3>
-            <p>Books, Notes, Stationery</p>
-          </article>
-          <article
-            class="bg-white shadow-md p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-accent"
-          >
-            <h3 class="text-xl font-bold mb-2 text-primary">Tech</h3>
-            <p>Laptops, Gadgets, Accessories</p>
-          </article>
-          <article
-            class="bg-white shadow-md p-6 rounded-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-accent"
-          >
-            <h3 class="text-xl font-bold mb-2 text-primary">Hostel</h3>
-            <p>Fans, Furniture, Cooking Gear</p>
-          </article>
+      <section class="py-20 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+              Shop by Category
+            </h2>
+            <p class="text-primary-200 dark:text-primary-100 text-lg">
+              Find exactly what you need from fellow CUET students
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <a href="/marketplace?category=Academic" class="group">
+              <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
+                <div class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                  <i data-lucide="book-open" class="h-8 w-8 text-primary dark:text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center">
+                  Academic
+                </h3>
+                <p class="text-primary-200 dark:text-primary-100 text-center">
+                  Books, Notes, Stationery
+                </p>
+              </div>
+            </a>
+            
+            <a href="/marketplace?category=Tech" class="group">
+              <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
+                <div class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                  <i data-lucide="laptop" class="h-8 w-8 text-primary dark:text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center">
+                  Tech
+                </h3>
+                <p class="text-primary-200 dark:text-primary-100 text-center">
+                  Laptops, Gadgets, Accessories
+                </p>
+              </div>
+            </a>
+            
+            <a href="/marketplace?category=Hostel" class="group">
+              <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
+                <div class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                  <i data-lucide="home" class="h-8 w-8 text-primary dark:text-accent"></i>
+                </div>
+                <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center">
+                  Hostel
+                </h3>
+                <p class="text-primary-200 dark:text-primary-100 text-center">
+                  Fans, Furniture, Cooking Gear
+                </p>
+              </div>
+            </a>
+          </div>
         </div>
       </section>
 
-      <!-- Academic Section -->
-      <section class="bg-white py-16 px-6 md:px-16">
-        <div
-          class="max-w-6xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12"
-        >
-          <img
-            th:src="@{/images/books1.jpg}"
-            alt="Academic books and stationery"
-            class="w-full md:w-2/5 rounded-md shadow-md md:translate-y-8"
-          />
-          <div class="md:w-1/2">
-            <h2
-              class="text-4xl font-extrabold text-primary mb-6 tracking-tight"
-            >
-              📚 Academic Essentials
+      <!-- About Section -->
+      <section id="about" class="py-20 bg-gradient-to-r from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+              About CampusCart
             </h2>
-            <div
-              class="bg-gradient-to-br from-secondary to-base p-8 rounded-2xl shadow-xl border border-secondary"
-            >
-              <p class="text-lg text-primary leading-relaxed tracking-wide">
-                CampusCart's Academic section is your go-to place for affordable
-                textbooks, reference materials, class notes, calculators, and
-                essential stationery. Students often complete semesters with
-                items they no longer need - why not pass them on?
-                <br /><br />
-                By buying and selling academic materials within CUET, we reduce
-                waste, support our peers, and save money. It’s smart,
-                sustainable, and student-friendly.
-              </p>
+            <p class="text-primary-200 dark:text-primary-100 text-lg max-w-3xl mx-auto">
+              Built by CUET students, for CUET students. We understand campus life and created a platform that makes trading easier.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+              <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20">
+                <div class="flex items-center mb-4">
+                  <i data-lucide="target" class="h-6 w-6 text-accent mr-3"></i>
+                  <h3 class="text-xl font-bold text-primary dark:text-primary-50">Our Mission</h3>
+                </div>
+                <p class="text-primary-200 dark:text-primary-100">
+                  To make student life easier by providing a simple and secure platform tailored for CUETians to buy, sell, and exchange goods and services.
+                </p>
+              </div>
+              
+              <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20">
+                <div class="flex items-center mb-4">
+                  <i data-lucide="users" class="h-6 w-6 text-accent mr-3"></i>
+                  <h3 class="text-xl font-bold text-primary dark:text-primary-50">Who We Are</h3>
+                </div>
+                <p class="text-primary-200 dark:text-primary-100">
+                  CampusCart is built by CSE students of CUET, reflecting our passion for solving real-world problems using technology.
+                </p>
+              </div>
+            </div>
+            
+            <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-xl border border-primary-100/20 dark:border-accent/20">
+              <h3 class="text-2xl font-bold text-primary dark:text-primary-50 mb-4">Why Choose CampusCart?</h3>
+              <ul class="space-y-4">
+                <li class="flex items-center">
+                  <i data-lucide="shield-check" class="h-5 w-5 text-accent mr-3"></i>
+                  <span class="text-primary-200 dark:text-primary-100">Secure transactions within CUET community</span>
+                </li>
+                <li class="flex items-center">
+                  <i data-lucide="clock" class="h-5 w-5 text-accent mr-3"></i>
+                  <span class="text-primary-200 dark:text-primary-100">Quick and easy buying/selling process</span>
+                </li>
+                <li class="flex items-center">
+                  <i data-lucide="heart" class="h-5 w-5 text-accent mr-3"></i>
+                  <span class="text-primary-200 dark:text-primary-100">Built by students, for students</span>
+                </li>
+                <li class="flex items-center">
+                  <i data-lucide="recycle" class="h-5 w-5 text-accent mr-3"></i>
+                  <span class="text-primary-200 dark:text-primary-100">Promote sustainability and reduce waste</span>
+                </li>
+              </ul>
+              
+              <div class="mt-6 pt-6 border-t border-primary-100/20 dark:border-accent/20">
+                <a href="/signup" class="bg-accent hover:bg-primary text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-block">
+                  Join the Community
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Tech Section -->
-      <section class="py-16 px-6 md:px-16 bg-base">
-        <div
-          class="max-w-6xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12"
-        >
-          <img
-            th:src="@{/images/tech1.jpg}"
-            alt="Laptops and tech gadgets"
-            class="w-full md:w-2/5 rounded-md shadow-md md:translate-y-8"
-          />
-          <div class="md:w-1/2">
-            <h2
-              class="text-4xl font-extrabold text-primary mb-6 tracking-tight"
-            >
-              💻 Tech Gear & Gadgets
+      <!-- Contact Section -->
+      <section id="contact" class="py-20 bg-white dark:bg-surface-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+              Get in Touch
             </h2>
-            <div
-              class="bg-gradient-to-br from-accent to-base p-8 rounded-2xl shadow-xl border border-accent"
-            >
-              <p class="text-lg text-primary leading-relaxed tracking-wide">
-                From laptops and keyboards to smartwatches and headphones, the
-                Tech section is tailored for CUET students looking to upgrade or
-                offload their gadgets. Whether you're a CSE student selling an
-                extra mouse or someone looking for a budget-friendly tablet,
-                this category helps tech circulate where it's needed.
-                <br /><br />
-                It's practical, fast, and supports the digital needs of our
-                campus.
-              </p>
+            <p class="text-primary-200 dark:text-primary-100 text-lg">
+              Have questions or need support? We're here to help!
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Facebook -->
+            <div class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
+              <div class="flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-xl mb-4 mx-auto">
+                <i data-lucide="facebook" class="h-8 w-8 text-blue-600 dark:text-blue-400"></i>
+              </div>
+              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Facebook</h3>
+              <p class="text-primary-200 dark:text-primary-100 mb-4">Follow us for updates</p>
+              <a href="https://www.facebook.com/YourPageName" target="_blank" 
+                 class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                Visit Page
+              </a>
+            </div>
+
+            <!-- Email -->
+            <div class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
+              <div class="flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-xl mb-4 mx-auto">
+                <i data-lucide="mail" class="h-8 w-8 text-green-600 dark:text-green-400"></i>
+              </div>
+              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Email</h3>
+              <p class="text-primary-200 dark:text-primary-100 mb-4">campuscart@gmail.com</p>
+              <a href="mailto:campuscart@gmail.com" 
+                 class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                Send Email
+              </a>
+            </div>
+
+            <!-- Phone -->
+            <div class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
+              <div class="flex items-center justify-center w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-xl mb-4 mx-auto">
+                <i data-lucide="phone" class="h-8 w-8 text-purple-600 dark:text-purple-400"></i>
+              </div>
+              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Phone</h3>
+              <p class="text-primary-200 dark:text-primary-100 mb-4">+8801234567890</p>
+              <a href="tel:+8801234567890" 
+                 class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                Call Now
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Hostel Section -->
-      <section class="py-16 px-6 md:px-16 bg-base">
-        <div
-          class="max-w-6xl mx-auto flex flex-col md:flex-row-reverse items-center gap-12"
-        >
-          <img
-            th:src="@{/images/fan1.jpg}"
-            alt="Hostel items like a fan"
-            class="w-full md:w-2/5 rounded-md shadow-md md:translate-y-8"
-          />
-          <div class="md:w-1/2">
-            <h2
-              class="text-4xl font-extrabold text-primary mb-6 tracking-tight"
-            >
-              🏠 Hostel Essentials
+      <!-- Features Section -->
+      <section class="py-20 bg-gradient-to-r from-accent-50 to-primary-50 dark:from-background-dark dark:to-surface-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+              How It Works
             </h2>
-            <div
-              class="bg-gradient-to-br from-secondary to-base p-8 rounded-2xl shadow-xl border border-secondary"
-            >
-              <p class="text-lg text-primary leading-relaxed tracking-wide">
-                Moving in or out of CUET hostels? The Hostel section includes
-                room fans, induction cookers, buckets, racks, and basic
-                furniture - all the daily essentials to survive and thrive in
-                hostel life.
-                <br /><br />
-                Ideal for freshers setting up quickly and seniors passing down
-                items, this category keeps costs low and makes student life
-                simpler.
+            <p class="text-primary-200 dark:text-primary-100 text-lg">
+              Simple steps to start buying and selling on campus
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+              <div class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg">
+                <i data-lucide="user-plus" class="h-10 w-10 text-white"></i>
+              </div>
+              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-4">1. Sign Up</h3>
+              <p class="text-primary-200 dark:text-primary-100">
+                Create your account with your CUET email and join the community
+              </p>
+            </div>
+            
+            <div class="text-center">
+              <div class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg">
+                <i data-lucide="search" class="h-10 w-10 text-white"></i>
+              </div>
+              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-4">2. Browse & Buy</h3>
+              <p class="text-primary-200 dark:text-primary-100">
+                Explore products from fellow students and find great deals
+              </p>
+            </div>
+            
+            <div class="text-center">
+              <div class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg">
+                <i data-lucide="tag" class="h-10 w-10 text-white"></i>
+              </div>
+              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-4">3. Sell Items</h3>
+              <p class="text-primary-200 dark:text-primary-100">
+                List your items for sale or rent and earn money from unused goods
               </p>
             </div>
           </div>
