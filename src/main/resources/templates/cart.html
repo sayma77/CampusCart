@@ -4,11 +4,15 @@
     <title>Shopping Cart - CampusCart</title>
   </head>
   <body th:replace="~{layout :: layout}">
-    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8">
+    <main
+      class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-8">
-          <h1 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+          <h1
+            class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+          >
             Your Shopping Cart
           </h1>
           <p class="text-primary-200 dark:text-primary-100 text-lg">
@@ -19,21 +23,31 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Cart Items -->
           <div class="lg:col-span-2 space-y-4">
-            <div th:each="item : ${cartItems}" 
-                class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-100/20 dark:border-accent/20 flex items-center gap-6">
-              
+            <div
+              th:each="item : ${cartItems}"
+              class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-100/20 dark:border-accent/20 flex items-center gap-6"
+            >
               <!-- Product Image -->
               <div class="flex-shrink-0 w-28 h-28">
-                <img th:src="@{${item.product.image}}"
-                    alt="Product Image"
-                    class="w-full h-full object-cover rounded-xl shadow-md"
-                    onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop'"/>
+                <img
+                  th:src="@{${item.product.image}}"
+                  alt="Product Image"
+                  class="w-full h-full object-cover rounded-xl shadow-md"
+                  onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop'"
+                />
               </div>
 
               <!-- Product Details -->
               <div class="flex-1">
-                <h3 class="text-lg font-bold text-primary dark:text-primary-50 mb-1" th:text="${item.product.name}">Product Title</h3>
-                <div class="flex flex-wrap gap-2 text-sm text-primary-200 dark:text-primary-100">
+                <h3
+                  class="text-lg font-bold text-primary dark:text-primary-50 mb-1"
+                  th:text="${item.product.name}"
+                >
+                  Product Title
+                </h3>
+                <div
+                  class="flex flex-wrap gap-2 text-sm text-primary-200 dark:text-primary-100"
+                >
                   <span class="flex items-center gap-1">
                     <i data-lucide="info" class="h-4 w-4"></i>
                     <span th:text="${item.product.status}">Condition</span>
@@ -52,20 +66,45 @@
               <!-- Quantity + Price + Actions -->
               <div class="flex flex-col items-end justify-between h-full">
                 <!-- Quantity Update Form -->
-                <form th:action="@{/cart/update}" method="post" class="flex items-center gap-2 mb-2">
-                  <input type="hidden" name="productId" th:value="${item.product.id}" />
-                  <input type="number" name="quantity" th:value="${item.quantity}"
-                        class="w-16 border border-gray-300 rounded px-2 py-1 text-center"
-                        min="1" onchange="this.form.submit()"/>
+                <form
+                  th:action="@{/cart/update}"
+                  method="post"
+                  class="flex items-center gap-2 mb-2"
+                >
+                  <input
+                    type="hidden"
+                    name="productId"
+                    th:value="${item.product.id}"
+                  />
+                  <input
+                    type="number"
+                    name="quantity"
+                    th:value="${item.quantity}"
+                    class="w-16 border border-gray-300 rounded px-2 py-1 text-center"
+                    min="1"
+                    onchange="this.form.submit()"
+                  />
                 </form>
 
                 <!-- Price -->
-                <p class="text-2xl font-bold text-accent mb-2" th:text="${currency} + ${item.product.price}">৳ 0</p>
+                <p
+                  class="text-2xl font-bold text-accent mb-2"
+                  th:text="${currency} + ${item.product.price}"
+                >
+                  ৳ 0
+                </p>
 
                 <!-- Remove Button -->
                 <form th:action="@{/cart/remove}" method="post">
-                  <input type="hidden" name="productId" th:value="${item.product.id}" />
-                  <button type="submit" class="bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 p-2 rounded-lg transition-all duration-200 transform hover:scale-105">
+                  <input
+                    type="hidden"
+                    name="productId"
+                    th:value="${item.product.id}"
+                  />
+                  <button
+                    type="submit"
+                    class="bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 p-2 rounded-lg transition-all duration-200 transform hover:scale-105"
+                  >
                     <i data-lucide="trash-2" class="h-5 w-5"></i>
                   </button>
                 </form>
@@ -74,15 +113,25 @@
 
             <!-- Empty State -->
             <div th:if="${#lists.isEmpty(cartItems)}" class="text-center py-20">
-              <div class="bg-white dark:bg-surface-dark rounded-2xl p-12 shadow-lg border border-primary-100/20 dark:border-accent/20">
-                <i data-lucide="shopping-cart" class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"></i>
-                <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">
+              <div
+                class="bg-white dark:bg-surface-dark rounded-2xl p-12 shadow-lg border border-primary-100/20 dark:border-accent/20"
+              >
+                <i
+                  data-lucide="shopping-cart"
+                  class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"
+                ></i>
+                <h3
+                  class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+                >
                   Your cart is empty
                 </h3>
                 <p class="text-primary-200 dark:text-primary-100 mb-6">
                   Browse the marketplace and add items to your cart
                 </p>
-                <a href="/marketplace" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                <a
+                  href="/marketplace"
+                  class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+                >
                   Browse Marketplace
                 </a>
               </div>
@@ -90,23 +139,33 @@
           </div>
 
           <!-- Order Summary -->
-          <div class="lg:col-span-1 sticky top-24">
-            <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20 flex flex-col justify-between h-full">
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-6 text-center flex items-center justify-center gap-2">
+          <div class="lg:col-span-1 sticky top-24 h-[450px] overflow-y-auto">
+            <div
+              class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20 flex flex-col justify-center h-full"
+            >
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-6 text-center flex items-center justify-center gap-2"
+              >
                 <i data-lucide="clipboard" class="h-5 w-5"></i>
                 Order Summary
               </h3>
 
               <div class="space-y-4">
                 <!-- Total -->
-                <div class="flex justify-between font-bold text-lg text-primary dark:text-primary-50">
+                <div
+                  class="flex justify-between font-bold text-lg text-primary dark:text-primary-50"
+                >
                   <span>Total:</span>
                   <span th:text="${currency} + ${subtotal}">৳ 0</span>
                 </div>
 
                 <!-- Motivational Message -->
-                <div class="bg-accent/10 border-l-4 border-highlight rounded-lg p-3 text-center">
-                  <p class="text-sm font-medium text-primary dark:text-primary-50 mb-1">
+                <div
+                  class="bg-accent/10 border-l-4 border-highlight rounded-lg p-3 text-center"
+                >
+                  <p
+                    class="text-sm font-medium text-primary dark:text-primary-50 mb-1"
+                  >
                     Great choice! Your items will reach you soon.
                   </p>
                   <p class="text-xs text-primary-200 dark:text-primary-100">
@@ -116,13 +175,22 @@
 
                 <!-- Action Buttons -->
                 <form th:action="@{/order/checkout}" method="post">
-                  <button type="submit" class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-2"></i>
+                  <button
+                    type="submit"
+                    class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    <i
+                      data-lucide="shopping-cart"
+                      class="h-4 w-4 inline mr-2"
+                    ></i>
                     Submit Order
                   </button>
                 </form>
 
-                <a href="/marketplace" class="block w-full text-center border-2 border-primary dark:border-accent text-primary dark:text-accent py-3 rounded-xl hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-300 transform hover:scale-105 font-semibold">
+                <a
+                  href="/marketplace"
+                  class="block w-full text-center border-2 border-primary dark:border-accent text-primary dark:text-accent py-3 rounded-xl hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-300 transform hover:scale-105 font-semibold"
+                >
                   Continue Shopping
                 </a>
               </div>

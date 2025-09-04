@@ -1,2 +1,6 @@
 .rounded-ours {
 }
+
+[x-cloak] {
+    display: none;
+}

@@ -4,25 +4,274 @@
     <title>CampusCart Marketplace</title>
   </head>
   <body th:replace="~{layout :: layout}">
-    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark">
-      <!-- Header -->
-      <section class="bg-white/50 dark:bg-surface-dark/50 backdrop-blur-sm py-12 border-b border-primary-100/20 dark:border-accent/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
-            CampusCart Marketplace
+    <main
+      class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark"
+    >
+      <!-- Modal -->
+      <div
+        id="sellModal"
+        class="fixed inset-0 flex items-center justify-center bg-black/50 z-50 hidden overflow-y-auto h-vh"
+      >
+        <div
+          class="bg-white dark:bg-surface-dark rounded-2xl shadow-xl w-full max-w-3xl mx-auto my-8 p-6 relative"
+        >
+          <!-- Close Button -->
+          <button
+            id="closeModalBtn"
+            class="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+          >
+            ✕
+          </button>
+
+          <!-- Full Sell Form -->
+          <h1
+            class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4 text-center"
+          >
+            List Your Item
           </h1>
-          <p class="text-primary-200 dark:text-primary-100 text-lg max-w-2xl mx-auto">
-            Discover quality products from fellow CUET students at unbeatable prices
+          <p
+            class="text-primary-200 dark:text-primary-100 text-lg text-center mb-6"
+          >
+            Share your unused items with fellow CUET students and earn money
           </p>
+
+          <form
+            method="post"
+            th:action="@{/sell}"
+            th:object="${product}"
+            class="space-y-6"
+          >
+            <!-- Product Name -->
+            <div>
+              <label
+                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+              >
+                <i data-lucide="tag" class="h-4 w-4 inline mr-1"></i>
+                Product Name
+              </label>
+              <input
+                type="text"
+                th:field="*{name}"
+                placeholder="Enter product name"
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+                required
+              />
+            </div>
+
+            <!-- Price -->
+            <div>
+              <label
+                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+              >
+                <i data-lucide="dollar-sign" class="h-4 w-4 inline mr-1"></i>
+                Price (৳)
+              </label>
+              <input
+                type="number"
+                th:field="*{price}"
+                placeholder="Enter price"
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+                min="0"
+                required
+              />
+            </div>
+
+            <!-- Condition -->
+            <div>
+              <label
+                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+              >
+                <i data-lucide="info" class="h-4 w-4 inline mr-1"></i>
+                Condition
+              </label>
+              <input
+                type="text"
+                th:field="*{status}"
+                placeholder="New, Used, Like New, etc."
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+                required
+              />
+            </div>
+
+            <!-- Type Selection -->
+            <div>
+              <label
+                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+              >
+                <i data-lucide="layers" class="h-4 w-4 inline mr-1"></i>
+                Listing Type
+              </label>
+              <div class="grid grid-cols-2 gap-4">
+                <label class="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    th:field="*{sellOrRent}"
+                    value="sell"
+                    class="sr-only peer"
+                    required
+                  />
+                  <div
+                    class="bg-primary-50 dark:bg-accent/20 border-2 border-primary-100 dark:border-accent/30 rounded-lg p-2 text-center peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white transition-all duration-200"
+                  >
+                    <i
+                      data-lucide="credit-card"
+                      class="h-6 w-6 mx-auto mb-2"
+                    ></i>
+                    <span class="font-medium">Sell</span>
+                  </div>
+                </label>
+                <label class="relative cursor-pointer">
+                  <input
+                    type="radio"
+                    th:field="*{sellOrRent}"
+                    value="rent"
+                    class="sr-only peer"
+                    required
+                  />
+                  <div
+                    class="bg-primary-50 dark:bg-accent/20 border-2 border-primary-100 dark:border-accent/30 rounded-lg p-2 text-center peer-checked:border-accent peer-checked:bg-accent peer-checked:text-white transition-all duration-200"
+                  >
+                    <i data-lucide="clock" class="h-6 w-6 mx-auto mb-2"></i>
+                    <span class="font-medium">Rent</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Category -->
+            <div>
+              <label
+                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+              >
+                <i data-lucide="grid-3x3" class="h-4 w-4 inline mr-1"></i>
+                Category
+              </label>
+              <div class="relative">
+                <select
+                  th:field="*{category}"
+                  class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200 appearance-none"
+                  required
+                >
+                  <option value="">Select Category</option>
+                  <option
+                    th:each="cat : ${categories}"
+                    th:value="${cat.name}"
+                    th:text="${cat.name}"
+                  ></option>
+                </select>
+                <i
+                  data-lucide="chevron-down"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200 pointer-events-none"
+                ></i>
+              </div>
+            </div>
+
+            <!-- Image URL -->
+            <div>
+              <label
+                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+              >
+                <i data-lucide="image" class="h-4 w-4 inline mr-1"></i>
+                Image URL
+              </label>
+              <input
+                type="url"
+                th:field="*{image}"
+                placeholder="Enter image URL (optional)"
+                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+              />
+              <p class="text-xs text-primary-200 dark:text-primary-100 mt-1">
+                Tip: Use image hosting services like Imgur or direct image links
+              </p>
+            </div>
+
+            <!-- Hidden Fields -->
+            <input type="hidden" th:field="*{categoryId}" />
+            <input type="hidden" th:field="*{userId}" />
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              <i data-lucide="plus" class="h-5 w-5 inline mr-2"></i>
+              Post Item for Sale
+            </button>
+          </form>
+
+          <!-- Tips Section -->
+          <div
+            class="mt-8 bg-primary-50 dark:bg-accent/10 rounded-2xl p-6 border border-primary-100/20 dark:border-accent/20"
+          >
+            <h3
+              class="text-lg font-semibold text-primary dark:text-primary-50 mb-4 flex items-center"
+            >
+              <i data-lucide="lightbulb" class="h-5 w-5 mr-2"></i>
+              Tips for Better Sales
+            </h3>
+            <ul class="space-y-2 text-primary-200 dark:text-primary-100">
+              <li class="flex items-center">
+                <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+                Use clear, high-quality photos
+              </li>
+              <li class="flex items-center">
+                <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+                Write detailed, honest descriptions
+              </li>
+              <li class="flex items-center">
+                <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+                Price competitively based on condition
+              </li>
+              <li class="flex items-center">
+                <i data-lucide="check" class="h-4 w-4 text-accent mr-2"></i>
+                Respond quickly to interested buyers
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Header -->
+      <section
+        class="bg-white/50 dark:bg-surface-dark/50 backdrop-blur-sm py-12 border-b border-primary-100/20 dark:border-accent/20"
+      >
+        <div class="flex flex-row gap-4 items-center w-[70%] mx-auto">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1
+              class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+            >
+              CampusCart Marketplace
+            </h1>
+            <p
+              class="text-primary-200 dark:text-primary-100 text-lg max-w-2xl mx-auto"
+            >
+              Discover quality products from fellow CUET students at unbeatable
+              prices
+            </p>
+          </div>
+          <div>
+            <!-- Sell Item Button -->
+            <button
+              id="openModalBtn"
+              class="bg-primary hover:bg-accent text-white px-4 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md inline-flex items-center"
+            >
+              <i data-lucide="plus" class="h-4 w-4 inline mr-1"></i>
+              Sell Item
+            </button>
+          </div>
         </div>
       </section>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Search Bar -->
-        <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg mb-8 border border-primary-100/20 dark:border-accent/20">
+        <div
+          class="bg-white dark:bg-surface-dark rounded-2xl p-3 shadow-lg mb-8 border border-primary-100/20 dark:border-accent/20"
+        >
           <form method="GET" action="/marketplace" class="relative">
             <div class="relative">
-              <i data-lucide="search" class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-200"></i>
+              <i
+                data-lucide="search"
+                class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-200"
+              ></i>
               <input
                 type="text"
                 name="search"
@@ -30,7 +279,11 @@
                 placeholder="Search for products..."
                 class="w-full pl-12 pr-4 py-4 bg-primary-50 dark:bg-background-dark border-2 border-primary-100/20 dark:border-accent/20 rounded-xl focus:border-accent focus:outline-none transition-all duration-300 text-primary dark:text-primary-50"
               />
-              <input type="hidden" name="categoryId" th:value="${selectedCategory}" />
+              <input
+                type="hidden"
+                name="categoryId"
+                th:value="${selectedCategory}"
+              />
               <input type="hidden" name="type" th:value="${selectedType}" />
             </div>
           </form>
@@ -39,44 +292,62 @@
         <!-- Filters -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <!-- Categories -->
-          <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20">
-            <h3 class="text-lg font-semibold text-primary dark:text-primary-50 mb-4 flex items-center">
+          <div
+            class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20"
+          >
+            <h3
+              class="text-lg font-semibold text-primary dark:text-primary-50 mb-4 flex items-center"
+            >
               <i data-lucide="grid-3x3" class="h-5 w-5 mr-2"></i>
               Categories
             </h3>
             <div class="flex flex-wrap gap-2">
-              <a th:href="@{/marketplace(type=${selectedType})}"
-                 th:class="${selectedCategory == null} ? 'bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-primary' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'">
+              <a
+                th:href="@{/marketplace(type=${selectedType})}"
+                th:class="${selectedCategory == null} ? 'bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-primary' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
+              >
                 All Categories
               </a>
-              <a th:each="category : ${categories}"
-                 th:href="@{/marketplace(category=${category.name}, type=${selectedType})}"
-                 th:class="${selectedCategory != null && selectedCategory == category.name} ? 'bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-primary' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
-                 th:text="${category.name}">
+              <a
+                th:each="category : ${categories}"
+                th:href="@{/marketplace(category=${category.name}, type=${selectedType})}"
+                th:class="${selectedCategory != null && selectedCategory == category.name} ? 'bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-primary' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
+                th:text="${category.name}"
+              >
                 Category
               </a>
             </div>
           </div>
 
           <!-- Types -->
-          <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20">
-            <h3 class="text-lg font-semibold text-primary dark:text-primary-50 mb-4 flex items-center">
+          <div
+            class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20"
+          >
+            <h3
+              class="text-lg font-semibold text-primary dark:text-primary-50 mb-4 flex items-center"
+            >
               <i data-lucide="filter" class="h-5 w-5 mr-2"></i>
               Type
             </h3>
             <div class="grid grid-cols-3 gap-2">
-              <a th:href="@{/marketplace(category=${selectedCategory}, type='all')}"
-                 th:class="${selectedType == null || selectedType == 'all'} ? 'bg-accent text-white py-3 rounded-lg hover:bg-primary transition-all duration-200 text-center block font-medium' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent py-3 rounded-lg hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200 text-center block font-medium'">
+              <a
+                th:href="@{/marketplace(category=${selectedCategory}, type='all')}"
+                th:class="${selectedType == null || selectedType == 'all'} ? 'bg-accent text-white py-3 rounded-lg hover:bg-primary transition-all duration-200 text-center block font-medium' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent py-3 rounded-lg hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200 text-center block font-medium'"
+              >
                 <i data-lucide="shopping-bag" class="h-4 w-4 inline mr-1"></i>
                 All Items
               </a>
-              <a th:href="@{/marketplace(category=${selectedCategory}, type='sell')}"
-                 th:class="${selectedType == 'sell'} ? 'bg-accent text-white py-3 rounded-lg hover:bg-primary transition-all duration-200 text-center block font-medium' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent py-3 rounded-lg hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200 text-center block font-medium'">
+              <a
+                th:href="@{/marketplace(category=${selectedCategory}, type='sell')}"
+                th:class="${selectedType == 'sell'} ? 'bg-accent text-white py-3 rounded-lg hover:bg-primary transition-all duration-200 text-center block font-medium' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent py-3 rounded-lg hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200 text-center block font-medium'"
+              >
                 <i data-lucide="credit-card" class="h-4 w-4 inline mr-1"></i>
                 Buy Items
               </a>
-              <a th:href="@{/marketplace(category=${selectedCategory}, type='rent')}"
-                 th:class="${selectedType == 'rent'} ? 'bg-accent text-white py-3 rounded-lg hover:bg-primary transition-all duration-200 text-center block font-medium' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent py-3 rounded-lg hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200 text-center block font-medium'">
+              <a
+                th:href="@{/marketplace(category=${selectedCategory}, type='rent')}"
+                th:class="${selectedType == 'rent'} ? 'bg-accent text-white py-3 rounded-lg hover:bg-primary transition-all duration-200 text-center block font-medium' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent py-3 rounded-lg hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200 text-center block font-medium'"
+              >
                 <i data-lucide="clock" class="h-4 w-4 inline mr-1"></i>
                 Rent Items
               </a>
@@ -87,35 +358,58 @@
         <!-- Results Header -->
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold text-primary dark:text-primary-50">
-            <span th:if="${search != null && !search.isEmpty()}" th:text="'Search Results for: ' + ${search}">Search Results</span>
-            <span th:if="${search == null || search.isEmpty()}">All Products</span>
+            <span
+              th:if="${search != null && !search.isEmpty()}"
+              th:text="'Search Results for: ' + ${search}"
+              >Search Results</span
+            >
+            <span th:if="${search == null || search.isEmpty()}"
+              >All Products</span
+            >
           </h2>
-          <span class="text-primary-200 dark:text-primary-100 bg-white dark:bg-surface-dark px-4 py-2 rounded-lg shadow-sm border border-primary-100/20 dark:border-accent/20"
-                th:text="${#lists.size(products)} + ' products found'">
+          <span
+            class="text-primary-200 dark:text-primary-100 bg-white dark:bg-surface-dark px-4 py-2 rounded-lg shadow-sm border border-primary-100/20 dark:border-accent/20"
+            th:text="${#lists.size(products)} + ' products found'"
+          >
             0 products found
           </span>
         </div>
 
         <!-- No Products -->
         <div th:if="${#lists.isEmpty(products)}" class="text-center py-20">
-          <div class="bg-white dark:bg-surface-dark rounded-2xl p-12 shadow-lg border border-primary-100/20 dark:border-accent/20 max-w-md mx-auto">
-            <i data-lucide="search-x" class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"></i>
-            <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">
+          <div
+            class="bg-white dark:bg-surface-dark rounded-2xl p-12 shadow-lg border border-primary-100/20 dark:border-accent/20 max-w-md mx-auto"
+          >
+            <i
+              data-lucide="search-x"
+              class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"
+            ></i>
+            <h3
+              class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+            >
               No Products Found
             </h3>
             <p class="text-primary-200 dark:text-primary-100 mb-6">
               Try adjusting your search criteria or browse all categories.
             </p>
-            <a href="/marketplace" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+            <a
+              href="/marketplace"
+              class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+            >
               View All Products
             </a>
           </div>
         </div>
 
         <!-- Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" th:if="${!#lists.isEmpty(products)}">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          th:if="${!#lists.isEmpty(products)}"
+        >
           <div th:each="product : ${products}" class="group">
-            <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20 overflow-hidden">
+            <div
+              class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20 overflow-hidden"
+            >
               <!-- Product Image -->
               <div class="relative overflow-hidden">
                 <img
@@ -125,11 +419,16 @@
                   onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop'"
                 />
                 <div class="absolute top-3 left-3 flex gap-2">
-                  <span class="bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold" th:text="${product.status}">
+                  <span
+                    class="bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold"
+                    th:text="${product.status}"
+                  >
                     Condition
                   </span>
-                  <span class="bg-accent text-white text-xs px-2 py-1 rounded-full font-semibold"
-                        th:text="${product.sellOrRent == 'sell'} ? 'For Sale' : (${product.sellOrRent == 'rent'} ? 'For Rent' : 'Sale/Rent')">
+                  <span
+                    class="bg-accent text-white text-xs px-2 py-1 rounded-full font-semibold"
+                    th:text="${product.sellOrRent == 'sell'} ? 'For Sale' : (${product.sellOrRent == 'rent'} ? 'For Rent' : 'Sale/Rent')"
+                  >
                     Type
                   </span>
                 </div>
@@ -137,24 +436,41 @@
 
               <!-- Product Info -->
               <div class="p-6">
-                <h3 class="font-bold text-primary dark:text-primary-50 mb-2 line-clamp-2" th:text="${product.name}">
+                <h3
+                  class="font-bold text-primary dark:text-primary-50 mb-2 line-clamp-2"
+                  th:text="${product.name}"
+                >
                   Product Name
                 </h3>
-                <p class="text-2xl font-bold text-accent mb-3" th:text="'৳' + ${product.price}">
+                <p
+                  class="text-2xl font-bold text-accent mb-3"
+                  th:text="'৳' + ${product.price}"
+                >
                   ৳0
                 </p>
-                
+
                 <!-- Seller Info -->
-                <div class="text-sm text-primary-200 dark:text-primary-100 mb-4 space-y-1">
+                <div
+                  class="text-sm text-primary-200 dark:text-primary-100 mb-4 space-y-1"
+                >
                   <div class="flex items-center">
                     <i data-lucide="user" class="h-4 w-4 mr-2"></i>
-                    <span th:text="${product.user != null ? product.user.username : 'Unknown Seller'}">Seller</span>
+                    <span
+                      th:text="${product.user != null ? product.user.username : 'Unknown Seller'}"
+                      >Seller</span
+                    >
                   </div>
-                  <div th:if="${product.user != null && product.user.hall != null}" class="flex items-center">
+                  <div
+                    th:if="${product.user != null && product.user.hall != null}"
+                    class="flex items-center"
+                  >
                     <i data-lucide="map-pin" class="h-4 w-4 mr-2"></i>
                     <span th:text="${product.user.hall}">Hall</span>
                   </div>
-                  <div th:if="${product.category != null}" class="flex items-center">
+                  <div
+                    th:if="${product.category != null}"
+                    class="flex items-center"
+                  >
                     <i data-lucide="tag" class="h-4 w-4 mr-2"></i>
                     <span th:text="${product.category.name}">Category</span>
                   </div>
@@ -162,18 +478,42 @@
 
                 <!-- Actions -->
                 <div class="flex gap-2">
-                  <form th:action="@{/wishlist}" method="post" class="flex-shrink-0">
-                    <input type="hidden" name="productId" th:value="${product.id}" />
-                    <button type="submit" class="p-2 rounded-lg bg-primary-50 dark:bg-accent/20 hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group">
-                      <i data-lucide="heart" class="h-5 w-5 text-primary dark:text-accent group-hover:text-red-500"></i>
+                  <form
+                    th:action="@{/wishlist}"
+                    method="post"
+                    class="flex-shrink-0"
+                  >
+                    <input
+                      type="hidden"
+                      name="productId"
+                      th:value="${product.id}"
+                    />
+                    <button
+                      type="submit"
+                      class="p-2 rounded-lg bg-primary-50 dark:bg-accent/20 hover:bg-red-100 dark:hover:bg-red-900/30 transition-all duration-200 group"
+                    >
+                      <i
+                        data-lucide="heart"
+                        class="h-5 w-5 text-primary dark:text-accent group-hover:text-red-500"
+                      ></i>
                     </button>
                   </form>
-                  
+
                   <form th:action="@{/cart}" method="post" class="flex-1">
-                    <input type="hidden" name="productId" th:value="${product.id}" />
+                    <input
+                      type="hidden"
+                      name="productId"
+                      th:value="${product.id}"
+                    />
                     <input type="hidden" name="quantity" th:value="1" />
-                    <button type="submit" class="w-full bg-primary hover:bg-accent text-white py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg">
-                      <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-1"></i>
+                    <button
+                      type="submit"
+                      class="w-full bg-primary hover:bg-accent text-white py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
+                    >
+                      <i
+                        data-lucide="shopping-cart"
+                        class="h-4 w-4 inline mr-1"
+                      ></i>
                       Add to Cart
                     </button>
                   </form>
@@ -183,6 +523,26 @@
           </div>
         </div>
       </div>
+      <script>
+        $(document).ready(function () {
+          // Open modal
+          $("#openModalBtn").click(function () {
+            $("#sellModal").fadeIn();
+          });
+
+          // Close modal
+          $("#closeModalBtn").click(function () {
+            $("#sellModal").fadeOut();
+          });
+
+          // Close when clicking outside modal content
+          $("#sellModal").click(function (e) {
+            if (e.target === this) {
+              $(this).fadeOut();
+            }
+          });
+        });
+      </script>
     </main>
   </body>
 </html>

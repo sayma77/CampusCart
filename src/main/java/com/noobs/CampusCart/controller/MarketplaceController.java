@@ -37,6 +37,9 @@ public class MarketplaceController {
     @Autowired
     private WishlistItemRepository wishlistRepo;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @GetMapping("/marketplace")
     public String showMarketplace(
             @RequestParam(name = "category", required = false) String category,
@@ -76,6 +79,10 @@ public class MarketplaceController {
             wishlist_count = wishlistRepo.findByUser(user).size();
         }
 
+        List<Category> all_cat = categoryRepository.findAll();
+        model.addAttribute("product", new Product());
+        model.addAttribute("categories", all_cat);
+
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         model.addAttribute("selectedCategory", category);
@@ -83,7 +90,6 @@ public class MarketplaceController {
         model.addAttribute("search", search);
         model.addAttribute("cart_item_count", cart_count);
         model.addAttribute("wishlist_count", wishlist_count);
-
 
         return "marketplace";
     }

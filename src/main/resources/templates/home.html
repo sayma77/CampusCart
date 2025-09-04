@@ -4,17 +4,27 @@
   <body th:replace="~{layout :: layout}">
     <main>
       <!-- Hero Section -->
-      <section class="relative overflow-hidden bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-20">
+      <section
+        class="relative overflow-hidden bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-20"
+      >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center animate-fade-in">
-            <h1 class="text-4xl md:text-6xl font-bold text-primary dark:text-primary-50 mb-6 leading-tight">
+            <h1
+              class="text-4xl md:text-6xl font-bold text-primary dark:text-primary-50 mb-6 leading-tight"
+            >
               Welcome to <span class="text-accent">Campus</span>Cart
             </h1>
-            <p class="text-xl text-primary-200 dark:text-primary-100 mb-8 max-w-3xl mx-auto">
-              Your premium campus marketplace for CUET students. Buy, sell, and trade with your peers easily and safely.
+            <p
+              class="text-xl text-primary-200 dark:text-primary-100 mb-8 max-w-3xl mx-auto"
+            >
+              Your premium campus marketplace for CUET students. Buy, sell, and
+              trade with your peers easily and safely.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/marketplace" class="bg-primary hover:bg-accent text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <a
+                href="/marketplace"
+                class="bg-primary hover:bg-accent text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
                 Explore Marketplace
               </a>
             </div>
@@ -22,15 +32,23 @@
         </div>
 
         <!-- Decorative elements -->
-        <div class="absolute top-20 left-10 w-20 h-20 bg-accent/10 rounded-full blur-xl"></div>
-        <div class="absolute bottom-20 right-10 w-32 h-32 bg-primary-200/10 rounded-full blur-xl"></div>
+        <div
+          class="absolute top-20 left-10 w-20 h-20 bg-accent/10 rounded-full blur-xl"
+        ></div>
+        <div
+          class="absolute bottom-20 right-10 w-32 h-32 bg-primary-200/10 rounded-full blur-xl"
+        ></div>
       </section>
 
       <!-- Categories Section -->
-      <section class="py-20 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-sm">
+      <section
+        class="py-20 bg-white/50 dark:bg-surface-dark/50 backdrop-blur-sm"
+      >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+            <h2
+              class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+            >
               Shop by Category
             </h2>
             <p class="text-primary-200 dark:text-primary-100 text-lg">
@@ -40,11 +58,20 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <a href="/marketplace?category=Academic" class="group">
-              <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-                <div class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <i data-lucide="book-open" class="h-8 w-8 text-primary dark:text-accent"></i>
+              <div
+                class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+              >
+                <div
+                  class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300"
+                >
+                  <i
+                    data-lucide="book-open"
+                    class="h-8 w-8 text-primary dark:text-accent"
+                  ></i>
                 </div>
-                <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center">
+                <h3
+                  class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center"
+                >
                   Academic
                 </h3>
                 <p class="text-primary-200 dark:text-primary-100 text-center">
@@ -52,13 +79,22 @@
                 </p>
               </div>
             </a>
-            
+
             <a href="/marketplace?category=Tech" class="group">
-              <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-                <div class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <i data-lucide="laptop" class="h-8 w-8 text-primary dark:text-accent"></i>
+              <div
+                class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+              >
+                <div
+                  class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300"
+                >
+                  <i
+                    data-lucide="laptop"
+                    class="h-8 w-8 text-primary dark:text-accent"
+                  ></i>
                 </div>
-                <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center">
+                <h3
+                  class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center"
+                >
                   Tech
                 </h3>
                 <p class="text-primary-200 dark:text-primary-100 text-center">
@@ -66,13 +102,22 @@
                 </p>
               </div>
             </a>
-            
+
             <a href="/marketplace?category=Hostel" class="group">
-              <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-                <div class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                  <i data-lucide="home" class="h-8 w-8 text-primary dark:text-accent"></i>
+              <div
+                class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+              >
+                <div
+                  class="flex items-center justify-center w-16 h-16 bg-primary-50 dark:bg-accent/20 rounded-xl mb-4 mx-auto group-hover:scale-110 transition-transform duration-300"
+                >
+                  <i
+                    data-lucide="home"
+                    class="h-8 w-8 text-primary dark:text-accent"
+                  ></i>
                 </div>
-                <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center">
+                <h3
+                  class="text-xl font-bold text-primary dark:text-primary-50 mb-2 text-center"
+                >
                   Hostel
                 </h3>
                 <p class="text-primary-200 dark:text-primary-100 text-center">
@@ -85,63 +130,108 @@
       </section>
 
       <!-- About Section -->
-      <section id="about" class="py-20 bg-gradient-to-r from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark">
+      <section
+        id="about"
+        class="py-20 bg-gradient-to-r from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark"
+      >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+            <h2
+              class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+            >
               About CampusCart
             </h2>
-            <p class="text-primary-200 dark:text-primary-100 text-lg max-w-3xl mx-auto">
-              Built by CUET students, for CUET students. We understand campus life and created a platform that makes trading easier.
+            <p
+              class="text-primary-200 dark:text-primary-100 text-lg max-w-3xl mx-auto"
+            >
+              Built by CUET students, for CUET students. We understand campus
+              life and created a platform that makes trading easier.
             </p>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div class="space-y-6">
-              <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20">
+              <div
+                class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20"
+              >
                 <div class="flex items-center mb-4">
                   <i data-lucide="target" class="h-6 w-6 text-accent mr-3"></i>
-                  <h3 class="text-xl font-bold text-primary dark:text-primary-50">Our Mission</h3>
+                  <h3
+                    class="text-xl font-bold text-primary dark:text-primary-50"
+                  >
+                    Our Mission
+                  </h3>
                 </div>
                 <p class="text-primary-200 dark:text-primary-100">
-                  To make student life easier by providing a simple and secure platform tailored for CUETians to buy, sell, and exchange goods and services.
+                  To make student life easier by providing a simple and secure
+                  platform tailored for CUETians to buy, sell, and exchange
+                  goods and services.
                 </p>
               </div>
-              
-              <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20">
+
+              <div
+                class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-lg border border-primary-100/20 dark:border-accent/20"
+              >
                 <div class="flex items-center mb-4">
                   <i data-lucide="users" class="h-6 w-6 text-accent mr-3"></i>
-                  <h3 class="text-xl font-bold text-primary dark:text-primary-50">Who We Are</h3>
+                  <h3
+                    class="text-xl font-bold text-primary dark:text-primary-50"
+                  >
+                    Who We Are
+                  </h3>
                 </div>
                 <p class="text-primary-200 dark:text-primary-100">
-                  CampusCart is built by CSE students of CUET, reflecting our passion for solving real-world problems using technology.
+                  CampusCart is built by CSE students of CUET, reflecting our
+                  passion for solving real-world problems using technology.
                 </p>
               </div>
             </div>
-            
-            <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-xl border border-primary-100/20 dark:border-accent/20">
-              <h3 class="text-2xl font-bold text-primary dark:text-primary-50 mb-4">Why Choose CampusCart?</h3>
+
+            <div
+              class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-xl border border-primary-100/20 dark:border-accent/20"
+            >
+              <h3
+                class="text-2xl font-bold text-primary dark:text-primary-50 mb-4"
+              >
+                Why Choose CampusCart?
+              </h3>
               <ul class="space-y-4">
                 <li class="flex items-center">
-                  <i data-lucide="shield-check" class="h-5 w-5 text-accent mr-3"></i>
-                  <span class="text-primary-200 dark:text-primary-100">Secure transactions within CUET community</span>
+                  <i
+                    data-lucide="shield-check"
+                    class="h-5 w-5 text-accent mr-3"
+                  ></i>
+                  <span class="text-primary-200 dark:text-primary-100"
+                    >Secure transactions within CUET community</span
+                  >
                 </li>
                 <li class="flex items-center">
                   <i data-lucide="clock" class="h-5 w-5 text-accent mr-3"></i>
-                  <span class="text-primary-200 dark:text-primary-100">Quick and easy buying/selling process</span>
+                  <span class="text-primary-200 dark:text-primary-100"
+                    >Quick and easy buying/selling process</span
+                  >
                 </li>
                 <li class="flex items-center">
                   <i data-lucide="heart" class="h-5 w-5 text-accent mr-3"></i>
-                  <span class="text-primary-200 dark:text-primary-100">Built by students, for students</span>
+                  <span class="text-primary-200 dark:text-primary-100"
+                    >Built by students, for students</span
+                  >
                 </li>
                 <li class="flex items-center">
                   <i data-lucide="recycle" class="h-5 w-5 text-accent mr-3"></i>
-                  <span class="text-primary-200 dark:text-primary-100">Promote sustainability and reduce waste</span>
+                  <span class="text-primary-200 dark:text-primary-100"
+                    >Promote sustainability and reduce waste</span
+                  >
                 </li>
               </ul>
-              
-              <div class="mt-6 pt-6 border-t border-primary-100/20 dark:border-accent/20">
-                <a href="/signup" class="bg-accent hover:bg-primary text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-block">
+
+              <div
+                class="mt-6 pt-6 border-t border-primary-100/20 dark:border-accent/20"
+              >
+                <a
+                  href="/signup"
+                  class="bg-accent hover:bg-primary text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-block"
+                >
                   Join the Community
                 </a>
               </div>
@@ -154,7 +244,9 @@
       <section id="contact" class="py-20 bg-white dark:bg-surface-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+            <h2
+              class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+            >
               Get in Touch
             </h2>
             <p class="text-primary-200 dark:text-primary-100 text-lg">
@@ -164,40 +256,86 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Facebook -->
-            <div class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-              <div class="flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-xl mb-4 mx-auto">
-                <i data-lucide="facebook" class="h-8 w-8 text-blue-600 dark:text-blue-400"></i>
+            <div
+              class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+            >
+              <div
+                class="flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-xl mb-4 mx-auto"
+              >
+                <i
+                  data-lucide="facebook"
+                  class="h-8 w-8 text-blue-600 dark:text-blue-400"
+                ></i>
               </div>
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Facebook</h3>
-              <p class="text-primary-200 dark:text-primary-100 mb-4">Follow us for updates</p>
-              <a href="https://www.facebook.com/YourPageName" target="_blank" 
-                 class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+              >
+                Facebook
+              </h3>
+              <p class="text-primary-200 dark:text-primary-100 mb-4">
+                Follow us for updates
+              </p>
+              <a
+                href="https://www.facebook.com/YourPageName"
+                target="_blank"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+              >
                 Visit Page
               </a>
             </div>
 
             <!-- Email -->
-            <div class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-              <div class="flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-xl mb-4 mx-auto">
-                <i data-lucide="mail" class="h-8 w-8 text-green-600 dark:text-green-400"></i>
+            <div
+              class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+            >
+              <div
+                class="flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-xl mb-4 mx-auto"
+              >
+                <i
+                  data-lucide="mail"
+                  class="h-8 w-8 text-green-600 dark:text-green-400"
+                ></i>
               </div>
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Email</h3>
-              <p class="text-primary-200 dark:text-primary-100 mb-4">campuscart@gmail.com</p>
-              <a href="mailto:campuscart@gmail.com" 
-                 class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+              >
+                Email
+              </h3>
+              <p class="text-primary-200 dark:text-primary-100 mb-4">
+                campuscart@gmail.com
+              </p>
+              <a
+                href="mailto:campuscart@gmail.com"
+                class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+              >
                 Send Email
               </a>
             </div>
 
             <!-- Phone -->
-            <div class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-              <div class="flex items-center justify-center w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-xl mb-4 mx-auto">
-                <i data-lucide="phone" class="h-8 w-8 text-purple-600 dark:text-purple-400"></i>
+            <div
+              class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+            >
+              <div
+                class="flex items-center justify-center w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-xl mb-4 mx-auto"
+              >
+                <i
+                  data-lucide="phone"
+                  class="h-8 w-8 text-purple-600 dark:text-purple-400"
+                ></i>
               </div>
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Phone</h3>
-              <p class="text-primary-200 dark:text-primary-100 mb-4">+8801234567890</p>
-              <a href="tel:+8801234567890" 
-                 class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+              >
+                Phone
+              </h3>
+              <p class="text-primary-200 dark:text-primary-100 mb-4">
+                +8801234567890
+              </p>
+              <a
+                href="tel:+8801234567890"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+              >
                 Call Now
               </a>
             </div>
@@ -206,10 +344,14 @@
       </section>
 
       <!-- Features Section -->
-      <section class="py-20 bg-gradient-to-r from-accent-50 to-primary-50 dark:from-background-dark dark:to-surface-dark">
+      <section
+        class="py-20 bg-gradient-to-r from-accent-50 to-primary-50 dark:from-background-dark dark:to-surface-dark"
+      >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+            <h2
+              class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+            >
               How It Works
             </h2>
             <p class="text-primary-200 dark:text-primary-100 text-lg">
@@ -219,37 +361,77 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="text-center">
-              <div class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg">
+              <div
+                class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg"
+              >
                 <i data-lucide="user-plus" class="h-10 w-10 text-white"></i>
               </div>
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-4">1. Sign Up</h3>
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-4"
+              >
+                1. Sign Up
+              </h3>
               <p class="text-primary-200 dark:text-primary-100">
                 Create your account with your CUET email and join the community
               </p>
             </div>
-            
+
             <div class="text-center">
-              <div class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg">
+              <div
+                class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg"
+              >
                 <i data-lucide="search" class="h-10 w-10 text-white"></i>
               </div>
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-4">2. Browse & Buy</h3>
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-4"
+              >
+                2. Browse & Buy
+              </h3>
               <p class="text-primary-200 dark:text-primary-100">
                 Explore products from fellow students and find great deals
               </p>
             </div>
-            
+
             <div class="text-center">
-              <div class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg">
+              <div
+                class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg"
+              >
                 <i data-lucide="tag" class="h-10 w-10 text-white"></i>
               </div>
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-4">3. Sell Items</h3>
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-4"
+              >
+                3. Sell Items
+              </h3>
               <p class="text-primary-200 dark:text-primary-100">
-                List your items for sale or rent and earn money from unused goods
+                List your items for sale or rent and earn money from unused
+                goods
               </p>
             </div>
           </div>
         </div>
       </section>
+      <script>
+        $(document).ready(function () {
+          // Only inject links if we are on the homepage
+          if (window.location.pathname === "/") {
+            $("#nav-links").append(`
+             <a
+              href="#about"
+              class="text-primary dark:text-primary-50 hover:text-accent transition-colors duration-200"
+            >
+              About
+            </a>
+            <a
+              href="#contact"
+              class="text-primary dark:text-primary-50 hover:text-accent transition-colors duration-200"
+            >
+              Contact
+            </a>
+        `);
+          }
+        });
+      </script>
     </main>
   </body>
 </html>
