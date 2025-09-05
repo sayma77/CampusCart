@@ -31,10 +31,17 @@ public class CartPageController {
     private ProductRepository productRepository;
 
     @GetMapping("/cart")
-    public String viewCart(Model model, Principal principal) {
+    public String viewCart(Model model, Principal principal,
+        @RequestParam(value = "sort", required = false) String sort) {
         User user = userRepository.findByEmail(principal.getName()).get();
         List<CartItem> cartItems = cartItemRepository.findByUser(user);
-
+        
+        // Sorting
+        if ("priceAsc".equals(sort)) {
+            cartItems.sort((a, b) -> Double.compare(a.getProduct().getPrice(), b.getProduct().getPrice()));
+        } else if ("priceDesc".equals(sort)) {
+            cartItems.sort((a, b) -> Double.compare(b.getProduct().getPrice(), a.getProduct().getPrice()));
+        }
         double subtotal = cartItems.stream()
                 .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
                 .sum();
@@ -42,6 +49,7 @@ public class CartPageController {
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("subtotal", subtotal);
         model.addAttribute("currency", "৳"); // optional helper
+        model.addAttribute("sort", sort);
         return "cart";
     }
 

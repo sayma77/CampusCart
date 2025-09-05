@@ -23,6 +23,20 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Cart Items -->
           <div class="lg:col-span-2 space-y-4">
+            <!-- Sorting Buttons -->
+            <div class="mb-6 flex gap-3 justify-start">
+              <a th:href="@{/cart(sort='priceAsc')}"
+                th:classappend="${sort == 'priceAsc'} ? 'bg-primary text-white shadow-lg' : 'bg-white dark:bg-surface-dark text-primary dark:text-accent border border-primary-100/20 dark:border-accent/20 hover:bg-primary hover:text-white transition-all'"
+                class="px-4 py-2 rounded-xl font-semibold shadow-sm transition-all duration-300 transform hover:scale-105">
+                Price: Low → High
+              </a>
+
+              <a th:href="@{/cart(sort='priceDesc')}"
+                th:classappend="${sort == 'priceDesc'} ? 'bg-primary text-white shadow-lg' : 'bg-white dark:bg-surface-dark text-primary dark:text-accent border border-primary-100/20 dark:border-accent/20 hover:bg-primary hover:text-white transition-all'"
+                class="px-4 py-2 rounded-xl font-semibold shadow-sm transition-all duration-300 transform hover:scale-105">
+                Price: High → Low
+              </a>
+            </div>
             <div
               th:each="item : ${cartItems}"
               class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-100/20 dark:border-accent/20 flex items-center gap-6"
@@ -161,7 +175,7 @@
 
                 <!-- Motivational Message -->
                 <div
-                  class="bg-accent/10 border-l-4 border-highlight rounded-lg p-3 text-center"
+                  class="bg-accent/10 border-highlight rounded-lg p-3 text-center"
                 >
                   <p
                     class="text-sm font-medium text-primary dark:text-primary-50 mb-1"
