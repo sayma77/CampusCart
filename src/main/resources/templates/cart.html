@@ -24,7 +24,7 @@
           <!-- Cart Items -->
           <div class="lg:col-span-2 space-y-4">
             <!-- Sorting Buttons -->
-            <div class="mb-6 flex gap-3 justify-start">
+            <div th:if="${!#lists.isEmpty(cartItems)}" class="mb-6 flex gap-3 justify-start">
               <a th:href="@{/cart(sort='priceAsc')}"
                 th:classappend="${sort == 'priceAsc'} ? 'bg-primary text-white shadow-lg' : 'bg-white dark:bg-surface-dark text-primary dark:text-accent border border-primary-100/20 dark:border-accent/20 hover:bg-primary hover:text-white transition-all'"
                 class="px-4 py-2 rounded-xl font-semibold shadow-sm transition-all duration-300 transform hover:scale-105">
