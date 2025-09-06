@@ -26,13 +26,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // optional: enable for production
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/about",
-                                "/contactus", "/admin/**", "/admin/js/**", "/admin/css/**", "/admin/images/**",
-                                "/admin")
+                                "/contactus", "/admin/**")
                         .permitAll()
+                        // .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/signin")
-                        .loginProcessingUrl("/login") // where POST should go
+                        .loginProcessingUrl("/signin") // where POST should go
                         .usernameParameter("email") // match form input name
                         .passwordParameter("password")
                         .defaultSuccessUrl("/", true)

@@ -47,7 +47,6 @@ public class SigninPageController {
         }
 
         User user = opuser.get();
-
         if (passwordEncoder.matches(signinData.getPassword(), user.getPassword())) {
             Cookie cookie = new Cookie("SESSION_ID", user.getId().toString());
             cookie.setHttpOnly(true);
@@ -60,8 +59,7 @@ public class SigninPageController {
             return ResponseEntity.ok(Map.of(
                     "status", "success",
                     "message", "Signin successful",
-                    "redirect", "/"
-            ));
+                    "redirect", "/"));
         }
 
         return ResponseEntity

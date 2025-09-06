@@ -4,18 +4,29 @@
     <title>Sign In - CampusCart</title>
   </head>
   <body th:replace="~{layout :: layout}">
-    <main class="min-h-screen flex items-center justify-center bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-12">
+    <main
+      class="min-h-screen flex items-center justify-center bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-12"
+    >
       <div class="w-full max-w-4xl mx-auto px-4">
-        <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-2xl overflow-hidden border border-primary-100/20 dark:border-accent/20">
+        <div
+          class="bg-white dark:bg-surface-dark rounded-2xl shadow-2xl overflow-hidden border border-primary-100/20 dark:border-accent/20"
+        >
           <div class="grid grid-cols-1 lg:grid-cols-2">
             <!-- Sign In Form -->
             <div class="p-8 lg:p-12">
               <div class="text-center mb-8">
                 <div class="flex items-center justify-center mb-4">
-                  <i data-lucide="package" class="h-10 w-10 text-primary mr-2"></i>
-                  <span class="text-2xl font-bold text-primary dark:text-accent">CampusCart</span>
+                  <i
+                    data-lucide="package"
+                    class="h-10 w-10 text-primary mr-2"
+                  ></i>
+                  <span class="text-2xl font-bold text-primary dark:text-accent"
+                    >CampusCart</span
+                  >
                 </div>
-                <h2 class="text-3xl font-bold text-primary dark:text-primary-50 mb-2">
+                <h2
+                  class="text-3xl font-bold text-primary dark:text-primary-50 mb-2"
+                >
                   Welcome Back
                 </h2>
                 <p class="text-primary-200 dark:text-primary-100">
@@ -23,12 +34,18 @@
                 </p>
               </div>
 
-              <form th:action="@{/login}" method="post" class="space-y-6">
+              <form th:action="@{/signin}" method="post" class="space-y-6">
                 <!-- Email -->
                 <div>
-                  <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">CUET Email</label>
+                  <label
+                    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+                    >CUET Email</label
+                  >
                   <div class="relative">
-                    <i data-lucide="mail" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-200"></i>
+                    <i
+                      data-lucide="mail"
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-200"
+                    ></i>
                     <input
                       type="email"
                       name="email"
@@ -43,9 +60,15 @@
 
                 <!-- Password -->
                 <div>
-                  <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">Password</label>
+                  <label
+                    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+                    >Password</label
+                  >
                   <div class="relative">
-                    <i data-lucide="lock" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-200"></i>
+                    <i
+                      data-lucide="lock"
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-200"
+                    ></i>
                     <input
                       type="password"
                       name="password"
@@ -68,20 +91,29 @@
 
               <!-- Forgot Password -->
               <div class="text-center mt-6">
-                <a href="/forgot-password" class="text-accent hover:text-primary transition-colors duration-200 text-sm">
+                <a
+                  href="/forgot-password"
+                  class="text-accent hover:text-primary transition-colors duration-200 text-sm"
+                >
                   Forgot your password?
                 </a>
               </div>
             </div>
 
             <!-- Side Panel -->
-            <div class="bg-gradient-to-br from-primary to-accent p-8 lg:p-12 text-white flex flex-col justify-center">
+            <div
+              class="bg-gradient-to-br from-primary to-accent p-8 lg:p-12 text-white flex flex-col justify-center"
+            >
               <div class="text-center">
-                <i data-lucide="users" class="h-16 w-16 mx-auto mb-6 text-white/80"></i>
+                <i
+                  data-lucide="users"
+                  class="h-16 w-16 mx-auto mb-6 text-white/80"
+                ></i>
                 <h3 class="text-2xl font-bold mb-4">New to CampusCart?</h3>
                 <p class="text-white/90 mb-8 leading-relaxed">
-                  Join thousands of CUET students who are already buying, selling, and trading on our platform. 
-                  Create your account and start exploring great deals today!
+                  Join thousands of CUET students who are already buying,
+                  selling, and trading on our platform. Create your account and
+                  start exploring great deals today!
                 </p>
                 <a
                   href="/signup"

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.UserRepository;
 
-
 @Controller
 public class SignupPageController {
 
@@ -36,8 +35,9 @@ public class SignupPageController {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
         userRepository.save(user);
         return "redirect:/home";
-    }   
-    
+    }
+
 }
