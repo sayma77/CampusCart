@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Management - CampusCart Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "dark-blue": {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+                950: "#082f49",
+              },
+              midnight: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+                950: "#020617",
+              },
+            },
+          },
+        },
+      };
+    </script>
     <script
       src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
       defer
@@ -17,106 +53,145 @@
       [x-cloak] {
         display: none !important;
       }
+      body {
+        background: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e293b 50%,
+          #0c4a6e 100%
+        );
+        min-height: 100vh;
+      }
+      .glass-effect {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+      }
     </style>
   </head>
-  <body>
+  <body class="text-slate-100 min-h-screen">
     <div th:insert="admin/admin-layout :: layout('users', ~{::content})">
       <div th:fragment="content" x-data="userManagement()">
         <!-- Page Header -->
-        <div class="md:flex md:items-center md:justify-between mb-6">
+        <div class="md:flex md:items-center md:justify-between mb-8">
           <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-900">
+            <h2
+              class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+            >
               User Management
             </h2>
-            <p class="mt-1 text-sm text-gray-500">
-              Manage all users, roles, and permissions
+            <p class="mt-2 text-slate-400 text-lg">
+              Manage and monitor all CampusCart users
             </p>
           </div>
         </div>
 
-        <!-- Filters -->
-        <div class="bg-white shadow rounded-lg mb-6">
-          <div class="px-4 py-5 sm:p-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Search
-              </label>
+        <!-- Search and Filters -->
+        <div class="glass-effect rounded-2xl mb-8 border border-cyan-500/30">
+          <div class="px-8 py-6">
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+              >
+                <i class="fas fa-search text-slate-400"></i>
+              </div>
               <input
                 type="text"
                 x-model="searchQuery"
                 @input="filterUsers()"
-                placeholder="Search users..."
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Search users by name, email, or role..."
+                class="w-full pl-12 pr-4 py-4 rounded-xl bg-dark-blue-900/50 border border-cyan-500/30 text-slate-100 placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 focus:outline-none transition-all"
               />
             </div>
           </div>
         </div>
 
         <!-- Users Table -->
-        <div class="bg-white shadow rounded-lg overflow-hidden">
-          <div class="min-w-full divide-y divide-gray-200">
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
+        <div
+          class="glass-effect rounded-2xl overflow-hidden border border-cyan-500/30"
+        >
+          <div class="overflow-x-auto">
+            <table class="min-w-full">
+              <thead
+                class="bg-gradient-to-r from-dark-blue-900/80 to-dark-blue-800/80"
+              >
                 <tr>
                   <th
-                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    class="px-8 py-6 text-left text-sm font-semibold text-cyan-300 uppercase tracking-wider border-b border-cyan-500/20"
                   >
-                    User
+                    User Information
                   </th>
                   <th
-                    class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    class="px-8 py-6 text-center text-sm font-semibold text-cyan-300 uppercase tracking-wider border-b border-cyan-500/20"
+                  ></th>
+                  <th
+                    class="px-8 py-6 text-right text-sm font-semibold text-cyan-300 uppercase tracking-wider border-b border-cyan-500/20"
                   >
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-200">
-                <tr th:each="user : ${users}" class="hover:bg-gray-50">
+              <tbody class="divide-y divide-slate-700/50">
+                <tr
+                  th:each="user : ${users}"
+                  class="hover:bg-dark-blue-800/30 transition-colors"
+                >
                   <!-- User info -->
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-8 py-6 whitespace-nowrap">
                     <div class="flex items-center">
                       <div
-                        class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center"
+                        class="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center shadow-lg"
                       >
                         <span
                           th:text="${user.initials}"
-                          class="text-sm font-medium text-gray-700"
+                          class="text-lg font-bold text-white"
                           >JD</span
                         >
                       </div>
-                      <div class="ml-4">
+                      <div class="ml-6">
                         <div
                           th:text="${user.name}"
-                          class="text-sm font-medium text-gray-900"
+                          class="text-lg font-semibold text-white"
                         >
                           John Doe
                         </div>
                         <div
                           th:text="${user.email}"
-                          class="text-sm text-gray-500"
+                          class="text-slate-400 mt-1"
                         >
                           john@example.com
+                        </div>
+                        <div class="flex items-center mt-2">
+                          <span
+                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-700 text-slate-300"
+                          >
+                            <i class="fas fa-graduation-cap mr-2"></i>
+                            Student
+                          </span>
                         </div>
                       </div>
                     </div>
                   </td>
 
+                  <!-- Status -->
+                  <td class="px-8 py-6 whitespace-nowrap text-center"></td>
+
                   <!-- Actions -->
-                  <td
-                    class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2 text-right"
-                  >
+                  <td class="px-8 py-6 whitespace-nowrap text-right space-x-3">
                     <button
                       @click="editUser(user)"
                       th:attr="data-user-id=${user.id}"
-                      class="text-blue-600 hover:text-blue-900"
+                      class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-lg"
                     >
+                      <i class="fas fa-edit mr-2"></i>
                       Edit
                     </button>
 
                     <button
                       @click="deleteUser(user.id)"
-                      class="text-red-600 hover:text-red-900"
+                      class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-lg"
                     >
+                      <i class="fas fa-trash mr-2"></i>
                       Delete
                     </button>
                   </td>
@@ -127,18 +202,18 @@
 
           <!-- Pagination -->
           <div
-            class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
+            class="bg-gradient-to-r from-dark-blue-900/50 to-dark-blue-800/50 px-8 py-4 flex items-center justify-between border-t border-slate-700/50"
           >
             <div class="flex-1 flex justify-between sm:hidden">
               <button
                 th:disabled="${currentPage == 1}"
-                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400"
+                class="relative inline-flex items-center px-4 py-2 border border-slate-600 text-sm font-medium rounded-lg text-slate-300 bg-dark-blue-800 hover:bg-dark-blue-700 disabled:bg-slate-800 disabled:text-slate-500 transition-colors"
               >
                 Previous
               </button>
               <button
                 th:disabled="${currentPage == totalPages}"
-                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400"
+                class="ml-3 relative inline-flex items-center px-4 py-2 border border-slate-600 text-sm font-medium rounded-lg text-slate-300 bg-dark-blue-800 hover:bg-dark-blue-700 disabled:bg-slate-800 disabled:text-slate-500 transition-colors"
               >
                 Next
               </button>
@@ -147,23 +222,31 @@
               class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between"
             >
               <div>
-                <p class="text-sm text-gray-700">
+                <p class="text-slate-400">
                   Showing
-                  <span th:text="${startIndex}" class="font-medium">1</span> to
-                  <span th:text="${endIndex}" class="font-medium">10</span> of
-                  <span th:text="${totalUsers}" class="font-medium">97</span>
+                  <span th:text="${startIndex}" class="font-semibold text-white"
+                    >1</span
+                  >
+                  to
+                  <span th:text="${endIndex}" class="font-semibold text-white"
+                    >10</span
+                  >
+                  of
+                  <span th:text="${totalUsers}" class="font-semibold text-white"
+                    >97</span
+                  >
                   results
                 </p>
               </div>
               <div>
                 <nav
-                  class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                  class="relative z-0 inline-flex rounded-lg shadow-sm -space-x-px"
                 >
                   <button
                     th:each="page : ${#numbers.sequence(1, totalPages)}"
                     th:text="${page}"
-                    th:class="${page == currentPage} ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'"
-                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                    th:class="${page == currentPage} ? 'bg-gradient-to-r from-cyan-500 to-blue-500 border-cyan-500 text-white' : 'bg-dark-blue-800 border-slate-600 text-slate-300 hover:bg-dark-blue-700'"
+                    class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors"
                   >
                     1
                   </button>
@@ -197,7 +280,6 @@
           },
 
           saveUser() {
-            // Implementation would send data to backend
             console.log("Saving user:", this.userForm);
             this.showUserModal = false;
             this.resetForm();
@@ -205,7 +287,6 @@
 
           deleteUser(userId) {
             if (confirm("Are you sure you want to delete this user?")) {
-              // Implementation would delete user
               console.log("Deleting user:", userId);
             }
           },
@@ -213,13 +294,11 @@
           toggleUserStatus(userId, currentStatus) {
             const action = currentStatus === "ACTIVE" ? "block" : "unblock";
             if (confirm(`Are you sure you want to ${action} this user?`)) {
-              // Implementation would toggle user status
               console.log(`${action} user:`, userId);
             }
           },
 
           filterUsers() {
-            // Implementation would filter users based on search and filters
             console.log("Filtering users:", {
               search: this.searchQuery,
               role: this.filterRole,

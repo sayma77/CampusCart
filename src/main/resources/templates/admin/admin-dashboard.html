@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - CampusCart Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "dark-blue": {
+                50: "#f0f9ff",
+                100: "#e0f2fe",
+                200: "#bae6fd",
+                300: "#7dd3fc",
+                400: "#38bdf8",
+                500: "#0ea5e9",
+                600: "#0284c7",
+                700: "#0369a1",
+                800: "#075985",
+                900: "#0c4a6e",
+                950: "#082f49",
+              },
+              midnight: {
+                50: "#f8fafc",
+                100: "#f1f5f9",
+                200: "#e2e8f0",
+                300: "#cbd5e1",
+                400: "#94a3b8",
+                500: "#64748b",
+                600: "#475569",
+                700: "#334155",
+                800: "#1e293b",
+                900: "#0f172a",
+                950: "#020617",
+              },
+            },
+          },
+        },
+      };
+    </script>
     <script
       src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
       defer
@@ -14,38 +50,80 @@
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        background: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e293b 50%,
+          #0c4a6e 100%
+        );
+        min-height: 100vh;
+      }
+      .glass-effect {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+      }
+      .glow-effect {
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+      }
+      .stat-card {
+        background: linear-gradient(
+          135deg,
+          rgba(30, 41, 59, 0.8) 0%,
+          rgba(15, 23, 42, 0.9) 100%
+        );
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        transition: all 0.3s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+        border-color: rgba(56, 189, 248, 0.5);
+      }
+    </style>
   </head>
-  <body>
+  <body class="text-slate-100 min-h-screen">
     <div th:replace="admin/admin-layout :: layout('dashboard', ~{::content})">
       <div th:fragment="content">
         <!-- Page Header -->
         <div class="md:flex md:items-center md:justify-between mb-8">
           <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl">
-              Dashboard
+            <h2
+              class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+            >
+              Dashboard Overview
             </h2>
-            <p class="mt-1 text-sm text-gray-500">
-              Welcome back to CampusCart Admin
+            <p class="mt-2 text-slate-400 text-lg">
+              Welcome back to your CampusCart admin center
             </p>
           </div>
         </div>
 
         <!-- Stats Overview -->
-        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
           <!-- Total Users -->
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
+          <div class="stat-card rounded-2xl shadow-xl">
+            <div class="p-6">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <i class="fas fa-users h-8 w-8 text-blue-400"></i>
+                  <div
+                    class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl flex items-center justify-center"
+                  >
+                    <i class="fas fa-users text-white text-xl"></i>
+                  </div>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
+                    >
                       Total Users
                     </dt>
                     <dd
-                      class="text-lg font-medium text-gray-900"
+                      class="text-2xl font-bold text-white mt-1"
                       th:text="${stats.totalUsers}"
                     >
                       1,234
@@ -54,32 +132,40 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-5 py-3">
+            <div
+              class="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 px-6 py-3 rounded-b-2xl border-t border-cyan-500/20"
+            >
               <div class="text-sm">
                 <span
                   th:text="${stats.newUsersThisWeek}"
-                  class="font-medium text-green-600"
+                  class="font-semibold text-green-400"
                   >+12</span
                 >
-                <span class="text-gray-600">this week</span>
+                <span class="text-slate-400 ml-1">new this week</span>
               </div>
             </div>
           </div>
 
           <!-- Pending Products -->
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
+          <div class="stat-card rounded-2xl shadow-xl">
+            <div class="p-6">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <i class="fas fa-clock h-8 w-8 text-amber-400"></i>
+                  <div
+                    class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center"
+                  >
+                    <i class="fas fa-clock text-white text-xl"></i>
+                  </div>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">
-                      Pending Products
+                    <dt
+                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
+                    >
+                      Pending Reviews
                     </dt>
                     <dd
-                      class="text-lg font-medium text-gray-900"
+                      class="text-2xl font-bold text-white mt-1"
                       th:text="${stats.pendingProducts}"
                     >
                       23
@@ -88,31 +174,39 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-5 py-3">
+            <div
+              class="bg-gradient-to-r from-amber-900/30 to-orange-900/30 px-6 py-3 rounded-b-2xl border-t border-amber-500/20"
+            >
               <div class="text-sm">
                 <a
                   href="/admin/products?status=pending"
-                  class="text-amber-600 hover:text-amber-700 font-medium"
-                  >Review now</a
+                  class="text-amber-400 hover:text-amber-300 font-semibold transition-colors"
+                  >Review now →</a
                 >
               </div>
             </div>
           </div>
 
           <!-- Active Orders -->
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
+          <div class="stat-card rounded-2xl shadow-xl">
+            <div class="p-6">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <i class="fas fa-shopping-cart h-8 w-8 text-green-400"></i>
+                  <div
+                    class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-600 rounded-xl flex items-center justify-center"
+                  >
+                    <i class="fas fa-shopping-cart text-white text-xl"></i>
+                  </div>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
+                    >
                       Active Orders
                     </dt>
                     <dd
-                      class="text-lg font-medium text-gray-900"
+                      class="text-2xl font-bold text-white mt-1"
                       th:text="${stats.activeOrders}"
                     >
                       89
@@ -121,32 +215,40 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-5 py-3">
+            <div
+              class="bg-gradient-to-r from-emerald-900/30 to-green-900/30 px-6 py-3 rounded-b-2xl border-t border-emerald-500/20"
+            >
               <div class="text-sm">
                 <span
                   th:text="${stats.ordersToday}"
-                  class="font-medium text-green-600"
+                  class="font-semibold text-green-400"
                   >+5</span
                 >
-                <span class="text-gray-600">today</span>
+                <span class="text-slate-400 ml-1">today</span>
               </div>
             </div>
           </div>
 
           <!-- Revenue -->
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
+          <div class="stat-card rounded-2xl shadow-xl">
+            <div class="p-6">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <i class="fas fa-dollar-sign h-8 w-8 text-green-400"></i>
+                  <div
+                    class="w-12 h-12 bg-gradient-to-br from-violet-400 to-purple-600 rounded-xl flex items-center justify-center"
+                  >
+                    <i class="fas fa-dollar-sign text-white text-xl"></i>
+                  </div>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                   <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">
+                    <dt
+                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
+                    >
                       Monthly Revenue
                     </dt>
                     <dd
-                      class="text-lg font-medium text-gray-900"
+                      class="text-2xl font-bold text-white mt-1"
                       th:text="'$' + ${stats.monthlyRevenue}"
                     >
                       $12,345
@@ -155,127 +257,91 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-5 py-3">
+            <div
+              class="bg-gradient-to-r from-violet-900/30 to-purple-900/30 px-6 py-3 rounded-b-2xl border-t border-violet-500/20"
+            >
               <div class="text-sm">
                 <span
                   th:text="${stats.revenueGrowth}"
-                  class="font-medium text-green-600"
+                  class="font-semibold text-green-400"
                   >+8.2%</span
                 >
-                <span class="text-gray-600">vs last month</span>
+                <span class="text-slate-400 ml-1">vs last month</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Quick Actions & Recent Activity -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <!-- Quick Actions -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
-              <h3 class="text-lg font-medium text-gray-900 mb-4">
-                Quick Actions
-              </h3>
-              <div class="grid grid-cols-2 gap-4">
-                <button
-                  onclick="window.location.href='/admin/users'"
-                  class="bg-blue-50 hover:bg-blue-100 p-4 rounded-lg text-center transition-colors"
-                >
-                  <i class="fas fa-user-plus text-blue-600 text-2xl mb-2"></i>
-                  <p class="text-sm font-medium text-blue-600">Add User</p>
-                </button>
-                <button
-                  onclick="window.location.href='/admin/products?status=pending'"
-                  class="bg-amber-50 hover:bg-amber-100 p-4 rounded-lg text-center transition-colors"
-                >
-                  <i class="fas fa-clock text-amber-600 text-2xl mb-2"></i>
-                  <p class="text-sm font-medium text-amber-600">
-                    Review Products
-                  </p>
-                </button>
-                <button
-                  onclick="window.location.href='/admin/categories'"
-                  class="bg-green-50 hover:bg-green-100 p-4 rounded-lg text-center transition-colors"
-                >
-                  <i class="fas fa-tags text-green-600 text-2xl mb-2"></i>
-                  <p class="text-sm font-medium text-green-600">Add Category</p>
-                </button>
-                <button
-                  onclick="window.location.href='/admin/analytics'"
-                  class="bg-purple-50 hover:bg-purple-100 p-4 rounded-lg text-center transition-colors"
-                >
-                  <i class="fas fa-chart-bar text-purple-600 text-2xl mb-2"></i>
-                  <p class="text-sm font-medium text-purple-600">
-                    View Reports
-                  </p>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Recent Activity -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-4 py-5 sm:p-6">
-              <h3 class="text-lg font-medium text-gray-900 mb-4">
-                Recent Activity
-              </h3>
-              <div class="space-y-4 max-h-64 overflow-y-auto">
+        <!-- Quick Actions -->
+        <div
+          class="glass-effect rounded-2xl shadow-2xl border border-cyan-500/30"
+        >
+          <div class="px-8 py-8">
+            <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+              <i class="fas fa-bolt mr-3 text-cyan-400"></i>
+              Quick Actions
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <button
+                onclick="window.location.href='/admin/users'"
+                class="group bg-gradient-to-br from-dark-blue-800/50 to-dark-blue-900/50 hover:from-cyan-600/20 hover:to-blue-600/20 p-6 rounded-xl text-center transition-all duration-300 border border-slate-700 hover:border-cyan-500/50 hover:shadow-lg"
+              >
                 <div
-                  th:each="activity : ${recentActivities}"
-                  class="flex items-center space-x-3"
+                  class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform"
                 >
-                  <div class="flex-shrink-0">
-                    <div
-                      th:class="'h-2 w-2 rounded-full ' + ${activity.statusColor}"
-                    ></div>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p
-                      th:text="${activity.description}"
-                      class="text-sm text-gray-900"
-                    >
-                      New user registered: john@example.com
-                    </p>
-                    <p
-                      th:text="${activity.timeAgo}"
-                      class="text-xs text-gray-500"
-                    >
-                      5 minutes ago
-                    </p>
-                  </div>
+                  <i class="fas fa-user-cog text-white text-2xl"></i>
                 </div>
-              </div>
+                <p
+                  class="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors"
+                >
+                  Manage Users
+                </p>
+                <p class="text-slate-400 text-sm mt-2">
+                  Add, edit, or review user accounts
+                </p>
+              </button>
+
+              <button
+                onclick="window.location.href='/admin/products?status=pending'"
+                class="group bg-gradient-to-br from-dark-blue-800/50 to-dark-blue-900/50 hover:from-amber-600/20 hover:to-orange-600/20 p-6 rounded-xl text-center transition-all duration-300 border border-slate-700 hover:border-amber-500/50 hover:shadow-lg"
+              >
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform"
+                >
+                  <i class="fas fa-clock text-white text-2xl"></i>
+                </div>
+                <p
+                  class="text-lg font-semibold text-white group-hover:text-amber-400 transition-colors"
+                >
+                  Review Products
+                </p>
+                <p class="text-slate-400 text-sm mt-2">
+                  Approve or reject pending listings
+                </p>
+              </button>
+
+              <button
+                onclick="window.location.href='/admin/categories'"
+                class="group bg-gradient-to-br from-dark-blue-800/50 to-dark-blue-900/50 hover:from-emerald-600/20 hover:to-green-600/20 p-6 rounded-xl text-center transition-all duration-300 border border-slate-700 hover:border-emerald-500/50 hover:shadow-lg"
+              >
+                <div
+                  class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform"
+                >
+                  <i class="fas fa-tags text-white text-2xl"></i>
+                </div>
+                <p
+                  class="text-lg font-semibold text-white group-hover:text-emerald-400 transition-colors"
+                >
+                  Manage Categories
+                </p>
+                <p class="text-slate-400 text-sm mt-2">
+                  Organize and create product categories
+                </p>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- <script>
-        // Sales Chart
-        const ctx = document.getElementById('salesChart').getContext('2d');
-        const salesChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [${salesChartLabels}],
-                datasets: [{
-                    label: 'Sales',
-                    data: [[${salesChartData}]],
-                    borderColor: 'rgb(59, 130, 246)',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script> -->
   </body>
 </html>
