@@ -19,7 +19,7 @@ public class GlobalControllerAdvice {
     public void addAdminFlag(Model model, Principal principal) {
         boolean isAdmin = false;
         if (principal != null) {
-            isAdmin = userService.isAdmin(principal.getName());
+            isAdmin = userService.isAdmin(principal);
         }
         model.addAttribute("isAdmin", isAdmin);
     }

@@ -1,5 +1,7 @@
 package com.noobs.CampusCart.service;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,4 +48,18 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public boolean isAdmin(Principal principal) {
+        if (principal == null) {
+            return false; // not logged in
+        }
+        User user = userRepository.findByEmail(principal.getName()).orElse(null);
+
+        if (user == null) {
+            return false;
+        }
+
+        return "ADMIN".equalsIgnoreCase(user.getRole());
+    }
+
 }
