@@ -11,8 +11,8 @@ public class HomePageController {
         // model.addAttribute("platformName", "CampusCart");
         // model.addAttribute("user", new User("Sayma"));
         // model.addAttribute("items", List.of(
-        //     new Item("Textbook", 250),
-        //     new Item("Lamp", 500)
+        // new Item("Textbook", 250),
+        // new Item("Lamp", 500)
         // ));
         return "home";
     }

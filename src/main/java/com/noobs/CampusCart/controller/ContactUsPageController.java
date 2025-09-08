@@ -1,6 +1,5 @@
 package com.noobs.CampusCart.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +9,6 @@ public class ContactUsPageController {
 
     @GetMapping("/contactus")
     public String contactUsPage(Model model) {
-        return "contactus"; 
+        return "contactus";
     }
 }

@@ -28,7 +28,7 @@ public class ProfilePageController {
     private OrderRepository orderRepository;
 
     @Autowired
-    private ProductRepository productRepository; 
+    private ProductRepository productRepository;
 
     private final UserService userService;
 
@@ -38,9 +38,9 @@ public class ProfilePageController {
 
     @GetMapping("/profile")
     public String profilePage(
-        @RequestParam(value = "filter", required = false, defaultValue = "all") String filter,
-        Model model,
-        Principal principal) {
+            @RequestParam(value = "filter", required = false, defaultValue = "all") String filter,
+            Model model,
+            Principal principal) {
         User user = userService.getUserByEmail(principal.getName());
         Map<String, String> user_data = new HashMap<>();
         user_data.put("name", user.getName());
@@ -56,10 +56,9 @@ public class ProfilePageController {
                 orders = orderRepository.findByUser(user).stream()
                         .map(order -> {
                             order.setProducts(
-                                order.getProducts().stream()
-                                    .filter(p -> p.getSellOrRent().equalsIgnoreCase("sell"))
-                                    .toList()
-                            );
+                                    order.getProducts().stream()
+                                            .filter(p -> p.getSellOrRent().equalsIgnoreCase("sell"))
+                                            .toList());
                             return order;
                         })
                         .filter(o -> !o.getProducts().isEmpty())
@@ -70,10 +69,9 @@ public class ProfilePageController {
                 orders = orderRepository.findByUser(user).stream()
                         .map(order -> {
                             order.setProducts(
-                                order.getProducts().stream()
-                                    .filter(p -> p.getSellOrRent().equalsIgnoreCase("rent"))
-                                    .toList()
-                            );
+                                    order.getProducts().stream()
+                                            .filter(p -> p.getSellOrRent().equalsIgnoreCase("rent"))
+                                            .toList());
                             return order;
                         })
                         .filter(o -> !o.getProducts().isEmpty())
@@ -88,9 +86,7 @@ public class ProfilePageController {
                 products = productRepository.findByUserAndSellOrRent(user, "rent");
                 break;
 
-            
         }
-        
 
         // Format dates for orders
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
@@ -104,7 +100,6 @@ public class ProfilePageController {
         model.addAttribute("selectedFilter", filter);
         return "profile";
     }
-
 
     @PostMapping("/profile/update")
     public String updateProfile(

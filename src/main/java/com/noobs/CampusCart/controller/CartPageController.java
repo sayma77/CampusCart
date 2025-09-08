@@ -32,10 +32,10 @@ public class CartPageController {
 
     @GetMapping("/cart")
     public String viewCart(Model model, Principal principal,
-        @RequestParam(value = "sort", required = false) String sort) {
+            @RequestParam(value = "sort", required = false) String sort) {
         User user = userRepository.findByEmail(principal.getName()).get();
         List<CartItem> cartItems = cartItemRepository.findByUser(user);
-        
+
         // Sorting
         if ("priceAsc".equals(sort)) {
             cartItems.sort((a, b) -> Double.compare(a.getProduct().getPrice(), b.getProduct().getPrice()));
@@ -75,11 +75,12 @@ public class CartPageController {
         }
         return "redirect:/marketplace";
     }
+
     @PostMapping("/cart/update")
     public String updateCartQuantity(
-        @RequestParam("productId") Long productId,
-        @RequestParam("quantity") int quantity,
-        Principal principal) {
+            @RequestParam("productId") Long productId,
+            @RequestParam("quantity") int quantity,
+            Principal principal) {
         User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Product product = productRepository.findById(productId)

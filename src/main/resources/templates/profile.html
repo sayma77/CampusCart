@@ -4,47 +4,81 @@
     <title>Profile - CampusCart</title>
   </head>
   <body th:replace="~{layout :: layout}">
-    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8">
+    <main
+      class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <!-- Profile Information -->
           <div class="lg:col-span-1">
             <!-- Profile Card -->
-            <div class="bg-gradient-to-br from-primary to-accent rounded-2xl p-8 text-white mb-6 shadow-xl">
+            <div
+              class="bg-gradient-to-br from-primary to-accent rounded-2xl p-8 text-white mb-6 shadow-xl"
+            >
               <div class="text-center">
-                <div class="w-24 h-24 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <div
+                  class="w-24 h-24 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center"
+                >
                   <i data-lucide="user" class="h-12 w-12 text-white"></i>
                 </div>
-                <h2 class="text-xl font-bold mb-2" th:text="${user.username != null ? user.username : 'John Doe'}">
+                <h2
+                  class="text-xl font-bold mb-2"
+                  th:text="${user.username != null ? user.username : 'John Doe'}"
+                >
                   John Doe
                 </h2>
-                <p class="text-white/80" th:text="${user.email != null ? user.email : 'john.doe@student.cuet.ac.bd'}">
+                <p
+                  class="text-white/80"
+                  th:text="${user.email != null ? user.email : 'john.doe@student.cuet.ac.bd'}"
+                >
                   john.doe@student.cuet.ac.bd
                 </p>
-                <div th:if="${user.hall != null}" class="mt-2 flex items-center justify-center">
+                <div
+                  th:if="${user.hall != null}"
+                  class="mt-2 flex items-center justify-center"
+                >
                   <i data-lucide="map-pin" class="h-4 w-4 mr-1"></i>
-                  <span class="text-white/80 text-sm" th:text="${user.hall}">Hall</span>
+                  <span class="text-white/80 text-sm" th:text="${user.hall}"
+                    >Hall</span
+                  >
                 </div>
               </div>
             </div>
 
             <!-- Profile Form -->
-            <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20">
-              <h3 class="text-lg font-bold text-primary dark:text-primary-50 mb-6 flex items-center">
+            <div
+              class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20"
+            >
+              <h3
+                class="text-lg font-bold text-primary dark:text-primary-50 mb-6 flex items-center"
+              >
                 <i data-lucide="settings" class="h-5 w-5 mr-2"></i>
                 Profile Settings
               </h3>
 
-              <div th:if="${success}" class="bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-700 text-green-800 dark:text-green-300 p-4 rounded-lg mb-6">
+              <div
+                th:if="${success}"
+                class="bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-700 text-green-800 dark:text-green-300 p-4 rounded-lg mb-6"
+              >
                 <p th:text="${success}"></p>
               </div>
 
-              <form th:action="@{/profile/update}" method="post" class="space-y-4">
+              <form
+                th:action="@{/profile/update}"
+                method="post"
+                class="space-y-4"
+              >
                 <!-- Name -->
                 <div>
-                  <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">Full Name</label>
+                  <label
+                    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+                    >Full Name</label
+                  >
                   <div class="relative">
-                    <i data-lucide="user" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"></i>
+                    <i
+                      data-lucide="user"
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"
+                    ></i>
                     <input
                       type="text"
                       name="name"
@@ -57,9 +91,15 @@
 
                 <!-- Email (readonly) -->
                 <div>
-                  <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">CUET Email</label>
+                  <label
+                    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+                    >CUET Email</label
+                  >
                   <div class="relative">
-                    <i data-lucide="mail" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"></i>
+                    <i
+                      data-lucide="mail"
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"
+                    ></i>
                     <input
                       type="email"
                       name="email"
@@ -73,9 +113,15 @@
 
                 <!-- Username (readonly) -->
                 <div>
-                  <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">Username</label>
+                  <label
+                    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+                    >Username</label
+                  >
                   <div class="relative">
-                    <i data-lucide="at-sign" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"></i>
+                    <i
+                      data-lucide="at-sign"
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"
+                    ></i>
                     <input
                       type="text"
                       name="username"
@@ -89,31 +135,81 @@
 
                 <!-- Hall Selection -->
                 <div>
-                  <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">Hall/Location</label>
+                  <label
+                    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+                    >Hall/Location</label
+                  >
                   <div class="relative">
-                    <i data-lucide="map-pin" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"></i>
+                    <i
+                      data-lucide="map-pin"
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"
+                    ></i>
                     <select
                       name="hall"
                       class="w-full pl-10 pr-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200 appearance-none"
                     >
                       <option value="">Select Your Hall</option>
-                      <option value="qk_hall" th:selected="${user.hall != null and user.hall == 'qk_hall'}">QK Hall</option>
-                      <option value="north_hall" th:selected="${user.hall != null and user.hall == 'north_hall'}">North Hall</option>
-                      <option value="south_hall" th:selected="${user.hall != null and user.hall == 'south_hall'}">South Hall</option>
-                      <option value="bb_hall" th:selected="${user.hall != null and user.hall == 'bb_hall'}">BB Hall</option>
-                      <option value="shamshen_nahar_hall" th:selected="${user.hall != null and user.hall == 'shamshen_nahar_hall'}">Shamshen Nahar Hall</option>
-                      <option value="rabeya_hall" th:selected="${user.hall != null and user.hall == 'rabeya_hall'}">Rabeya Hall</option>
-                      <option value="sufiya_kamal_hall" th:selected="${user.hall != null and user.hall == 'sufiya_kamal_hall'}">Sufiya Kamal Hall</option>
+                      <option
+                        value="qk_hall"
+                        th:selected="${user.hall != null and user.hall == 'qk_hall'}"
+                      >
+                        QK Hall
+                      </option>
+                      <option
+                        value="north_hall"
+                        th:selected="${user.hall != null and user.hall == 'north_hall'}"
+                      >
+                        North Hall
+                      </option>
+                      <option
+                        value="south_hall"
+                        th:selected="${user.hall != null and user.hall == 'south_hall'}"
+                      >
+                        South Hall
+                      </option>
+                      <option
+                        value="bb_hall"
+                        th:selected="${user.hall != null and user.hall == 'bb_hall'}"
+                      >
+                        BB Hall
+                      </option>
+                      <option
+                        value="shamshen_nahar_hall"
+                        th:selected="${user.hall != null and user.hall == 'shamshen_nahar_hall'}"
+                      >
+                        Shamshen Nahar Hall
+                      </option>
+                      <option
+                        value="rabeya_hall"
+                        th:selected="${user.hall != null and user.hall == 'rabeya_hall'}"
+                      >
+                        Rabeya Hall
+                      </option>
+                      <option
+                        value="sufiya_kamal_hall"
+                        th:selected="${user.hall != null and user.hall == 'sufiya_kamal_hall'}"
+                      >
+                        Sufiya Kamal Hall
+                      </option>
                     </select>
-                    <i data-lucide="chevron-down" class="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200 pointer-events-none"></i>
+                    <i
+                      data-lucide="chevron-down"
+                      class="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200 pointer-events-none"
+                    ></i>
                   </div>
                 </div>
 
                 <!-- Password -->
                 <div>
-                  <label class="block text-sm font-medium text-primary dark:text-primary-50 mb-2">New Password</label>
+                  <label
+                    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+                    >New Password</label
+                  >
                   <div class="relative">
-                    <i data-lucide="lock" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"></i>
+                    <i
+                      data-lucide="lock"
+                      class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primary-200"
+                    ></i>
                     <input
                       type="password"
                       name="password"
@@ -136,53 +232,86 @@
 
           <!-- Orders/Items List -->
           <div class="lg:col-span-2">
-            <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20">
+            <div
+              class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20"
+            >
               <div class="flex items-center justify-between mb-6">
-                <h3 class="text-lg font-bold text-primary dark:text-primary-50 flex items-center">
+                <h3
+                  class="text-lg font-bold text-primary dark:text-primary-50 flex items-center"
+                >
                   <i data-lucide="package" class="h-5 w-5 mr-2"></i>
                   My Orders & Items
                 </h3>
-                
+
                 <!-- Filter Buttons -->
                 <div class="flex space-x-2">
                   <a th:href="@{/profile(filter='buy')}">
-                    <button th:class="${selectedFilter == 'buy'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'">
+                    <button
+                      th:class="${selectedFilter == 'buy'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
+                    >
                       Buy
                     </button>
                   </a>
                   <a th:href="@{/profile(filter='sell')}">
-                    <button th:class="${selectedFilter == 'sell'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'">
+                    <button
+                      th:class="${selectedFilter == 'sell'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
+                    >
                       Sell
                     </button>
                   </a>
                   <a th:href="@{/profile(filter='taken_rent')}">
-                    <button th:class="${selectedFilter == 'taken_rent'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'">
+                    <button
+                      th:class="${selectedFilter == 'taken_rent'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
+                    >
                       Rent (Taken)
                     </button>
                   </a>
                   <a th:href="@{/profile(filter='given_rent')}">
-                    <button th:class="${selectedFilter == 'given_rent'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'">
+                    <button
+                      th:class="${selectedFilter == 'given_rent'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
+                    >
                       Rent (Given)
                     </button>
                   </a>
                 </div>
               </div>
-              
+
               <!-- Items List -->
               <div class="space-y-4">
                 <!-- Orders -->
                 <div th:each="order : ${orders}">
-                  <div th:each="product : ${order.products}" class="bg-primary-50 dark:bg-background-dark rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-primary-100/20 dark:border-accent/20">
+                  <div
+                    th:each="product : ${order.products}"
+                    class="bg-primary-50 dark:bg-background-dark rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-primary-100/20 dark:border-accent/20"
+                  >
                     <div class="flex items-center justify-between">
                       <div class="flex items-center space-x-4">
-                        <div class="w-16 h-16 bg-primary-100 dark:bg-accent/20 rounded-lg flex items-center justify-center">
-                          <i data-lucide="package" class="h-6 w-6 text-primary dark:text-accent"></i>
+                        <div
+                          class="w-16 h-16 bg-primary-100 dark:bg-accent/20 rounded-lg flex items-center justify-center"
+                        >
+                          <i
+                            data-lucide="package"
+                            class="h-6 w-6 text-primary dark:text-accent"
+                          ></i>
                         </div>
                         <div>
-                          <h4 class="font-semibold text-primary dark:text-primary-50" th:text="${product.name}">Item Name</h4>
+                          <h4
+                            class="font-semibold text-primary dark:text-primary-50"
+                            th:text="${product.name}"
+                          >
+                            Item Name
+                          </h4>
                           <div class="flex items-center space-x-3 mt-2">
-                            <span class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium" th:text="${product.sellOrRent}">TYPE</span>
-                            <span class="text-sm text-primary-200 dark:text-primary-100" th:text="${order.formattedDate}">Date</span>
+                            <span
+                              class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium"
+                              th:text="${product.sellOrRent}"
+                              >TYPE</span
+                            >
+                            <span
+                              class="text-sm text-primary-200 dark:text-primary-100"
+                              th:text="${order.formattedDate}"
+                              >Date</span
+                            >
                           </div>
                         </div>
                       </div>
@@ -190,25 +319,49 @@
                         <p class="text-xl font-bold text-accent">
                           ৳<span th:text="${product.price}">0</span>
                         </p>
-                        <span class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs px-2 py-1 rounded-full font-medium mt-2 inline-block" th:text="${order.status}">STATUS</span>
+                        <span
+                          class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs px-2 py-1 rounded-full font-medium mt-2 inline-block"
+                          th:text="${order.status}"
+                          >STATUS</span
+                        >
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Products -->
                 <div th:each="product : ${products}">
-                  <div class="bg-primary-50 dark:bg-background-dark rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-primary-100/20 dark:border-accent/20">
+                  <div
+                    class="bg-primary-50 dark:bg-background-dark rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-primary-100/20 dark:border-accent/20"
+                  >
                     <div class="flex items-center justify-between">
                       <div class="flex items-center space-x-4">
-                        <div class="w-16 h-16 bg-primary-100 dark:bg-accent/20 rounded-lg flex items-center justify-center">
-                          <i data-lucide="package" class="h-6 w-6 text-primary dark:text-accent"></i>
+                        <div
+                          class="w-16 h-16 bg-primary-100 dark:bg-accent/20 rounded-lg flex items-center justify-center"
+                        >
+                          <i
+                            data-lucide="package"
+                            class="h-6 w-6 text-primary dark:text-accent"
+                          ></i>
                         </div>
                         <div>
-                          <h4 class="font-semibold text-primary dark:text-primary-50" th:text="${product.name}">Item Name</h4>
+                          <h4
+                            class="font-semibold text-primary dark:text-primary-50"
+                            th:text="${product.name}"
+                          >
+                            Item Name
+                          </h4>
                           <div class="flex items-center space-x-3 mt-2">
-                            <span class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium" th:text="${product.sellOrRent}">TYPE</span>
-                            <span class="text-sm text-primary-200 dark:text-primary-100" th:text="${product.category.name}">Category</span>
+                            <span
+                              class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium"
+                              th:text="${product.sellOrRent}"
+                              >TYPE</span
+                            >
+                            <span
+                              class="text-sm text-primary-200 dark:text-primary-100"
+                              th:text="${product.category.name}"
+                              >Category</span
+                            >
                           </div>
                         </div>
                       </div>
@@ -220,17 +373,35 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Empty State -->
-                <div th:if="${#lists.isEmpty(orders) and #lists.isEmpty(products)}" class="text-center py-12">
-                  <i data-lucide="shopping-bag" class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"></i>
-                  <h3 class="text-lg font-semibold text-primary dark:text-primary-50 mb-2">No orders or items yet</h3>
-                  <p class="text-primary-200 dark:text-primary-100 mb-6">Start buying, selling, or renting items on CampusCart</p>
+                <div
+                  th:if="${#lists.isEmpty(orders) and #lists.isEmpty(products)}"
+                  class="text-center py-12"
+                >
+                  <i
+                    data-lucide="shopping-bag"
+                    class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"
+                  ></i>
+                  <h3
+                    class="text-lg font-semibold text-primary dark:text-primary-50 mb-2"
+                  >
+                    No orders or items yet
+                  </h3>
+                  <p class="text-primary-200 dark:text-primary-100 mb-6">
+                    Start buying, selling, or renting items on CampusCart
+                  </p>
                   <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="/marketplace" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                    <a
+                      href="/marketplace"
+                      class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+                    >
                       Browse Items
                     </a>
-                    <a href="/sell" class="border-2 border-primary text-primary dark:text-accent dark:border-accent px-6 py-3 rounded-lg font-semibold hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-200 transform hover:scale-105">
+                    <a
+                      href="/sell"
+                      class="border-2 border-primary text-primary dark:text-accent dark:border-accent px-6 py-3 rounded-lg font-semibold hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-200 transform hover:scale-105"
+                    >
                       Sell Item
                     </a>
                   </div>

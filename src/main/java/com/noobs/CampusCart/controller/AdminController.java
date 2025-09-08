@@ -3,7 +3,6 @@ package com.noobs.CampusCart.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,39 +33,6 @@ public class AdminController {
         stats.put("revenueGrowth", "8.2%");
 
         model.addAttribute("stats", stats);
-
-        // --- Recent Activities ---
-        List<Map<String, String>> recentActivities = new ArrayList<>();
-
-        recentActivities.add(Map.of(
-                "description", "New user registered: alice@example.com",
-                "timeAgo", "5 minutes ago",
-                "statusColor", "bg-green-400"));
-        recentActivities.add(Map.of(
-                "description", "New order placed by john@example.com",
-                "timeAgo", "20 minutes ago",
-                "statusColor", "bg-blue-400"));
-        recentActivities.add(Map.of(
-                "description", "Product 'Wireless Mouse' pending approval",
-                "timeAgo", "1 hour ago",
-                "statusColor", "bg-amber-400"));
-        recentActivities.add(Map.of(
-                "description", "Category 'Smartphones' added",
-                "timeAgo", "2 hours ago",
-                "statusColor", "bg-purple-400"));
-
-        model.addAttribute("recentActivities", recentActivities);
-
-        // --- Top Categories ---
-        List<Map<String, Object>> topCategories = new ArrayList<>();
-
-        topCategories.add(Map.of("name", "Electronics", "productCount", 145, "icon", "fa-tv"));
-        topCategories.add(Map.of("name", "Books", "productCount", 98, "icon", "fa-book"));
-        topCategories.add(Map.of("name", "Fashion", "productCount", 120, "icon", "fa-tshirt"));
-        topCategories.add(Map.of("name", "Home & Kitchen", "productCount", 75, "icon", "fa-blender"));
-
-        model.addAttribute("topCategories", topCategories);
-
         return "admin/admin-dashboard"; // updated file name
     }
 
@@ -142,51 +108,6 @@ public class AdminController {
         return "admin/admin-products";
     }
 
-    // Orders Management
-    @GetMapping("/admin/orders")
-    public String ordersPage(Model model) {
-
-        // dummy data for orders
-
-        // Dummy customers
-        Map<String, Object> customer1 = createCustomer("John Doe", "john@example.com");
-        Map<String, Object> customer2 = createCustomer("Alice Smith", "alice@example.com");
-        Map<String, Object> customer3 = createCustomer("Bob Johnson", "bob@example.com");
-
-        // Dummy orders
-        List<Map<String, Object>> orders = new ArrayList<>();
-
-        orders.add(createOrder(101L, customer1, "PENDING", LocalDate.now().minusDays(2),
-                Arrays.asList(
-                        createOrderItem("MacBook Pro", 1, 999.0, ""),
-                        createOrderItem("iPhone 14", 2, 1200.0, "")),
-                3399.0));
-
-        orders.add(createOrder(102L, customer2, "SHIPPED", LocalDate.now().minusDays(5),
-                Arrays.asList(
-                        createOrderItem("Samsung Galaxy S23", 1, 799.0, "")),
-                799.0));
-
-        orders.add(createOrder(103L, customer3, "DELIVERED", LocalDate.now().minusDays(10),
-                Arrays.asList(
-                        createOrderItem("Sony Headphones", 1, 199.0, ""),
-                        createOrderItem("Logitech Mouse", 2, 49.0, ""),
-                        createOrderItem("Dell Monitor", 1, 299.0, "")),
-                596.0));
-
-        // Dummy order counts for tabs
-        Map<String, Integer> orderCounts = new HashMap<>();
-        orderCounts.put("total", orders.size());
-        orderCounts.put("pending", 1);
-        orderCounts.put("shipped", 1);
-        orderCounts.put("delivered", 1);
-
-        model.addAttribute("orders", orders);
-        model.addAttribute("orderCounts", orderCounts);
-
-        return "admin/admin-orders";
-    }
-
     // Categories Management
     @GetMapping("/admin/categories")
     public String categoriesPage(Model model) {
@@ -205,65 +126,6 @@ public class AdminController {
         model.addAttribute("activeTab", "categories");
 
         return "admin/admin-categories";
-    }
-
-    // Analytics
-    @GetMapping("/admin/analytics")
-    public String analyticsPage(Model model) {
-
-        // dummy data for analytics
-
-        // Key metrics
-        Map<String, Object> analytics = Map.of(
-                "totalRevenue", 45231,
-                "revenueGrowth", 12.5,
-                "totalOrders", 324,
-                "ordersGrowth", 8.2,
-                "activeUsers", 1234,
-                "usersGrowth", 15.3,
-                "totalProducts", 567,
-                "productsGrowth", 6.7);
-
-        // Top products
-        List<Map<String, Object>> topProducts = List.of(
-                Map.of("name", "MacBook Pro 13\"", "categoryName", "Electronics", "salesCount", 45, "revenue", 45000),
-                Map.of("name", "Nike Air Max", "categoryName", "Fashion", "salesCount", 32, "revenue", 9600),
-                Map.of("name", "Instant Pot", "categoryName", "Home & Kitchen", "salesCount", 28, "revenue", 2800),
-                Map.of("name", "The Alchemist", "categoryName", "Books", "salesCount", 20, "revenue", 400),
-                Map.of("name", "Football", "categoryName", "Sports", "salesCount", 18, "revenue", 900));
-
-        // Top sellers
-        List<Map<String, Object>> topSellers = List.of(
-                Map.of("name", "John's Store", "email", "john@example.com", "initials", "JS", "ordersCount", 23,
-                        "revenue", 12450),
-                Map.of("name", "Anna's Boutique", "email", "anna@example.com", "initials", "AB", "ordersCount", 17,
-                        "revenue", 8900),
-                Map.of("name", "TechWorld", "email", "tech@example.com", "initials", "TW", "ordersCount", 12, "revenue",
-                        15300));
-
-        // Chart data
-        // List<Integer> revenueChartData = List.of(5000, 7200, 8100, 6500, 9100, 10200,
-        // 11200); // last 7 days
-        // List<String> revenueChartLabels = List.of("Mon", "Tue", "Wed", "Thu", "Fri",
-        // "Sat", "Sun");
-
-        // List<Integer> ordersChartData = List.of(20, 32, 28, 25, 40, 35, 45); // last
-        // 7 days
-        // List<String> ordersChartLabels = List.of("Mon", "Tue", "Wed", "Thu", "Fri",
-        // "Sat", "Sun");
-
-        model.addAttribute("analytics", analytics);
-        model.addAttribute("topProducts", topProducts);
-        model.addAttribute("topSellers", topSellers);
-        // model.addAttribute("revenueChartData", revenueChartData);
-        // model.addAttribute("revenueChartLabels", revenueChartLabels);
-        // model.addAttribute("ordersChartData", ordersChartData);
-        // model.addAttribute("ordersChartLabels", ordersChartLabels);
-
-        model.addAttribute("pageTitle", "Analytics");
-        model.addAttribute("activeTab", "analytics");
-
-        return "admin/admin-analytics";
     }
 
     // helper methods
@@ -318,35 +180,6 @@ public class AdminController {
         product.put("imageUrl", imageUrl);
         product.put("description", description);
         return product;
-    }
-
-    private Map<String, Object> createCustomer(String name, String email) {
-        Map<String, Object> customer = new HashMap<>();
-        customer.put("name", name);
-        customer.put("email", email);
-        customer.put("initials", getInitials(name));
-        return customer;
-    }
-
-    private Map<String, Object> createOrder(Long id, Map<String, Object> customer, String status, LocalDate date,
-            List<Map<String, Object>> items, Double total) {
-        Map<String, Object> order = new HashMap<>();
-        order.put("id", id);
-        order.put("customer", customer);
-        order.put("status", status);
-        order.put("orderDate", date.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
-        order.put("items", items);
-        order.put("total", total);
-        return order;
-    }
-
-    private Map<String, Object> createOrderItem(String productName, int quantity, double price, String image) {
-        Map<String, Object> item = new HashMap<>();
-        item.put("productName", productName);
-        item.put("quantity", quantity);
-        item.put("price", price);
-        item.put("productImage", image);
-        return item;
     }
 
 }

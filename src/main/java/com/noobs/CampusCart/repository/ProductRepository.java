@@ -27,7 +27,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     // By category AND type
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.name = :categoryId AND LOWER(p.sellOrRent) = LOWER(:type)")
-    List<Product> findByCategoryAndTypeWithUserAndCategory(@Param("categoryId") String categoryId, @Param("type") String type);
+    List<Product> findByCategoryAndTypeWithUserAndCategory(@Param("categoryId") String categoryId,
+            @Param("type") String type);
 
     // Search by name (case-insensitive)
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
@@ -36,7 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Find products posted by a specific user with a specific type (sell or rent)
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.user = :user AND LOWER(p.sellOrRent) = LOWER(:type)")
     List<Product> findByUserAndSellOrRent(@Param("user") User user, @Param("type") String type);
-    
+
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.user = :user")
     List<Product> findByUser(@Param("user") User user);
 }

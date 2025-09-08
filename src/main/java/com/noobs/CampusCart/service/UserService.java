@@ -35,8 +35,9 @@ public class UserService {
         if (updatedUser.getName() != null && !updatedUser.getName().isEmpty()) {
             user.setName(updatedUser.getName());
         }
-        // if (updatedUser.getUsername() != null && !updatedUser.getUsername().isEmpty()) {
-        //     user.setUsername(updatedUser.getUsername());
+        // if (updatedUser.getUsername() != null &&
+        // !updatedUser.getUsername().isEmpty()) {
+        // user.setUsername(updatedUser.getUsername());
         // }
         if (updatedUser.getHall() != null && !updatedUser.getHall().isEmpty()) {
             user.setHall(updatedUser.getHall());

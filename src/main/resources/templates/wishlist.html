@@ -4,11 +4,15 @@
     <title>Wishlist - CampusCart</title>
   </head>
   <body th:replace="~{layout :: layout}">
-    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8">
+    <main
+      class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8"
+    >
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-8">
-          <h1 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+          <h1
+            class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+          >
             Your Wishlist
           </h1>
           <p class="text-primary-200 dark:text-primary-100 text-lg">
@@ -21,7 +25,10 @@
           <div class="lg:col-span-2">
             <div class="space-y-4">
               <!-- Wishlist Item -->
-              <div th:each="item : ${wishlistItems}" class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-100/20 dark:border-accent/20">
+              <div
+                th:each="item : ${wishlistItems}"
+                class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border border-primary-100/20 dark:border-accent/20"
+              >
                 <div class="flex items-center space-x-6">
                   <!-- Product Image -->
                   <div class="flex-shrink-0">
@@ -32,13 +39,18 @@
                       onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop'"
                     />
                   </div>
-                  
+
                   <!-- Product Details -->
                   <div class="flex-1">
-                    <h3 class="text-lg font-bold text-primary dark:text-primary-50 mb-2" th:text="${item.product.name}">
+                    <h3
+                      class="text-lg font-bold text-primary dark:text-primary-50 mb-2"
+                      th:text="${item.product.name}"
+                    >
                       Product Title
                     </h3>
-                    <div class="space-y-1 text-sm text-primary-200 dark:text-primary-100">
+                    <div
+                      class="space-y-1 text-sm text-primary-200 dark:text-primary-100"
+                    >
                       <div class="flex items-center">
                         <i data-lucide="info" class="h-4 w-4 mr-2"></i>
                         <span th:text="${item.product.status}">Condition</span>
@@ -53,7 +65,7 @@
                       </div>
                     </div>
                   </div>
-                  
+
                   <!-- Price & Actions -->
                   <div class="text-right">
                     <p class="text-2xl font-bold text-accent mb-4">
@@ -62,16 +74,30 @@
                     <div class="flex items-center gap-2">
                       <!-- Add to Cart -->
                       <form th:action="@{/wishlist/add-to-cart}" method="post">
-                        <input type="hidden" name="productId" th:value="${item.product.id}" />
-                        <button type="submit" class="bg-primary hover:bg-accent text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md">
+                        <input
+                          type="hidden"
+                          name="productId"
+                          th:value="${item.product.id}"
+                        />
+                        <button
+                          type="submit"
+                          class="bg-primary hover:bg-accent text-white p-2 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md"
+                        >
                           <i data-lucide="shopping-cart" class="h-5 w-5"></i>
                         </button>
                       </form>
-                      
+
                       <!-- Remove from Wishlist -->
                       <form th:action="@{/wishlist/remove}" method="post">
-                        <input type="hidden" name="productId" th:value="${item.product.id}" />
-                        <button type="submit" class="bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 p-2 rounded-lg transition-all duration-200 transform hover:scale-105">
+                        <input
+                          type="hidden"
+                          name="productId"
+                          th:value="${item.product.id}"
+                        />
+                        <button
+                          type="submit"
+                          class="bg-red-100 dark:bg-red-900/30 hover:bg-red-200 dark:hover:bg-red-900/50 text-red-600 dark:text-red-400 p-2 rounded-lg transition-all duration-200 transform hover:scale-105"
+                        >
                           <i data-lucide="trash-2" class="h-5 w-5"></i>
                         </button>
                       </form>
@@ -79,18 +105,31 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- Empty State -->
-              <div th:if="${#lists.isEmpty(wishlistItems)}" class="text-center py-20">
-                <div class="bg-white dark:bg-surface-dark rounded-2xl p-12 shadow-lg border border-primary-100/20 dark:border-accent/20">
-                  <i data-lucide="heart" class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"></i>
-                  <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">
+              <div
+                th:if="${#lists.isEmpty(wishlistItems)}"
+                class="text-center py-20"
+              >
+                <div
+                  class="bg-white dark:bg-surface-dark rounded-2xl p-12 shadow-lg border border-primary-100/20 dark:border-accent/20"
+                >
+                  <i
+                    data-lucide="heart"
+                    class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"
+                  ></i>
+                  <h3
+                    class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+                  >
                     Your wishlist is empty
                   </h3>
                   <p class="text-primary-200 dark:text-primary-100 mb-6">
                     Start adding items you love to keep track of them
                   </p>
-                  <a href="/marketplace" class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105">
+                  <a
+                    href="/marketplace"
+                    class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+                  >
                     Browse Marketplace
                   </a>
                 </div>
@@ -100,24 +139,41 @@
 
           <!-- Wishlist Summary -->
           <div class="lg:col-span-1">
-            <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20 sticky top-24">
-              <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-6 text-center flex items-center justify-center">
+            <div
+              class="bg-white dark:bg-surface-dark rounded-2xl shadow-lg p-6 border border-primary-100/20 dark:border-accent/20 sticky top-24"
+            >
+              <h3
+                class="text-xl font-bold text-primary dark:text-primary-50 mb-6 text-center flex items-center justify-center"
+              >
                 <i data-lucide="heart" class="h-5 w-5 mr-2"></i>
                 Wishlist Summary
               </h3>
-              
+
               <!-- Total Items -->
               <div class="bg-primary-50 dark:bg-accent/10 rounded-xl p-4 mb-6">
                 <div class="flex justify-between items-center">
-                  <span class="text-primary dark:text-accent font-medium">Total Items:</span>
-                  <span class="text-2xl font-bold text-accent" th:text="${#lists.size(wishlistItems)}">0</span>
+                  <span class="text-primary dark:text-accent font-medium"
+                    >Total Items:</span
+                  >
+                  <span
+                    class="text-2xl font-bold text-accent"
+                    th:text="${#lists.size(wishlistItems)}"
+                    >0</span
+                  >
                 </div>
               </div>
 
               <!-- Motivational Message -->
-              <div class="bg-gradient-to-r from-accent/10 to-primary/10 rounded-xl p-4 mb-6 text-center">
-                <i data-lucide="star" class="h-6 w-6 text-accent mx-auto mb-2"></i>
-                <p class="text-sm font-medium text-primary dark:text-accent mb-1">
+              <div
+                class="bg-gradient-to-r from-accent/10 to-primary/10 rounded-xl p-4 mb-6 text-center"
+              >
+                <i
+                  data-lucide="star"
+                  class="h-6 w-6 text-accent mx-auto mb-2"
+                ></i>
+                <p
+                  class="text-sm font-medium text-primary dark:text-accent mb-1"
+                >
                   Save your favorites for later!
                 </p>
                 <p class="text-xs text-primary-200 dark:text-primary-100">
@@ -133,11 +189,14 @@
                     class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                     th:disabled="${#lists.isEmpty(wishlistItems)}"
                   >
-                    <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-2"></i>
+                    <i
+                      data-lucide="shopping-cart"
+                      class="h-4 w-4 inline mr-2"
+                    ></i>
                     Add All to Cart
                   </button>
                 </form>
-                
+
                 <a
                   href="/marketplace"
                   class="block w-full text-center border-2 border-primary dark:border-accent text-primary dark:text-accent py-3 rounded-xl hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-300 transform hover:scale-105 font-semibold"

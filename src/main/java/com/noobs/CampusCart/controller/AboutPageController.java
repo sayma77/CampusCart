@@ -8,7 +8,6 @@ public class AboutPageController {
 
     @GetMapping("/about")
     public String aboutPage() {
-        return "about"; 
+        return "about";
     }
 }
-

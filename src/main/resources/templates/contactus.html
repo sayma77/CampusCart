@@ -4,94 +4,167 @@
     <title>Contact Us - CampusCart</title>
   </head>
   <body th:replace="~{layout :: layout}">
-    <main class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-12">
+    <main
+      class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-12"
+    >
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-16">
-          <h1 class="text-4xl md:text-5xl font-bold text-primary dark:text-primary-50 mb-4">
+          <h1
+            class="text-4xl md:text-5xl font-bold text-primary dark:text-primary-50 mb-4"
+          >
             Get in Touch
           </h1>
-          <p class="text-xl text-primary-200 dark:text-primary-100 max-w-2xl mx-auto">
-            Have questions or need support? We're here to help you with your CampusCart experience.
+          <p
+            class="text-xl text-primary-200 dark:text-primary-100 max-w-2xl mx-auto"
+          >
+            Have questions or need support? We're here to help you with your
+            CampusCart experience.
           </p>
         </div>
 
         <!-- Contact Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <!-- Facebook -->
-          <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-            <div class="flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-xl mb-6 mx-auto">
-              <i data-lucide="facebook" class="h-8 w-8 text-blue-600 dark:text-blue-400"></i>
+          <div
+            class="bg-white dark:bg-surface-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+          >
+            <div
+              class="flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-xl mb-6 mx-auto"
+            >
+              <i
+                data-lucide="facebook"
+                class="h-8 w-8 text-blue-600 dark:text-blue-400"
+              ></i>
             </div>
-            <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Facebook</h3>
-            <p class="text-primary-200 dark:text-primary-100 mb-6">Follow us for updates and community discussions</p>
-            <a href="https://www.facebook.com/YourPageName" target="_blank" 
-              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg">
+            <h3
+              class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+            >
+              Facebook
+            </h3>
+            <p class="text-primary-200 dark:text-primary-100 mb-6">
+              Follow us for updates and community discussions
+            </p>
+            <a
+              href="https://www.facebook.com/YourPageName"
+              target="_blank"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
+            >
               Visit Our Page
             </a>
           </div>
 
           <!-- Email -->
-          <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-            <div class="flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-xl mb-6 mx-auto">
-              <i data-lucide="mail" class="h-8 w-8 text-green-600 dark:text-green-400"></i>
+          <div
+            class="bg-white dark:bg-surface-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+          >
+            <div
+              class="flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-xl mb-6 mx-auto"
+            >
+              <i
+                data-lucide="mail"
+                class="h-8 w-8 text-green-600 dark:text-green-400"
+              ></i>
             </div>
-            <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Email Support</h3>
-            <p class="text-primary-200 dark:text-primary-100 mb-2">campuscart@gmail.com</p>
-            <p class="text-sm text-primary-200 dark:text-primary-100 mb-6">We'll respond within 24 hours</p>
-            <a href="mailto:campuscart@gmail.com" 
-              class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg">
+            <h3
+              class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+            >
+              Email Support
+            </h3>
+            <p class="text-primary-200 dark:text-primary-100 mb-2">
+              campuscart@gmail.com
+            </p>
+            <p class="text-sm text-primary-200 dark:text-primary-100 mb-6">
+              We'll respond within 24 hours
+            </p>
+            <a
+              href="mailto:campuscart@gmail.com"
+              class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
+            >
               Send Email
             </a>
           </div>
 
           <!-- Phone -->
-          <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20">
-            <div class="flex items-center justify-center w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-xl mb-6 mx-auto">
-              <i data-lucide="phone" class="h-8 w-8 text-purple-600 dark:text-purple-400"></i>
+          <div
+            class="bg-white dark:bg-surface-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+          >
+            <div
+              class="flex items-center justify-center w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-xl mb-6 mx-auto"
+            >
+              <i
+                data-lucide="phone"
+                class="h-8 w-8 text-purple-600 dark:text-purple-400"
+              ></i>
             </div>
-            <h3 class="text-xl font-bold text-primary dark:text-primary-50 mb-2">Phone Support</h3>
-            <p class="text-primary-200 dark:text-primary-100 mb-2">+8801234567890</p>
-            <p class="text-sm text-primary-200 dark:text-primary-100 mb-6">Available 9 AM - 6 PM</p>
-            <a href="tel:+8801234567890" 
-              class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg">
+            <h3
+              class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+            >
+              Phone Support
+            </h3>
+            <p class="text-primary-200 dark:text-primary-100 mb-2">
+              +8801234567890
+            </p>
+            <p class="text-sm text-primary-200 dark:text-primary-100 mb-6">
+              Available 9 AM - 6 PM
+            </p>
+            <a
+              href="tel:+8801234567890"
+              class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
+            >
               Call Now
             </a>
           </div>
         </div>
 
         <!-- FAQ Section -->
-        <div class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg border border-primary-100/20 dark:border-accent/20">
-          <h2 class="text-2xl font-bold text-primary dark:text-primary-50 mb-8 text-center">
+        <div
+          class="bg-white dark:bg-surface-dark rounded-2xl p-8 shadow-lg border border-primary-100/20 dark:border-accent/20"
+        >
+          <h2
+            class="text-2xl font-bold text-primary dark:text-primary-50 mb-8 text-center"
+          >
             Frequently Asked Questions
           </h2>
-          
+
           <div class="space-y-6">
-            <div class="border-b border-primary-100/20 dark:border-accent/20 pb-6">
-              <h3 class="text-lg font-semibold text-primary dark:text-primary-50 mb-2">
+            <div
+              class="border-b border-primary-100/20 dark:border-accent/20 pb-6"
+            >
+              <h3
+                class="text-lg font-semibold text-primary dark:text-primary-50 mb-2"
+              >
                 How do I start selling on CampusCart?
               </h3>
               <p class="text-primary-200 dark:text-primary-100">
-                Simply sign up with your CUET email, complete your profile, and click "Sell Item" to list your products. 
-                It's that easy!
+                Simply sign up with your CUET email, complete your profile, and
+                click "Sell Item" to list your products. It's that easy!
               </p>
             </div>
-            
-            <div class="border-b border-primary-100/20 dark:border-accent/20 pb-6">
-              <h3 class="text-lg font-semibold text-primary dark:text-primary-50 mb-2">
+
+            <div
+              class="border-b border-primary-100/20 dark:border-accent/20 pb-6"
+            >
+              <h3
+                class="text-lg font-semibold text-primary dark:text-primary-50 mb-2"
+              >
                 Is CampusCart only for CUET students?
               </h3>
               <p class="text-primary-200 dark:text-primary-100">
-                Yes, CampusCart is exclusively designed for CUET students. You need a valid CUET student email to register.
+                Yes, CampusCart is exclusively designed for CUET students. You
+                need a valid CUET student email to register.
               </p>
             </div>
-            
+
             <div>
-              <h3 class="text-lg font-semibold text-primary dark:text-primary-50 mb-2">
+              <h3
+                class="text-lg font-semibold text-primary dark:text-primary-50 mb-2"
+              >
                 How do I contact a seller?
               </h3>
               <p class="text-primary-200 dark:text-primary-100">
-                Once you add an item to your cart or wishlist, you can view the seller's contact information and reach out directly.
+                Once you add an item to your cart or wishlist, you can view the
+                seller's contact information and reach out directly.
               </p>
             </div>
           </div>
