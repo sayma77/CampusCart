@@ -68,74 +68,72 @@ public class DataLoader implements CommandLineRunner {
                 categoryRepository.saveAll(List.of(c1, c2, c3, c4, c5, c6));
                 // ----- Products -----
                 Product p1 = new Product(null, "Laptop", 500.0, "Good", "/images/laptop.jpg", "sell", u1.getId(),
-                                c1.getId(),
-                                null, null);
-                Product p2 = new Product(null, "Smartphone", 300.0, "Fair", "/images/smartphone.jpg", "sell",
-                                u2.getId(),
-                                c1.getId(), null, null);
-                Product p3 = new Product(null, "Data Structures Book", 25.0, "Good", "ds_book.jpg", "rent", u3.getId(),
+                                c1.getId(),null, null);
+                Product p2 = new Product(null, "Google pixel 7 pro(12Gb/128GB)", 4000.0, "used for 1 year", "/images/smartphone.jpg", "sell",
+                                u2.getId(),c1.getId(), null, null);
+                Product p3 = new Product(null, "Analytic Mechanics", 300.0, "Good", "/images/mechanics.jpg", "rent", u3.getId(),
                                 c2.getId(), null, null);
-                Product p4 = new Product(null, "Desk Chair", 40.0, "Good", "chair.jpg", "sell", u1.getId(), c3.getId(),
-                                null,
-                                null);
-                Product p5 = new Product(null, "Dining Table", 120.0, "Fair", "table.jpg", "sell", u2.getId(),
-                                c3.getId(), null,
-                                null);
-                Product p6 = new Product(null, "Calculus Book", 20.0, "Good", "calc_book.jpg", "rent", u3.getId(),
-                                c2.getId(),
-                                null, null);
-                Product p7 = new Product(null, "Headphones", 60.0, "Good", "headphones.jpg", "sell", u4.getId(),
-                                c1.getId(),
-                                null, null);
-                Product p8 = new Product(null, "Bed Frame", 150.0, "Fair", "bed.jpg", "sell", u5.getId(), c3.getId(),
-                                null,
-                                null);
-                Product p9 = new Product(null, "Novel: The Alchemist", 15.0, "Good", "alchemist.jpg", "rent",
-                                u3.getId(),
-                                c2.getId(), null, null);
-                Product p10 = new Product(null, "Monitor", 200.0, "Good", "monitor.jpg", "sell", u1.getId(), c1.getId(),
-                                null,
-                                null);
-
-                Product p11 = new Product(null, "Notebook Set", 15.0, "New", "notebook_set.jpg", "sell", u1.getId(),
-                                c4.getId(),
-                                null, null);
-                Product p12 = new Product(null, "Pen Pack", 5.0, "New", "pen_pack.jpg", "sell", u2.getId(), c4.getId(),
-                                null,
-                                null);
-                Product p17 = new Product(null, "Highlighter Set", 7.0, "New", "highlighter_set.jpg", "sell",
+                Product p4 = new Product(null, "Desk Chair", 40.0, "Good", "/images/chair.jpg", "sell", u1.getId(), c3.getId(),
+                                null,null);
+                Product p5 = new Product(null, "Table", 120.0, "Fair", "/images/table.jpg", "sell", u2.getId(),
+                                c3.getId(), null,null);
+                Product p6 = new Product(null, "Calculus Book", 200.0, "Good", "/images/calc_book.jpg", "rent", u3.getId(),
+                                c2.getId(),null, null);
+                Product p7  = new Product(null, "Wiresto Earbuds", 500.0, "Good", "/images/wiresto_earbuds.jpg", "sell", u4.getId(), c1.getId(), null, null);
+                Product p8  = new Product(null, "Bed", 700.0, "Fair", "/images/bed.jpg", "sell", u5.getId(), c3.getId(), null, null);
+                Product p9 = new Product(null, "Novel: The Alchemist", 400.0, "Good", "/images/alchemist.jpg", "rent",
+                                u3.getId(),c2.getId(), null, null);
+                Product p10 = new Product(null, "Dell E1916HV 18.5\" LED Monitor", 3500.0, "Good", "/images/monitor.jpg", "sell", u1.getId(), c1.getId(),
+                                null,null);
+                Product p11 = new Product(null, "Notebook Set", 15.0, "New", "/images/notebook_set.jpg", "sell", u1.getId(),
+                                c4.getId(),null, null);
+                Product p12 = new Product(null, "Pen Pack", 30.0, "New", "/images/pen_pack.jpg", "sell", u2.getId(), c4.getId(),
+                                null,null);
+                Product p17 = new Product(null, "Highlighter Set", 50.0, "New", "/images/highlighter_set.jpg", "sell",
                                 u5.getId(),
                                 c4.getId(), null, null);
-                Product p18 = new Product(null, "Sticky Notes", 3.0, "New", "sticky_notes.jpg", "sell", u1.getId(),
+                Product p18 = new Product(null, "Sticky Notes", 10.0, "New", "/images/sticky_notes.jpg", "sell", u1.getId(),
                                 c4.getId(),
                                 null, null);
 
-                Product p13 = new Product(null, "Football", 25.0, "Good", "football.jpg", "sell", u4.getId(),
+                Product p13 = new Product(null, "Football", 25.0, "Good", "/images/football.jpg", "sell", u4.getId(),
                                 c5.getId(), null,
                                 null);
-                Product p14 = new Product(null, "Badminton Set", 40.0, "Like New", "badminton_set.jpg", "sell",
+                Product p14 = new Product(null, "Badminton", 1600.0, "Like New", "/images/badminton_set.jpg", "sell",
                                 u6.getId(),
                                 c5.getId(), null, null);
-                Product p19 = new Product(null, "Yoga Mat", 18.0, "New", "yoga_mat.jpg", "sell", u3.getId(), c5.getId(),
+                Product p19 = new Product(null, "Yoga Mat", 18.0, "New", "/images/yoga_mat.jpg", "sell", u3.getId(), c5.getId(),
                                 null,
                                 null);
-                Product p20 = new Product(null, "Tennis Racket", 50.0, "Good", "tennis_racket.jpg", "sell", u4.getId(),
+                Product p20 = new Product(null, "Tennis Racket", 50.0, "Good", "/images/tennis_racket.jpg", "sell", u4.getId(),
                                 c5.getId(), null, null);
 
-                Product p15 = new Product(null, "Bed Sheet", 20.0, "New", "bed_sheet.jpg", "sell", u6.getId(),
+                Product p15 = new Product(null, "Bed Sheet", 20.0, "New", "/images/bed_sheet.jpg", "sell", u6.getId(),
                                 c6.getId(), null,
                                 null);
-                Product p16 = new Product(null, "Desk Lamp", 12.0, "Good", "desk_lamp.jpg", "sell", u4.getId(),
+                Product p16 = new Product(null, "Desk Lamp", 12.0, "Good", "/images/desk_lamp.jpg", "sell", u4.getId(),
                                 c6.getId(),
                                 null, null);
-                Product p21 = new Product(null, "Pillow Set", 15.0, "New", "pillow_set.jpg", "sell", u1.getId(),
+                Product p21 = new Product(null, "Pillow Set", 15.0, "New", "/images/pillow_set.jpg", "sell", u1.getId(),
                                 c6.getId(),
                                 null, null);
-                Product p22 = new Product(null, "Laundry Basket", 10.0, "New", "laundry_basket.jpg", "sell", u1.getId(),
+                Product p22 = new Product(null, "Laundry Basket", 10.0, "New", "/images/laundry_basket.jpg", "sell", u1.getId(),
                                 c6.getId(), null, null);
-
+                Product p23 = new Product(null, "Casio fx-991EX PLUS", 300.0, "Old", "/images/casio_fx_991ex_plus.jpg", "sell", u2.getId(), c1.getId(), null, null);
+                Product p24 = new Product(null, "Electric Kettle", 500.0, "Old", "/images/electric_kettle.jpg", "sell", u3.getId(), c1.getId(), null, null);
+                Product p25 = new Product(null, "TP-link AC-1200", 700.0, "used 4 years", "/images/tplink_ac1200.jpg", "sell", u4.getId(), c1.getId(), null, null);
+                Product p26 = new Product(null,"Wardrobe",500.0, "used 2 years","/images/wardrobe.jpg","sell",u5.getId(),
+                                c3.getId(),null,null);
+                Product p27 = new Product(null,"Cyclone Table Fan",500.0, "used 2 years","/images/table_fan.jpg","sell",u6.getId(),
+                                c1.getId(),null,null);
+                Product p28 = new Product(null,"Heatmaster elite walton",1000.0, "used 1 years","/images/induction_oven.jpg","sell",u7.getId(),
+                                c1.getId(),null,null);
+                Product p29 = new Product(null,"Printer:brother dco t220 (print,scan,copy)",700.0, "used 4 years","/images/printer.jpg","sell",u7.getId(),
+                                c1.getId(),null,null);
+                Product p30 = new Product(null,"Pure it Water Filter",1000.0, "used 4 years","/images/pureit.jpg","sell",u5.getId(),
+                                c6.getId(),null,null);
                 productRepository.saveAll(
                                 List.of(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17,
-                                                p18, p19, p20, p21, p22));
+                                                p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30));
         }
 }
