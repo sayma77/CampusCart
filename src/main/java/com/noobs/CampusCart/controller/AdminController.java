@@ -1,20 +1,31 @@
 package com.noobs.CampusCart.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.noobs.CampusCart.model.Category;
+import com.noobs.CampusCart.model.User;
+import com.noobs.CampusCart.repository.CategoryRepository;
+import com.noobs.CampusCart.repository.UserRepository;
 
 @Controller
 public class AdminController {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     // Dashboard
     @GetMapping("/admin/dashboard")
@@ -40,21 +51,10 @@ public class AdminController {
     @GetMapping("/admin/users")
     public String usersPage(Model model) {
 
-        // dummy data for users
-
-        // --- Dummy Users List ---
-        List<Map<String, Object>> users = new ArrayList<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-
-        users.add(createUser(1L, "John Doe", "john@example.com", "ADMIN", "ACTIVE", LocalDate.of(2024, 1, 15)));
-        users.add(createUser(2L, "Alice Smith", "alice@example.com", "SELLER", "ACTIVE", LocalDate.of(2024, 2, 10)));
-        users.add(createUser(3L, "Bob Johnson", "bob@example.com", "BUYER", "BLOCKED", LocalDate.of(2024, 3, 5)));
-        users.add(createUser(4L, "Charlie Lee", "charlie@example.com", "SELLER", "ACTIVE", LocalDate.of(2024, 4, 12)));
-        users.add(createUser(5L, "Diana Prince", "diana@example.com", "BUYER", "ACTIVE", LocalDate.of(2024, 5, 20)));
-        users.add(createUser(6L, "Eve Adams", "eve@example.com", "ADMIN", "BLOCKED", LocalDate.of(2024, 6, 8)));
-        users.add(createUser(7L, "Frank Wright", "frank@example.com", "BUYER", "ACTIVE", LocalDate.of(2024, 7, 1)));
-        users.add(createUser(8L, "Grace Hall", "grace@example.com", "SELLER", "ACTIVE", LocalDate.of(2024, 8, 18)));
-
+        List<User> users = userRepository.findAll()
+                .stream()
+                .filter(user -> !"ADMIN".equalsIgnoreCase(user.getRole()))
+                .toList();
         model.addAttribute("users", users);
 
         // --- Pagination Dummy Data ---
@@ -71,6 +71,17 @@ public class AdminController {
         model.addAttribute("endIndex", endIndex);
 
         return "admin/admin-users";
+    }
+
+    @PostMapping("/admin/users/delete")
+    public String deleteUser(@RequestParam Long id) {
+        // Skip deleting admins for safety
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null && !"ADMIN".equalsIgnoreCase(user.getRole())) {
+            userRepository.deleteById(id);
+        }
+        // Redirect back to users page after deletion
+        return "redirect:/admin/users";
     }
 
     // Products Management
@@ -112,46 +123,33 @@ public class AdminController {
     @GetMapping("/admin/categories")
     public String categoriesPage(Model model) {
 
-        // dummy data for categories
-
-        List<Category> dummyCategories = List.of(
-                new Category(1L, "Electronics", "Gadgets and electronic devices"),
-                new Category(2L, "Fashion", "Clothing, shoes, and accessories"),
-                new Category(3L, "Home & Kitchen", "Furniture, appliances, and more"),
-                new Category(4L, "Books", "Educational and leisure reading"),
-                new Category(5L, "Sports", "Equipment and apparel for sports"));
-
-        model.addAttribute("categories", dummyCategories);
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
         model.addAttribute("pageTitle", "Category Management");
         model.addAttribute("activeTab", "categories");
 
         return "admin/admin-categories";
     }
 
-    // helper methods
+    @PostMapping("/admin/categories/add")
+    public String addCategory(@RequestParam String name,
+            @RequestParam String description,
+            RedirectAttributes redirectAttributes) {
+        if (name != null && !name.isEmpty()) {
+            Category category = new Category();
+            category.setName(name);
+            category.setDescription(description);
+            categoryRepository.save(category);
 
-    private Map<String, Object> createUser(Long id, String name, String email, String role, String status,
-            LocalDate joinedDate) {
-        Map<String, Object> user = new HashMap<>();
-        user.put("id", id);
-        user.put("name", name);
-        user.put("email", email);
-        user.put("role", role);
-        user.put("status", status);
-        user.put("joinedDate", joinedDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
-        user.put("initials", getInitials(name));
-        return user;
-    }
-
-    private String getInitials(String name) {
-        String[] parts = name.split(" ");
-        String initials = "";
-        for (String part : parts) {
-            if (!part.isEmpty())
-                initials += part.charAt(0);
+            redirectAttributes.addFlashAttribute("success", "Category added successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Category name is required!");
         }
-        return initials.toUpperCase();
+
+        return "redirect:/admin/categories"; // redirect back to categories page
     }
+
+    // helper methods
 
     private Map<String, Object> createCategory(Long id, String name, String icon) {
         Map<String, Object> category = new HashMap<>();
