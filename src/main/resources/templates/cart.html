@@ -33,7 +33,7 @@
                 th:classappend="${sort == 'priceAsc'} ? 'bg-primary text-white shadow-lg' : 'bg-white dark:bg-surface-dark text-primary dark:text-accent border border-primary-100/20 dark:border-accent/20 hover:bg-primary hover:text-white transition-all'"
                 class="px-4 py-2 rounded-xl font-semibold shadow-sm transition-all duration-300 transform hover:scale-105"
               >
-                Price: Low → High
+                Price: Ascending
               </a>
 
               <a
@@ -41,7 +41,7 @@
                 th:classappend="${sort == 'priceDesc'} ? 'bg-primary text-white shadow-lg' : 'bg-white dark:bg-surface-dark text-primary dark:text-accent border border-primary-100/20 dark:border-accent/20 hover:bg-primary hover:text-white transition-all'"
                 class="px-4 py-2 rounded-xl font-semibold shadow-sm transition-all duration-300 transform hover:scale-105"
               >
-                Price: High → Low
+                Price: Descending
               </a>
             </div>
             <div
@@ -101,7 +101,7 @@
                     type="number"
                     name="quantity"
                     th:value="${item.quantity}"
-                    class="w-16 border border-gray-300 rounded px-2 py-1 text-center"
+                    class="w-16 border border-gray-300 rounded px-2 py-1 text-center text-primary"
                     min="1"
                     onchange="this.form.submit()"
                   />
@@ -210,8 +210,9 @@
 
                 <a
                   href="/marketplace"
-                  class="block w-full text-center border-2 border-primary dark:border-accent text-primary dark:text-accent py-3 rounded-xl hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-300 transform hover:scale-105 font-semibold"
+                  class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-center inline-block"
                 >
+                  <i data-lucide="search" class="h-4 w-4 inline mr-2"></i>
                   Continue Shopping
                 </a>
               </div>
