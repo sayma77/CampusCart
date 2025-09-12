@@ -53,6 +53,12 @@ public class Product {
     @Column(name = "category_id")
     private Long categoryId;
 
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "sold_count")
+    private int soldCount;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
@@ -69,5 +75,8 @@ public class Product {
         this.image = imageUrl;
         this.status = "Good";
         this.sellOrRent = "sell";
+        this.validity = "approved";
+        this.quantity = 1;
+        this.soldCount = 0;
     }
 }
