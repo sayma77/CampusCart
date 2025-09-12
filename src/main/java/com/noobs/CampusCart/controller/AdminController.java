@@ -76,34 +76,52 @@ public class AdminController {
 
     // Products Management
     @GetMapping("/admin/products")
-    public String productsPage(Model model) {
+    public String productsPage(@RequestParam(name = "search", required = false) String search,
+        @RequestParam(name = "categoryId", required = false) Long categoryId,
+        @RequestParam(name = "status", required = false) String status,Model model) {
 
         List<Product> products = productRepository.findAll();
+        if (search != null && !search.isEmpty()) {
+            // Search has priority
+            products = productRepository.findByNameContainingWithUserAndCategory(search);
+        } else if (categoryId != null && status != null && !status.isEmpty()) {
+            // Filter by category and status
+            products = productRepository.findByCategoryAndValidity(categoryId, status.toLowerCase());
+        } else if (categoryId != null) {
+            // Only category filter
+            products = productRepository.findByCategoryId(categoryId);
+        } else if (status != null && !status.isEmpty()) {
+            // Only status filter
+            products = productRepository.findByValidity(status.toLowerCase());
+        } else {
+            // No filters → show all
+            products = productRepository.findAllWithUserAndCategory();
+        }
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
-
+        model.addAttribute("search", search);
+        model.addAttribute("selectedCategory", categoryId);
+        model.addAttribute("selectedStatus", status);
         return "admin/admin-products";
     }
 
     @PostMapping("/admin/products/approve")
-    public String approveProduct(@RequestParam Long productId) {
+    public String approveProduct(@RequestParam("productId") Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         product.setValidity("approved");
         productRepository.save(product);
-
-        return "redirect:/admin/products"; // redirect back to the products page
+        return "redirect:/admin/products";
     }
 
     @PostMapping("/admin/products/reject")
-    public String rejectProduct(@RequestParam Long productId) {
+    public String rejectProduct(@RequestParam("productId") Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         product.setValidity("rejected");
         productRepository.save(product);
-
-        return "redirect:/admin/products"; // reload the page to show updated status
+        return "redirect:/admin/products";
     }
 
     // Categories Management
