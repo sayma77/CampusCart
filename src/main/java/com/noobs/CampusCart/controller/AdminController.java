@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -78,8 +77,11 @@ public class AdminController {
     // Products Management
     @GetMapping("/admin/products")
     public String productsPage(Model model) {
+
         List<Product> products = productRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
         model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
 
         return "admin/admin-products";
     }
