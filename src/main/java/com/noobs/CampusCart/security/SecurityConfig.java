@@ -9,16 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.noobs.CampusCart.service.CustomUserDetailsService;
-
 @Configuration
 public class SecurityConfig {
-
-    private final CustomUserDetailsService userDetailsService;
-
-    public SecurityConfig(CustomUserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -26,9 +18,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // optional: enable for production
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/about",
-                                "/contactus", "/admin/**")
+                                "/contactus")
                         .permitAll()
-                        // .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/signin")
@@ -42,6 +34,9 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/signin?signout")
                         .invalidateHttpSession(true) // Clear session
                         .deleteCookies("JSESSIONID"))
+                .exceptionHandling(ex -> ex
+                        .accessDeniedPage("/403") // custom forbidden page
+                )
                 .build();
     }
 
