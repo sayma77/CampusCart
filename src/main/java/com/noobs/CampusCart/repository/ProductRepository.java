@@ -40,4 +40,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.user = :user")
     List<Product> findByUser(@Param("user") User user);
+
+    // By categoryId
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.id = :categoryId")
+    List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
+
+    // By validity (pending / approved / rejected)
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.validity) = LOWER(:validity)")
+    List<Product> findByValidity(@Param("validity") String validity);
+
+    // By categoryId + validity
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.id = :categoryId AND LOWER(p.validity) = LOWER(:validity)")
+    List<Product> findByCategoryAndValidity(@Param("categoryId") Long categoryId,
+                                            @Param("validity") String validity);
 }
