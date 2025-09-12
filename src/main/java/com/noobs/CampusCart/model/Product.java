@@ -44,6 +44,9 @@ public class Product {
     @Column(name = "sell_or_rent")
     private String sellOrRent;
 
+    @Column(name = "validity")
+    private String validity;
+
     @Column(name = "user_id")
     private Long userId;
 

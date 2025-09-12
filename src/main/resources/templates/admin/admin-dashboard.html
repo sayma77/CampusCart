@@ -41,15 +41,10 @@
         },
       };
     </script>
-    <script
-      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
-      defer
-    ></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
       body {
         background: linear-gradient(
@@ -62,282 +57,184 @@
       }
       .glass-effect {
         background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(15px);
         border: 1px solid rgba(56, 189, 248, 0.2);
       }
-      .glow-effect {
-        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+      .featured-card {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        transition: all 0.3s ease;
       }
-      .stat-card {
+      .featured-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 40px rgba(56, 189, 248, 0.3);
+      }
+      .action-button {
         background: linear-gradient(
           135deg,
           rgba(30, 41, 59, 0.8) 0%,
           rgba(15, 23, 42, 0.9) 100%
         );
         backdrop-filter: blur(15px);
-        border: 1px solid rgba(56, 189, 248, 0.3);
+        border: 1px solid rgba(71, 85, 105, 0.5);
         transition: all 0.3s ease;
       }
-      .stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
-        border-color: rgba(56, 189, 248, 0.5);
+      .action-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      }
+      .action-button.review:hover {
+        border-color: rgba(251, 191, 36, 0.6);
+        box-shadow: 0 15px 30px rgba(251, 191, 36, 0.2);
+      }
+      .action-button.categories:hover {
+        border-color: rgba(52, 211, 153, 0.6);
+        box-shadow: 0 15px 30px rgba(52, 211, 153, 0.2);
+      }
+      .bg-decoration {
+        position: absolute;
+        opacity: 0.05;
+      }
+      .bg-decoration.top-left {
+        top: 2.5rem;
+        left: 2.5rem;
+        width: 8rem;
+        height: 8rem;
+        background: #38bdf8;
+        border-radius: 50%;
+        filter: blur(3rem);
+      }
+      .bg-decoration.bottom-right {
+        bottom: 2.5rem;
+        right: 2.5rem;
+        width: 6rem;
+        height: 6rem;
+        background: #3b82f6;
+        border-radius: 50%;
+        filter: blur(2rem);
       }
     </style>
   </head>
   <body class="text-slate-100 min-h-screen">
     <div th:replace="admin/admin-layout :: layout('dashboard', ~{::content})">
       <div th:fragment="content">
-        <!-- Page Header -->
-        <div class="md:flex md:items-center md:justify-between mb-8">
-          <div class="flex-1 min-w-0">
-            <h2
-              class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+        <div class="container mx-auto px-6 py-8">
+          <!-- Page Header -->
+          <div class="text-center mb-16">
+            <h1
+              class="text-4xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-4"
             >
-              Dashboard Overview
-            </h2>
-            <p class="mt-2 text-slate-400 text-lg">
-              Welcome back to your CampusCart admin center
+              CampusCart Admin
+            </h1>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+              Streamlined dashboard for efficient platform management
             </p>
           </div>
-        </div>
 
-        <!-- Stats Overview -->
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          <!-- Total Users -->
-          <div class="stat-card rounded-2xl shadow-xl">
-            <div class="p-6">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl flex items-center justify-center"
-                  >
-                    <i class="fas fa-users text-white text-xl"></i>
-                  </div>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt
-                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
-                    >
-                      Total Users
-                    </dt>
-                    <dd
-                      class="text-2xl font-bold text-white mt-1"
-                      th:text="${stats.totalUsers}"
-                    >
-                      1,234
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-            <div
-              class="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 px-6 py-3 rounded-b-2xl border-t border-cyan-500/20"
-            >
-              <div class="text-sm">
-                <span
-                  th:text="${stats.newUsersThisWeek}"
-                  class="font-semibold text-green-400"
-                  >+12</span
-                >
-                <span class="text-slate-400 ml-1">new this week</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Pending Products -->
-          <div class="stat-card rounded-2xl shadow-xl">
-            <div class="p-6">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center"
-                  >
-                    <i class="fas fa-clock text-white text-xl"></i>
-                  </div>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt
-                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
-                    >
-                      Pending Reviews
-                    </dt>
-                    <dd
-                      class="text-2xl font-bold text-white mt-1"
-                      th:text="${stats.pendingProducts}"
-                    >
-                      23
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-            <div
-              class="bg-gradient-to-r from-amber-900/30 to-orange-900/30 px-6 py-3 rounded-b-2xl border-t border-amber-500/20"
-            >
-              <div class="text-sm">
-                <a
-                  href="/admin/products?status=pending"
-                  class="text-amber-400 hover:text-amber-300 font-semibold transition-colors"
-                  >Review now →</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Active Orders -->
-          <div class="stat-card rounded-2xl shadow-xl">
-            <div class="p-6">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-600 rounded-xl flex items-center justify-center"
-                  >
-                    <i class="fas fa-shopping-cart text-white text-xl"></i>
-                  </div>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt
-                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
-                    >
-                      Active Orders
-                    </dt>
-                    <dd
-                      class="text-2xl font-bold text-white mt-1"
-                      th:text="${stats.activeOrders}"
-                    >
-                      89
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-            <div
-              class="bg-gradient-to-r from-emerald-900/30 to-green-900/30 px-6 py-3 rounded-b-2xl border-t border-emerald-500/20"
-            >
-              <div class="text-sm">
-                <span
-                  th:text="${stats.ordersToday}"
-                  class="font-semibold text-green-400"
-                  >+5</span
-                >
-                <span class="text-slate-400 ml-1">today</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Revenue -->
-          <div class="stat-card rounded-2xl shadow-xl">
-            <div class="p-6">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <div
-                    class="w-12 h-12 bg-gradient-to-br from-violet-400 to-purple-600 rounded-xl flex items-center justify-center"
-                  >
-                    <i class="fas fa-dollar-sign text-white text-xl"></i>
-                  </div>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt
-                      class="text-sm font-medium text-slate-400 uppercase tracking-wider"
-                    >
-                      Monthly Revenue
-                    </dt>
-                    <dd
-                      class="text-2xl font-bold text-white mt-1"
-                      th:text="'$' + ${stats.monthlyRevenue}"
-                    >
-                      $12,345
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-            <div
-              class="bg-gradient-to-r from-violet-900/30 to-purple-900/30 px-6 py-3 rounded-b-2xl border-t border-violet-500/20"
-            >
-              <div class="text-sm">
-                <span
-                  th:text="${stats.revenueGrowth}"
-                  class="font-semibold text-green-400"
-                  >+8.2%</span
-                >
-                <span class="text-slate-400 ml-1">vs last month</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div
-          class="glass-effect rounded-2xl shadow-2xl border border-cyan-500/30"
-        >
-          <div class="px-8 py-8">
-            <h3 class="text-xl font-bold text-white mb-6 flex items-center">
-              <i class="fas fa-bolt mr-3 text-cyan-400"></i>
-              Quick Actions
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <button
-                onclick="window.location.href='/admin/users'"
-                class="group bg-gradient-to-br from-dark-blue-800/50 to-dark-blue-900/50 hover:from-cyan-600/20 hover:to-blue-600/20 p-6 rounded-xl text-center transition-all duration-300 border border-slate-700 hover:border-cyan-500/50 hover:shadow-lg"
+          <!-- Main Content Container -->
+          <div class="max-w-3xl mx-auto">
+            <!-- Total Users - Featured Section -->
+            <div class="mb-8">
+              <div
+                class="featured-card rounded-2xl shadow-2xl p-6 text-center relative overflow-hidden"
               >
-                <div
-                  class="w-16 h-16 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform"
-                >
-                  <i class="fas fa-user-cog text-white text-2xl"></i>
-                </div>
-                <p
-                  class="text-lg font-semibold text-white group-hover:text-cyan-400 transition-colors"
-                >
-                  Manage Users
-                </p>
-                <p class="text-slate-400 text-sm mt-2">
-                  Add, edit, or review user accounts
-                </p>
-              </button>
+                <!-- Background decoration -->
+                <div class="bg-decoration top-left"></div>
+                <div class="bg-decoration bottom-right"></div>
 
-              <button
-                onclick="window.location.href='/admin/products?status=pending'"
-                class="group bg-gradient-to-br from-dark-blue-800/50 to-dark-blue-900/50 hover:from-amber-600/20 hover:to-orange-600/20 p-6 rounded-xl text-center transition-all duration-300 border border-slate-700 hover:border-amber-500/50 hover:shadow-lg"
-              >
-                <div
-                  class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform"
-                >
-                  <i class="fas fa-clock text-white text-2xl"></i>
-                </div>
-                <p
-                  class="text-lg font-semibold text-white group-hover:text-amber-400 transition-colors"
-                >
-                  Review Products
-                </p>
-                <p class="text-slate-400 text-sm mt-2">
-                  Approve or reject pending listings
-                </p>
-              </button>
+                <div class="relative z-10">
+                  <div
+                    class="w-16 h-10 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg"
+                  >
+                    <i class="fas fa-users text-white text-2xl"></i>
+                  </div>
 
-              <button
-                onclick="window.location.href='/admin/categories'"
-                class="group bg-gradient-to-br from-dark-blue-800/50 to-dark-blue-900/50 hover:from-emerald-600/20 hover:to-green-600/20 p-6 rounded-xl text-center transition-all duration-300 border border-slate-700 hover:border-emerald-500/50 hover:shadow-lg"
-              >
-                <div
-                  class="w-16 h-16 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform"
-                >
-                  <i class="fas fa-tags text-white text-2xl"></i>
+                  <h2
+                    class="text-xl font-semibold text-slate-300 mb-2 uppercase tracking-wide"
+                  >
+                    Total Platform Users
+                  </h2>
+
+                  <div
+                    class="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-2"
+                    th:text="${totalUsers}"
+                  ></div>
+
+                  <p class="text-slate-400 text-sm">
+                    Active members in the CampusCart community
+                  </p>
                 </div>
-                <p
-                  class="text-lg font-semibold text-white group-hover:text-emerald-400 transition-colors"
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="glass-effect rounded-2xl shadow-2xl p-4">
+              <h3 class="text-xl font-bold text-white mb-6 text-center">
+                Management Actions
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-4">
+                <!-- Review Products -->
+                <button
+                  onclick="window.location.href='/admin/products?status=pending'"
+                  class="action-button review group relative p-4 rounded-xl text-center"
                 >
-                  Manage Categories
-                </p>
-                <p class="text-slate-400 text-sm mt-2">
-                  Organize and create product categories
-                </p>
-              </button>
+                  <div
+                    class="absolute inset-0 rounded-xl bg-gradient-to-br from-amber-400/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  ></div>
+
+                  <div class="relative z-10">
+                    <div
+                      class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg"
+                    >
+                      <i class="fas fa-clock text-white text-2xl"></i>
+                    </div>
+
+                    <h4
+                      class="text-lg font-semibold text-white group-hover:text-amber-300 transition-colors mb-1"
+                    >
+                      Review Products
+                    </h4>
+
+                    <p
+                      class="text-slate-400 text-xs group-hover:text-slate-300 transition-colors"
+                    >
+                      Approve or reject pending product listings from students
+                    </p>
+                  </div>
+                </button>
+
+                <!-- Manage Categories -->
+                <button
+                  onclick="window.location.href='/admin/categories'"
+                  class="action-button categories group relative p-4 rounded-xl text-center"
+                >
+                  <div
+                    class="absolute inset-0 rounded-xl bg-gradient-to-br from-emerald-400/5 to-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  ></div>
+
+                  <div class="relative z-10">
+                    <div
+                      class="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 rounded-xl mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg"
+                    >
+                      <i class="fas fa-tags text-white text-2xl"></i>
+                    </div>
+
+                    <h4
+                      class="text-lg font-semibold text-white group-hover:text-emerald-300 transition-colors mb-1"
+                    >
+                      Manage Categories
+                    </h4>
+
+                    <p
+                      class="text-slate-400 text-xs group-hover:text-slate-300 transition-colors"
+                    >
+                      Organize and create product categories for better browsing
+                    </p>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -164,15 +164,6 @@
             </a>
 
             <a
-              th:href="@{/admin/users}"
-              th:classappend="${activeTab == 'users'} ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg glow-effect' : 'text-slate-300 hover:bg-dark-blue-800/50 hover:text-cyan-400 border border-transparent hover:border-cyan-500/30'"
-              class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-300 ease-in-out"
-            >
-              <i class="fas fa-users mr-3 h-5 w-5"></i>
-              User Management
-            </a>
-
-            <a
               th:href="@{/admin/products}"
               th:classappend="${activeTab == 'products'} ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg glow-effect' : 'text-slate-300 hover:bg-dark-blue-800/50 hover:text-cyan-400 border border-transparent hover:border-cyan-500/30'"
               class="group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-300 ease-in-out"

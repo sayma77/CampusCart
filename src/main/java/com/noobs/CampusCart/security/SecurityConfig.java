@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/signin") // where POST should go
                         .usernameParameter("email") // match form input name
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/marketplace", true)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/signout")

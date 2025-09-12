@@ -183,16 +183,31 @@
               class="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gradient-to-br from-slate-700 to-slate-800"
             >
               <img
-                th:src="${product.imageUrl}"
+                th:src="${product.image}"
                 th:alt="${product.name}"
                 src="https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=400"
                 class="w-full h-56 object-cover object-center"
               />
-              <div class="absolute top-4 right-4">
+              <div class="absolute top-4 right-4 w-28">
                 <span
-                  class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                  th:switch="${product.validity}"
+                  class="inline-flex items-center justify-center w-full py-1 rounded-full text-xs font-bold text-white"
                 >
-                  PENDING
+                  <span
+                    th:case="'pending'"
+                    class="bg-yellow-500 text-white text-center rounded-full px-2"
+                    >Pending</span
+                  >
+                  <span
+                    th:case="'approved'"
+                    class="bg-green-500 text-white text-center rounded-full px-2"
+                    >Approved</span
+                  >
+                  <span
+                    th:case="'rejected'"
+                    class="bg-red-500 text-white text-center rounded-full px-2"
+                    >Rejected</span
+                  >
                 </span>
               </div>
             </div>
@@ -216,7 +231,7 @@
                   $999
                 </p>
                 <span
-                  th:text="${product.categoryName}"
+                  th:text="${product.category.name}"
                   class="text-xs text-slate-400 bg-slate-700/50 px-3 py-1 rounded-full border border-slate-600"
                 >
                   Electronics
@@ -230,7 +245,7 @@
                   <i class="fas fa-user text-white text-xs"></i>
                 </div>
                 <p
-                  th:text="${product.sellerName}"
+                  th:text="${product.user.name}"
                   class="text-sm text-slate-300"
                 >
                   John's Tech Store
@@ -239,21 +254,36 @@
 
               <!-- Actions -->
               <div class="flex space-x-2">
-                <button
-                  th:if="${product.status == 'PENDING'}"
-                  @click="approveProduct(product.id)"
-                  th:attr="data-product-id=${product.id}"
-                  class="flex-1 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 hover:shadow-lg"
-                >
-                  <i class="fas fa-check mr-2"></i>Approve
-                </button>
-                <button
-                  th:if="${product.status == 'PENDING'}"
-                  @click="rejectProduct(product.id)"
-                  class="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 hover:shadow-lg"
-                >
-                  <i class="fas fa-times mr-2"></i>Reject
-                </button>
+                <form th:action="@{/admin/products/approve}" method="post">
+                  <input
+                    type="hidden"
+                    name="productId"
+                    th:value="${product.id}"
+                  />
+                  <button
+                    th:if="${product.validity == 'pending'}"
+                    type="submit"
+                    class="flex-1 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 hover:shadow-lg"
+                  >
+                    <i class="fas fa-check mr-2"></i>Approve
+                  </button>
+                </form>
+
+                <form th:action="@{/admin/products/reject}" method="post">
+                  <input
+                    type="hidden"
+                    name="productId"
+                    th:value="${product.id}"
+                  />
+                  <button
+                    th:if="${product.validity == 'pending'}"
+                    type="submit"
+                    class="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 hover:shadow-lg"
+                  >
+                    <i class="fas fa-times mr-2"></i>Reject
+                  </button>
+                </form>
+
                 <button
                   @click="deleteProduct(product.id)"
                   class="bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-500 hover:to-slate-600 text-white text-sm font-semibold py-2.5 px-4 rounded-lg transition-all duration-200 hover:shadow-lg"

@@ -403,99 +403,99 @@
 
         <!-- Products Grid -->
         <div
-  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2"
-  th:if="${!#lists.isEmpty(products)}"
->
-          <div th:each="product : ${products}" class="group relative w-full h-72 overflow-hidden">
-              <!-- Product Card -->
-<div class="group relative w-full h-72 overflow-hidden">
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2"
+          th:if="${!#lists.isEmpty(products)}"
+        >
+                  <div th:each="product : ${products}" class="group relative w-full h-72 overflow-hidden">
+                      <!-- Product Card -->
+        <div class="group relative w-full h-72 overflow-hidden">
 
-  <!-- Product Image -->
-  <img
-    th:src="${product.image}"
-    th:alt="${product.name}"
-    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-    onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'"
-  />
+          <!-- Product Image -->
+          <img
+            th:src="${product.image}"
+            th:alt="${product.name}"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'"
+          />
 
-  <!-- Overlay (appears on hover) -->
-  <div
-    class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4"
-  >
-    <!-- Top Labels -->
-    <div class="flex gap-2">
-      <span
-        class="bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold"
-        th:text="${product.status}"
-      >
-        Condition
-      </span>
-      <span
-        class="bg-accent text-white text-xs px-2 py-1 rounded-full font-semibold"
-        th:text="${product.sellOrRent == 'sell'} ? 'For Sale' : (${product.sellOrRent == 'rent'} ? 'For Rent' : 'Sale/Rent')"
-      >
-        Type
-      </span>
-    </div>
-
-    <!-- Product Info & Actions -->
-    <div class="text-white">
-      <h3
-        class="font-bold text-lg mb-1 line-clamp-2"
-        th:text="${product.name}"
-      >
-        Product Name
-      </h3>
-      <p
-        class="text-xl font-bold mb-3"
-        th:text="'৳' + ${product.price}"
-      >
-        ৳0
-      </p>
-
-      <!-- Seller Info -->
-      <div class="text-sm mb-3 space-y-1">
-        <div class="flex items-center">
-          <i data-lucide="user" class="h-4 w-4 mr-2"></i>
-          <span th:text="${product.user != null ? product.user.username : 'Unknown Seller'}">Seller</span>
-        </div>
-        <div th:if="${product.user != null && product.user.hall != null}" class="flex items-center">
-          <i data-lucide="map-pin" class="h-4 w-4 mr-2"></i>
-          <span th:text="${product.user.hall}">Hall</span>
-        </div>
-        <div th:if="${product.category != null}" class="flex items-center">
-          <i data-lucide="tag" class="h-4 w-4 mr-2"></i>
-          <span th:text="${product.category.name}">Category</span>
-        </div>
-      </div>
-
-      <!-- Action Buttons -->
-      <div class="flex gap-2">
-        <form th:action="@{/wishlist}" method="post">
-          <input type="hidden" name="productId" th:value="${product.id}" />
-          <button
-            type="submit"
-            class="p-2 rounded-lg bg-white/20 hover:bg-red-500/80 transition-all duration-200"
+          <!-- Overlay (appears on hover) -->
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4"
           >
-            <i data-lucide="heart" class="h-5 w-5"></i>
-          </button>
-        </form>
+            <!-- Top Labels -->
+            <div class="flex gap-2">
+              <span
+                class="bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold"
+                th:text="${product.status}"
+              >
+                Condition
+              </span>
+              <span
+                class="bg-accent text-white text-xs px-2 py-1 rounded-full font-semibold"
+                th:text="${product.sellOrRent == 'sell'} ? 'For Sale' : (${product.sellOrRent == 'rent'} ? 'For Rent' : 'Sale/Rent')"
+              >
+                Type
+              </span>
+            </div>
 
-        <form th:action="@{/cart}" method="post" class="flex-1">
-          <input type="hidden" name="productId" th:value="${product.id}" />
-          <input type="hidden" name="quantity" th:value="1" />
-          <button
-            type="submit"
-            class="w-full bg-primary hover:bg-accent text-white py-2 rounded-lg font-semibold transition-all duration-200"
-          >
-            <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-1"></i>
-            Add to Cart
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+            <!-- Product Info & Actions -->
+            <div class="text-white">
+              <h3
+                class="font-bold text-lg mb-1 line-clamp-2"
+                th:text="${product.name}"
+              >
+                Product Name
+              </h3>
+              <p
+                class="text-xl font-bold mb-3"
+                th:text="'৳' + ${product.price}"
+              >
+                ৳0
+              </p>
+
+              <!-- Seller Info -->
+              <div class="text-sm mb-3 space-y-1">
+                <div class="flex items-center">
+                  <i data-lucide="user" class="h-4 w-4 mr-2"></i>
+                  <span th:text="${product.user != null ? product.user.username : 'Unknown Seller'}">Seller</span>
+                </div>
+                <div th:if="${product.user != null && product.user.hall != null}" class="flex items-center">
+                  <i data-lucide="map-pin" class="h-4 w-4 mr-2"></i>
+                  <span th:text="${product.user.hall}">Hall</span>
+                </div>
+                <div th:if="${product.category != null}" class="flex items-center">
+                  <i data-lucide="tag" class="h-4 w-4 mr-2"></i>
+                  <span th:text="${product.category.name}">Category</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-2">
+                <form th:action="@{/wishlist}" method="post">
+                  <input type="hidden" name="productId" th:value="${product.id}" />
+                  <button
+                    type="submit"
+                    class="p-2 rounded-lg bg-white/20 hover:bg-red-500/80 transition-all duration-200"
+                  >
+                    <i data-lucide="heart" class="h-5 w-5"></i>
+                  </button>
+                </form>
+
+                <form th:action="@{/cart}" method="post" class="flex-1">
+                  <input type="hidden" name="productId" th:value="${product.id}" />
+                  <input type="hidden" name="quantity" th:value="1" />
+                  <button
+                    type="submit"
+                    class="w-full bg-primary hover:bg-accent text-white py-2 rounded-lg font-semibold transition-all duration-200"
+                  >
+                    <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-1"></i>
+                    Add to Cart
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
 
             </div>
           </div>
