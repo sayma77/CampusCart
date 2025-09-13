@@ -17,6 +17,7 @@ import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CartItemRepository;
 import com.noobs.CampusCart.repository.OrderRepository;
 import com.noobs.CampusCart.repository.UserRepository;
+import com.noobs.CampusCart.service.OrderService;
 
 @Controller
 public class OrderController {
@@ -28,6 +29,9 @@ public class OrderController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/orders")
     public String viewOrders(Model model, Principal principal) {
@@ -64,8 +68,7 @@ public class OrderController {
                 .toList();
         order.setProducts(products);
 
-        orderRepository.save(order);
-
+        orderService.placeOrder(order);
         // Clear cart
         cartItemRepository.deleteAll(cartItems);
 
