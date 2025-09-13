@@ -53,9 +53,8 @@ public class SellController {
         Category category = categoryRepository.findByName(category_name).get();
         User user = userRepository.findByEmail(principal.getName()).get();
 
-        Product product = new Product(null, name, price, status, image, sellOrRent, "pending", user.getId(),
-                category.getId(), 1, 0,
-                null, null);
+        Product product = new Product(name, price, status, image, sellOrRent, "pending", user,
+                category, 1, 0);
         productRepository.save(product);
         redirectAttributes.addFlashAttribute("success", "Product Added!");
 

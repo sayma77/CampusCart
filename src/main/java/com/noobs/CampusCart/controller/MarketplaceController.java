@@ -17,6 +17,7 @@ import com.noobs.CampusCart.repository.*;
 import com.noobs.CampusCart.service.CartService;
 import com.noobs.CampusCart.service.CategoryService;
 import com.noobs.CampusCart.service.ProductService;
+import com.noobs.CampusCart.utils.AppLogger;
 
 @Controller
 public class MarketplaceController {
