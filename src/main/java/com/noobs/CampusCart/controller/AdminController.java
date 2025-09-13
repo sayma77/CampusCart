@@ -77,8 +77,8 @@ public class AdminController {
     // Products Management
     @GetMapping("/admin/products")
     public String productsPage(@RequestParam(name = "search", required = false) String search,
-        @RequestParam(name = "categoryId", required = false) Long categoryId,
-        @RequestParam(name = "status", required = false) String status,Model model) {
+            @RequestParam(name = "categoryId", required = false) Long categoryId,
+            @RequestParam(name = "status", required = false) String status, Model model) {
 
         List<Product> products = productRepository.findAll();
         if (search != null && !search.isEmpty()) {
@@ -152,6 +152,18 @@ public class AdminController {
         }
 
         return "redirect:/admin/categories"; // redirect back to categories page
+    }
+
+    @PostMapping("/admin/categories/remove")
+    public String removeCategory(@RequestParam("categoryId") Long categoryId) {
+
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        // Cascade delete will remove all products under this category
+        categoryRepository.delete(category);
+
+        return "redirect:/admin/categories"; // or wherever you want to redirect
     }
 
 }
