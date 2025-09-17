@@ -194,10 +194,14 @@
                   </p>
                 </div>
 
-                <!-- Action Buttons -->
-                <form th:action="@{/order/checkout}" method="post">
+                <!-- Action Buttons (only show if cart is not empty) -->
+                <div
+                  th:if="${!#lists.isEmpty(cartItems)}"
+                  x-data="{ open: false }"
+                >
+                  <!-- Submit Order Button -->
                   <button
-                    type="submit"
+                    id="openOrderModalBtn"
                     class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     <i
@@ -206,7 +210,124 @@
                     ></i>
                     Submit Order
                   </button>
-                </form>
+
+                  <!-- Order Confirmation Modal -->
+                  <div
+                    id="orderModal"
+                    class="fixed inset-0 flex items-center justify-center bg-black/60 z-50 hidden"
+                  >
+                    <div
+                      class="bg-white dark:bg-surface-dark rounded-2xl shadow-2xl w-full max-w-2xl mx-4 p-6 relative animate-fadeIn"
+                    >
+                      <!-- Close Button -->
+                      <button
+                        id="closeOrderModalBtn"
+                        class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-xl"
+                      >
+                        ✕
+                      </button>
+
+                      <!-- Title -->
+                      <h2
+                        class="text-2xl md:text-3xl font-bold text-center text-primary dark:text-primary-50 mb-6"
+                      >
+                        Confirm Your Order
+                      </h2>
+
+                      <!-- Order Details -->
+                      <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                        <ul
+                          class="divide-y divide-gray-200 dark:divide-gray-700"
+                        >
+                          <li
+                            th:each="item : ${cartItems}"
+                            class="py-4 flex flex-col md:flex-row md:justify-between md:items-start"
+                          >
+                            <!-- Product Info -->
+                            <div>
+                              <p
+                                class="font-semibold text-gray-900 dark:text-gray-100"
+                              >
+                                <span th:text="${item.product.name}"></span>
+                                (<span th:text="${item.quantity}"></span>x) –
+                                ৳<span th:text="${item.product.price}"></span>
+                              </p>
+                              <p
+                                class="text-sm text-gray-500 dark:text-gray-400"
+                              >
+                                Added on
+                                <span
+                                  th:text="${#temporals.format(item.addedDate, 'dd MMM yyyy HH:mm')}"
+                                ></span>
+                              </p>
+                            </div>
+
+                            <!-- Seller Info -->
+                            <div
+                              class="mt-2 md:mt-0 md:text-right text-sm text-gray-600 dark:text-gray-300"
+                            >
+                              <p>
+                                <strong>Seller:</strong>
+                                <span
+                                  th:text="${item.product.user.name}"
+                                ></span>
+                              </p>
+                              <p>
+                                <strong>Phone:</strong>
+                                <span
+                                  th:text="${item.product.user.phone}"
+                                ></span>
+                              </p>
+                              <p>
+                                <strong>Email:</strong>
+                                <span
+                                  th:text="${item.product.user.email}"
+                                ></span>
+                              </p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <!-- Total + Date -->
+                      <div
+                        class="mt-6 border-t pt-4 text-gray-800 dark:text-gray-100"
+                      >
+                        <p class="flex justify-between">
+                          <span class="font-semibold">Order Date:</span>
+                          <span
+                            th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"
+                          ></span>
+                        </p>
+                        <p class="flex justify-between text-lg font-bold mt-2">
+                          <span>Total:</span>
+                          <span class="text-accent"
+                            >৳<span th:text="${subtotal}"></span
+                          ></span>
+                        </p>
+                      </div>
+
+                      <!-- Buttons -->
+                      <div class="mt-6 flex justify-end space-x-3">
+                        <button
+                          id="cancelOrderBtn"
+                          class="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium transition"
+                        >
+                          Cancel
+                        </button>
+
+                        <form th:action="@{/order/checkout}" method="post">
+                          <button
+                            type="submit"
+                            class="px-5 py-2 rounded-xl bg-primary hover:bg-accent text-white font-semibold shadow-md transition"
+                          >
+                            Confirm Order
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <a
                   href="/marketplace"
@@ -220,6 +341,44 @@
           </div>
         </div>
       </div>
+      <!-- Script -->
+      <script>
+        $(document).ready(function () {
+          // Open modal
+          $("#openOrderModalBtn").click(function () {
+            $("#orderModal").fadeIn();
+          });
+
+          // Close modal
+          $("#closeOrderModalBtn, #cancelOrderBtn").click(function () {
+            $("#orderModal").fadeOut();
+          });
+
+          // Close when clicking outside modal content
+          $("#orderModal").click(function (e) {
+            if (e.target === this) {
+              $(this).fadeOut();
+            }
+          });
+        });
+      </script>
+
+      <style>
+        /* Fade-in animation like Sell modal */
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out;
+        }
+      </style>
     </main>
   </body>
 </html>

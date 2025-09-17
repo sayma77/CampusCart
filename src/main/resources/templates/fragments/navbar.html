@@ -83,11 +83,14 @@
               href="/notifications"
               class="relative p-2 rounded-lg hover:bg-primary-100/20 dark:hover:bg-accent/20 transition-all duration-200"
             >
-              <i data-lucide="bell" class="h-5 w-5 text-primary dark:text-primary-50"></i>
+              <i
+                data-lucide="bell"
+                class="h-5 w-5 text-primary dark:text-primary-50"
+              ></i>
               <span
-                th:if="${notification_count > 0}"
-                class="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
-                th:text="${notification_count}"
+                th:if="${unreadCount > 0}"
+                class="absolute -top-1 -right-1 bg-accent text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-medium"
+                th:text="${unreadCount}"
               ></span>
             </a>
             <!-- User Menu -->
