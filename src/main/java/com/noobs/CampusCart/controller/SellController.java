@@ -40,24 +40,34 @@ public class SellController {
     }
 
     @PostMapping("/sell")
-    public String postItem(
-            @RequestParam("name") String name,
-            @RequestParam("price") Double price,
-            @RequestParam("status") String status,
-            @RequestParam("sellOrRent") String sellOrRent,
-            @RequestParam("category") String category_name,
-            @RequestParam("image") String image,
-            Principal principal,
-            RedirectAttributes redirectAttributes) {
+public String postItem(
+        @RequestParam("name") String name,
+        @RequestParam("price") Double price,
+        @RequestParam("status") String status,
+        @RequestParam("sellOrRent") String sellOrRent,
+        @RequestParam("categoryId") Long categoryId,
+        @RequestParam("image") String image,
+        @RequestParam("quantity") int quantity,
+        Principal principal,
+        RedirectAttributes redirectAttributes) {
 
-        Category category = categoryRepository.findByName(category_name).get();
-        User user = userRepository.findByEmail(principal.getName()).get();
+    // Get category safely
+    Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid category ID: " + categoryId));
 
-        Product product = new Product(name, price, status, image, sellOrRent, "pending", user,
-                category, 1, 0);
-        productRepository.save(product);
-        redirectAttributes.addFlashAttribute("success", "Product Added!");
+    // Get user safely
+    User user = userRepository.findByEmail(principal.getName())
+            .orElseThrow(() -> new IllegalArgumentException("User not found: " + principal.getName()));
 
-        return "redirect:/marketplace";
-    }
+    // Create product
+    Product product = new Product(name, price, status, image, sellOrRent, "pending",
+            user, category, quantity, 0);
+
+    productRepository.save(product);
+
+    redirectAttributes.addFlashAttribute("success", "Product Added!");
+    return "redirect:/marketplace";
+}
+
+
 }
