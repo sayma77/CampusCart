@@ -79,13 +79,16 @@ public class ProfilePageController {
                 break;
 
             case "sell":
-                products = productRepository.findByUserAndSellOrRent(user, "sell");
+                products = productRepository.findByTypeAndApproved("sell").stream()
+                        .filter(p -> p.getUser().getId().equals(user.getId()))
+                        .toList();
                 break;
 
             case "given_rent":
-                products = productRepository.findByUserAndSellOrRent(user, "rent");
+                products = productRepository.findByTypeAndApproved("rent").stream()
+                        .filter(p -> p.getUser().getId().equals(user.getId()))
+                        .toList();
                 break;
-
         }
 
         // Format dates for orders
@@ -135,4 +138,27 @@ public class ProfilePageController {
         redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
         return "redirect:/profile";
     }
+    @PostMapping("/profile/rejectProduct")
+public String rejectProduct(@RequestParam("productId") Long productId,
+                            Principal principal,
+                            RedirectAttributes redirectAttributes) {
+    // Find product
+    Product product = productRepository.findById(productId)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
+
+    // Ensure only the owner can reject
+    User currentUser = userService.getUserByEmail(principal.getName());
+    if (!product.getUser().getId().equals(currentUser.getId())) {
+        redirectAttributes.addFlashAttribute("error", "You are not authorized to reject this product!");
+        return "redirect:/profile?filter=sell";
+    }
+
+    // Mark as rejected
+    product.setValidity("rejected");
+    productRepository.save(product);
+
+    redirectAttributes.addFlashAttribute("success", "Product rejected successfully!");
+    return "redirect:/profile?filter=sell";
+}
+
 }

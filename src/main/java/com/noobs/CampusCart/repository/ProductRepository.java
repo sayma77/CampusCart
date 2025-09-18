@@ -13,44 +13,45 @@ import com.noobs.CampusCart.model.User;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // All products with user and category
+    // --- Existing approved queries ---
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.validity) = 'approved'")
+    List<Product> findAllApproved();
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
+           "WHERE p.category.name = :category AND LOWER(p.validity) = 'approved'")
+    List<Product> findByCategoryNameAndApproved(@Param("category") String category);
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
+           "WHERE LOWER(p.sellOrRent) = LOWER(:type) AND LOWER(p.validity) = 'approved'")
+    List<Product> findByTypeAndApproved(@Param("type") String type);
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
+           "WHERE p.category.name = :category AND LOWER(p.sellOrRent) = LOWER(:type) " +
+           "AND LOWER(p.validity) = 'approved'")
+    List<Product> findByCategoryAndTypeAndApproved(@Param("category") String category,
+                                                   @Param("type") String type);
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
+           "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) AND LOWER(p.validity) = 'approved'")
+    List<Product> findByNameContainingAndApproved(@Param("keyword") String keyword);
+
+    // --- New methods for admin (all products, any validity) ---
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user")
-    List<Product> findAllWithUserAndCategory();
+    List<Product> findAllWithUserAndCategory(); // admin can see everything
 
-    // By category
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.name = :categoryId")
-    List<Product> findByCategoryIdWithUserAndCategory(@Param("categoryId") String categoryId);
-
-    // By type (sell or rent)
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.sellOrRent) = LOWER(:type)")
-    List<Product> findByTypeWithUserAndCategory(@Param("type") String type);
-
-    // By category AND type
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.name = :categoryId AND LOWER(p.sellOrRent) = LOWER(:type)")
-    List<Product> findByCategoryAndTypeWithUserAndCategory(@Param("categoryId") String categoryId,
-            @Param("type") String type);
-
-    // Search by name (case-insensitive)
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-    List<Product> findByNameContainingWithUserAndCategory(@Param("keyword") String keyword);
-
-    // Find products posted by a specific user with a specific type (sell or rent)
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.user = :user AND LOWER(p.sellOrRent) = LOWER(:type)")
-    List<Product> findByUserAndSellOrRent(@Param("user") User user, @Param("type") String type);
-
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.user = :user")
-    List<Product> findByUser(@Param("user") User user);
-
-    // By categoryId
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.id = :categoryId")
     List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
 
-    // By validity (pending / approved / rejected)
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.validity) = LOWER(:validity)")
     List<Product> findByValidity(@Param("validity") String validity);
 
-    // By categoryId + validity
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE p.category.id = :categoryId AND LOWER(p.validity) = LOWER(:validity)")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
+           "WHERE p.category.id = :categoryId AND LOWER(p.validity) = LOWER(:validity)")
     List<Product> findByCategoryAndValidity(@Param("categoryId") Long categoryId,
                                             @Param("validity") String validity);
+
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
+           "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<Product> findByNameContainingWithUserAndCategory(@Param("keyword") String keyword);
 }
+

@@ -15,22 +15,23 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
-        return productRepository.findAllWithUserAndCategory();
+        return productRepository.findAllApproved();
     }
 
     public List<Product> getProductsByCategory(String category) {
-        return productRepository.findByCategoryIdWithUserAndCategory(category);
+        return productRepository.findByCategoryNameAndApproved(category);
     }
 
     public List<Product> getProductsBySellOrRent(String type) {
-        return productRepository.findByTypeWithUserAndCategory(type);
+        return productRepository.findByTypeAndApproved(type);
     }
 
     public List<Product> getProductsByCategoryAndType(String category, String type) {
-        return productRepository.findByCategoryAndTypeWithUserAndCategory(category, type);
+        return productRepository.findByCategoryAndTypeAndApproved(category, type);
     }
 
     public List<Product> searchProductsByName(String keyword) {
-        return productRepository.findByNameContainingWithUserAndCategory(keyword);
+        return productRepository.findByNameContainingAndApproved(keyword);
     }
 }
+
