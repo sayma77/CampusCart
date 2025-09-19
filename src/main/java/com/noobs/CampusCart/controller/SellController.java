@@ -27,23 +27,23 @@ import com.noobs.CampusCart.repository.UserRepository;
 @Controller
 public class SellController {
 
-    @Autowired
-    private ProductRepository productRepository;
+        @Autowired
+        private ProductRepository productRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+        @Autowired
+        private CategoryRepository categoryRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+        @Autowired
+        private UserRepository userRepository;
 
-    // Show the Sell Form
-    @GetMapping("/sell")
-    public String showSellForm(Model model) {
-        List<Category> all_cat = categoryRepository.findAll();
-        model.addAttribute("product", new Product());
-        model.addAttribute("categories", all_cat);
-        return "sell";
-    }
+        // Show the Sell Form
+        @GetMapping("/sell")
+        public String showSellForm(Model model) {
+                List<Category> all_cat = categoryRepository.findAll();
+                model.addAttribute("product", new Product());
+                model.addAttribute("categories", all_cat);
+                return "sell";
+        }
 
     @PostMapping("/sell")
 public String postItem(
@@ -82,12 +82,11 @@ public String postItem(
     Product product = new Product(name, price, status, imagePath, sellOrRent, "pending",
         user, category, quantity, 0);
 
-    productRepository.save(product);
+                productRepository.save(product);
 
-    redirectAttributes.addFlashAttribute("success", "Product Added!");
-    return "redirect:/marketplace";
-}
-
+                redirectAttributes.addFlashAttribute("success", "Product Added!");
+                return "redirect:/marketplace";
+        }
 
 
 }

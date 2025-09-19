@@ -15,6 +15,7 @@ import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CategoryRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.repository.UserRepository;
+import com.noobs.CampusCart.service.NotificationService;
 
 @Controller
 public class AdminController {
@@ -27,6 +28,9 @@ public class AdminController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     // Dashboard
     @GetMapping("/admin/dashboard")
@@ -112,6 +116,11 @@ public class AdminController {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         product.setValidity("approved");
         productRepository.save(product);
+        notificationService.createNotification(
+            product.getUser(),
+            "PRODUCT_APPROVED",
+            "Your product '" + product.getName() + "' has been approved."
+        );
         return "redirect:/admin/products";
     }
 
@@ -121,6 +130,11 @@ public class AdminController {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         product.setValidity("rejected");
         productRepository.save(product);
+        notificationService.createNotification(
+            product.getUser(),
+            "PRODUCT_REJECTED",
+            "Your product '" + product.getName() + "' has been rejected."
+        );
         return "redirect:/admin/products";
     }
 
