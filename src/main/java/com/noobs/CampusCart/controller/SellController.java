@@ -21,53 +21,53 @@ import com.noobs.CampusCart.repository.UserRepository;
 @Controller
 public class SellController {
 
-    @Autowired
-    private ProductRepository productRepository;
+        @Autowired
+        private ProductRepository productRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+        @Autowired
+        private CategoryRepository categoryRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+        @Autowired
+        private UserRepository userRepository;
 
-    // Show the Sell Form
-    @GetMapping("/sell")
-    public String showSellForm(Model model) {
-        List<Category> all_cat = categoryRepository.findAll();
-        model.addAttribute("product", new Product());
-        model.addAttribute("categories", all_cat);
-        return "sell";
-    }
+        // Show the Sell Form
+        @GetMapping("/sell")
+        public String showSellForm(Model model) {
+                List<Category> all_cat = categoryRepository.findAll();
+                model.addAttribute("product", new Product());
+                model.addAttribute("categories", all_cat);
+                return "sell";
+        }
 
-    @PostMapping("/sell")
-public String postItem(
-        @RequestParam("name") String name,
-        @RequestParam("price") Double price,
-        @RequestParam("status") String status,
-        @RequestParam("sellOrRent") String sellOrRent,
-        @RequestParam("categoryId") Long categoryId,
-        @RequestParam("image") String image,
-        @RequestParam("quantity") int quantity,
-        Principal principal,
-        RedirectAttributes redirectAttributes) {
+        @PostMapping("/sell")
+        public String postItem(
+                        @RequestParam("name") String name,
+                        @RequestParam("price") Double price,
+                        @RequestParam("status") String status,
+                        @RequestParam("sellOrRent") String sellOrRent,
+                        @RequestParam("categoryId") Long categoryId,
+                        @RequestParam("image") String image,
+                        @RequestParam("quantity") int quantity,
+                        Principal principal,
+                        RedirectAttributes redirectAttributes) {
 
-    // Get category safely
-    Category category = categoryRepository.findById(categoryId)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid category ID: " + categoryId));
+                // Get category safely
+                Category category = categoryRepository.findById(categoryId)
+                                .orElseThrow(() -> new IllegalArgumentException("Invalid category ID: " + categoryId));
 
-    // Get user safely
-    User user = userRepository.findByEmail(principal.getName())
-            .orElseThrow(() -> new IllegalArgumentException("User not found: " + principal.getName()));
+                // Get user safely
+                User user = userRepository.findByEmail(principal.getName())
+                                .orElseThrow(() -> new IllegalArgumentException(
+                                                "User not found: " + principal.getName()));
 
-    // Create product
-    Product product = new Product(name, price, status, image, sellOrRent, "pending",
-            user, category, quantity, 0);
+                // Create product
+                Product product = new Product(name, price, status, image, sellOrRent, "pending",
+                                user, category, quantity, 0);
 
-    productRepository.save(product);
+                productRepository.save(product);
 
-    redirectAttributes.addFlashAttribute("success", "Product Added!");
-    return "redirect:/marketplace";
-}
-
+                redirectAttributes.addFlashAttribute("success", "Product Added!");
+                return "redirect:/marketplace";
+        }
 
 }

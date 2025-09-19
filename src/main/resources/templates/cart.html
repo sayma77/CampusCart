@@ -7,6 +7,70 @@
     <main
       class="min-h-screen bg-gradient-to-br from-background-light to-primary-50 dark:from-background-dark dark:to-surface-dark py-8"
     >
+      <!-- Flash Messages -->
+      <div
+        th:if="${warningMessage}"
+        class="mb-6 p-4 border-l-4 border-yellow-500 bg-yellow-50 text-yellow-800 rounded-lg flex items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 flex-shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M12 8v4m0 4h.01"
+          />
+        </svg>
+        <span th:text="${warningMessage}"></span>
+      </div>
+
+      <div
+        th:if="${error}"
+        class="mb-6 p-4 border-l-4 border-red-500 bg-red-50 text-red-800 rounded-lg flex items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 flex-shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+        <span th:text="${error}"></span>
+      </div>
+
+      <div
+        th:if="${info}"
+        class="mb-6 p-4 border-l-4 border-blue-500 bg-blue-50 text-blue-800 rounded-lg flex items-center gap-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 flex-shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M12 8v4m0 4h.01"
+          />
+        </svg>
+        <span th:text="${info}"></span>
+      </div>
+
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-8">

@@ -330,68 +330,86 @@
                 </div>
 
                 <!-- Products -->
-<div th:each="product : ${products}">
-  <div
-    class="bg-primary-50 dark:bg-background-dark rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-primary-100/20 dark:border-accent/20"
-  >
-    <div class="flex items-center justify-between">
-      <div class="flex items-center space-x-4">
-        <div
-          class="w-16 h-16 bg-primary-100 dark:bg-accent/20 rounded-lg flex items-center justify-center"
-        >
-          <i
-            data-lucide="package"
-            class="h-6 w-6 text-primary dark:text-accent"
-          ></i>
-        </div>
-        <div>
-          <h4
-            class="font-semibold text-primary dark:text-primary-50"
-            th:text="${product.name}"
-          >
-            Item Name
-          </h4>
-          <div class="flex items-center space-x-3 mt-2">
-            <span
-              class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium"
-              th:text="${product.sellOrRent}"
-              >TYPE</span
-            >
-            <span
-              class="text-sm text-primary-200 dark:text-primary-100"
-              th:text="${product.category.name}"
-              >Category</span
-            >
-          </div>
-        </div>
-      </div>
+                <div th:each="product : ${products}">
+                  <div
+                    class="bg-primary-50 dark:bg-background-dark rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-primary-100/20 dark:border-accent/20"
+                  >
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-4">
+                        <div
+                          class="w-16 h-16 bg-primary-100 dark:bg-accent/20 rounded-lg flex items-center justify-center"
+                        >
+                          <i
+                            data-lucide="package"
+                            class="h-6 w-6 text-primary dark:text-accent"
+                          ></i>
+                        </div>
+                        <div>
+                          <h4
+                            class="font-semibold text-primary dark:text-primary-50"
+                            th:text="${product.name}"
+                          >
+                            Item Name
+                          </h4>
+                          <div class="flex items-center space-x-3 mt-2">
+                            <!-- TYPE or SOLD -->
+                            <span
+                              th:if="${product.quantity == 0}"
+                              class="bg-red-600 text-white text-xs px-2 py-1 rounded-full font-medium"
+                            >
+                              Sold!
+                            </span>
+                            <span
+                              th:if="${product.quantity > 0}"
+                              class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium"
+                              th:text="${product.sellOrRent}"
+                            >
+                              TYPE
+                            </span>
+                            <!-- Category -->
+                            <span
+                              class="text-sm text-primary-200 dark:text-primary-100"
+                              th:text="${product.category.name}"
+                              >Category</span
+                            >
+                            <!-- Quantity -->
+                            <span
+                              class="text-sm text-gray-600 dark:text-gray-300 font-medium"
+                            >
+                              Qty: <span th:text="${product.quantity}">0</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
 
-      <!-- Price + Reject -->
-      <div class="text-right flex flex-col items-end space-y-2">
-        <p class="text-xl font-bold text-accent">
-          ৳<span th:text="${product.price}">0</span>
-        </p>
-
-        <!-- Reject button -->
-        <form
-          th:action="@{/profile/rejectProduct}"
-          method="post"
-          class="inline"
-        >
-          <input type="hidden" name="productId" th:value="${product.id}" />
-          <button
-            type="submit"
-            class="p-2 bg-white text-red-500 border  rounded-lg shadow-sm transition hover:bg-red-500 hover:text-white"
-            title="Reject Product"
-          >
-            <i data-lucide="trash-2" class="h-5 w-5"></i>
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
+                      <!-- Price + Reject -->
+                      <div class="text-right flex flex-col items-end space-y-2">
+                        <p class="text-xl font-bold text-accent">
+                          ৳<span th:text="${product.price}">0</span>
+                        </p>
+                        <!-- Reject button -->
+                        <form
+                          th:action="@{/profile/rejectProduct}"
+                          method="post"
+                          class="inline"
+                        >
+                          <input
+                            type="hidden"
+                            name="productId"
+                            th:value="${product.id}"
+                          />
+                          <button
+                            type="submit"
+                            class="p-2 bg-white text-red-500 border rounded-lg shadow-sm transition hover:bg-red-500 hover:text-white"
+                            title="Reject Product"
+                          >
+                            <i data-lucide="trash-2" class="h-5 w-5"></i>
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <!-- Empty State -->
                 <div
