@@ -1,5 +1,10 @@
 package com.noobs.CampusCart.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -12,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.noobs.CampusCart.model.Category;
@@ -147,44 +153,57 @@ public class ProfilePageController {
     }
 
     @PostMapping("/profile/updateProduct")
-    public String updateProduct(
-            @RequestParam("id") Long id,
-            @RequestParam("name") String name,
-            @RequestParam("price") Double price,
-            @RequestParam("status") String status,
-            @RequestParam("quantity") Integer quantity,
-            @RequestParam("sellOrRent") String sellOrRent,
-            @RequestParam("categoryId") Long categoryId,
-            @RequestParam("image") String image,
-            RedirectAttributes redirectAttributes) {
+public String updateProduct(
+        @RequestParam("id") Long id,
+        @RequestParam("name") String name,
+        @RequestParam("price") Double price,
+        @RequestParam("status") String status,
+        @RequestParam("sellOrRent") String sellOrRent,
+        @RequestParam("categoryId") Long categoryId,
+        @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, // accept uploaded file
+        @RequestParam("quantity") Integer quantity,
+        RedirectAttributes redirectAttributes) {
 
-        // Fetch existing product
-        Product existingProduct = productRepository.findById(id).orElse(null);
+    // Fetch existing product
+    Product existingProduct = productRepository.findById(id).orElse(null);
 
-        if (existingProduct != null) {
-            existingProduct.setName(name);
-            existingProduct.setPrice(price);
-            existingProduct.setStatus(status);
-            existingProduct.setQuantity(quantity);
-            existingProduct.setSellOrRent(sellOrRent);
-            existingProduct.setImage(image);
+    if (existingProduct != null) {
+        existingProduct.setName(name);
+        existingProduct.setPrice(price);
+        existingProduct.setStatus(status);
+        existingProduct.setQuantity(quantity);
+        existingProduct.setSellOrRent(sellOrRent);
 
-            // Fetch category by ID
-            if (categoryId != null && categoryId != 0) {
-                Category category = categoryRepository.findById(categoryId).orElse(null);
-                existingProduct.setCategory(category);
-            } else {
-                existingProduct.setCategory(null); // or leave as-is
-            }
-
-            productRepository.save(existingProduct);
-            redirectAttributes.addFlashAttribute("success", "Product updated successfully!");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Product not found!");
+        // Update category
+        if (categoryId != null && categoryId != 0) {
+            Category category = categoryRepository.findById(categoryId).orElse(null);
+            existingProduct.setCategory(category);
         }
 
-        return "redirect:/profile";
+        // Handle new image upload if provided
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
+            Path uploadPath = Paths.get("uploads");
+            try {
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+                Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                existingProduct.setImage("/uploads/" + fileName); // store relative path for Thymeleaf
+            } catch (IOException e) {
+                throw new RuntimeException("Image upload failed", e);
+            }
+        }
+
+        productRepository.save(existingProduct);
+        redirectAttributes.addFlashAttribute("success", "Product updated successfully!");
+    } else {
+        redirectAttributes.addFlashAttribute("error", "Product not found!");
     }
+
+    return "redirect:/profile";
+}
+
 
     @PostMapping("/profile/rejectProduct")
     public String rejectProduct(@RequestParam("productId") Long productId,
