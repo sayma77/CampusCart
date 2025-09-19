@@ -36,43 +36,44 @@
           </p>
 
           <form
-            method="post"
-            th:action="@{/sell}"
-            class="space-y-6"
-          >
-            <!-- Product Name -->
-            <div>
-              <label
-                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
-              >
-                <i data-lucide="tag" class="h-4 w-4 inline mr-1"></i>
-                Product Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter product name"
-                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
-                required
-              />
-            </div>
+  method="post"
+  th:action="@{/sell}"
+  enctype="multipart/form-data"
+  class="space-y-6"
+>
+  <!-- Product Name -->
+  <div>
+    <label
+      class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+    >
+      <i data-lucide="tag" class="h-4 w-4 inline mr-1"></i>
+      Product Name
+    </label>
+    <input
+      type="text"
+      name="name"
+      placeholder="Enter product name"
+      class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+      required
+    />
+  </div>
 
-            <!-- Price -->
-            <div>
-              <label
-                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
-              >
-                Price (৳)
-              </label>
-              <input
-                type="number"
-                name="price"
-                placeholder="Enter price"
-                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
-                min="0"
-                required
-              />
-            </div>
+  <!-- Price -->
+  <div>
+    <label
+      class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+    >
+      Price (৳)
+    </label>
+    <input
+      type="number"
+      name="price"
+      placeholder="Enter price"
+      class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
+      min="0"
+      required
+    />
+  </div>
 
             <!-- Condition -->
             <div>
@@ -176,24 +177,34 @@
               />
             </div>
 
-            <!-- Image URL -->
-            <div>
-              <label
-                class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
-              >
-                <i data-lucide="image" class="h-4 w-4 inline mr-1"></i>
-                Image URL
-              </label>
-              <input
-                type="url"
-                name="image"
-                placeholder="Enter image URL (optional)"
-                class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50 transition-all duration-200"
-              />
-              <p class="text-xs text-primary-200 dark:text-primary-100 mt-1">
-                Tip: Use image hosting services like Imgur or direct image links
-              </p>
-            </div>
+  <!-- Product Image Upload -->
+<div>
+  <label
+    class="block text-sm font-medium text-primary dark:text-primary-50 mb-2"
+  >
+    <i data-lucide="image" class="h-4 w-4 inline mr-1"></i>
+    Upload Image
+  </label>
+  <input
+    type="file"
+    name="imageFile"
+    accept="image/*"
+    class="w-full px-4 py-3 border border-primary-100 dark:border-accent/30 
+           rounded-lg focus:ring-2 focus:ring-accent focus:border-accent 
+           bg-primary-50 dark:bg-background-dark 
+           text-primary dark:text-primary-50 
+           file:mr-4 file:py-2 file:px-4 
+           file:rounded-lg file:border-0 
+           file:text-sm file:font-semibold 
+           file:bg-accent file:text-white 
+           hover:file:bg-primary transition-all duration-200"
+    required
+  />
+  <p class="text-xs text-primary-200 dark:text-primary-100 mt-1">
+    Upload a product image (JPG, PNG, etc.)
+  </p>
+</div>
+
 
             <!-- Submit Button -->
             <button
