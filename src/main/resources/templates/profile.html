@@ -240,7 +240,14 @@
                   class="text-lg font-bold text-primary dark:text-primary-50 flex items-center"
                 >
                   <i data-lucide="package" class="h-5 w-5 mr-2"></i>
-                  My Orders & Items
+                  <span th:switch="${selectedFilter}">
+                    <span th:case="'buy'">My Purchases</span>
+                    <span th:case="'sell'">My Listings</span>
+                    <span th:case="'taken_rent'">Rented Items (Taken)</span>
+                    <span th:case="'given_rent'">Rented Items (Given)</span>
+                    <span th:case="'orders_received'">Orders Received</span>
+                    <span th:case="*">My Orders & Items</span>
+                  </span>
                 </h3>
 
                 <!-- Filter Buttons -->
@@ -273,6 +280,13 @@
                       Rent (Given)
                     </button>
                   </a>
+                  <a th:href="@{/profile(filter='orders_received')}">
+                    <button
+                      th:class="${selectedFilter == 'orders_received'} ? 'bg-accent text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200' : 'bg-primary-50 dark:bg-accent/20 text-primary dark:text-accent px-3 py-2 rounded-lg text-sm font-medium hover:bg-primary-100 dark:hover:bg-accent/30 transition-all duration-200'"
+                    >
+                      Orders Received
+                    </button>
+                  </a>
                 </div>
               </div>
 
@@ -281,7 +295,7 @@
                 <!-- Orders -->
                 <div th:each="order : ${orders}">
                   <div
-                    th:each="product : ${order.products}"
+                    th:each="item : ${order.orderItems}"
                     class="bg-primary-50 dark:bg-background-dark rounded-xl p-4 hover:shadow-md transition-all duration-300 border border-primary-100/20 dark:border-accent/20"
                   >
                     <div class="flex items-center justify-between">
@@ -295,35 +309,120 @@
                           ></i>
                         </div>
                         <div>
+                          <!-- Product name -->
                           <h4
                             class="font-semibold text-primary dark:text-primary-50"
-                            th:text="${product.name}"
+                            th:text="${item.product.name}"
                           >
                             Item Name
                           </h4>
                           <div class="flex items-center space-x-3 mt-2">
+                            <!-- Type (Sell/Rent) -->
                             <span
                               class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium"
-                              th:text="${product.sellOrRent}"
-                              >TYPE</span
+                              th:text="${item.product.sellOrRent}"
                             >
+                              TYPE
+                            </span>
+                            <!-- Order Date -->
                             <span
                               class="text-sm text-primary-200 dark:text-primary-100"
                               th:text="${order.formattedDate}"
-                              >Date</span
                             >
+                              Date
+                            </span>
+                            <!-- Quantity -->
+                            <span
+                              class="text-sm text-gray-600 dark:text-gray-300 font-medium"
+                            >
+                              Qty: <span th:text="${item.quantity}">1</span>
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div class="text-right">
+
+                      <!-- Price & Status -->
+                      <div class="flex flex-col items-end space-y-2">
                         <p class="text-xl font-bold text-accent">
-                          ৳<span th:text="${product.price}">0</span>
+                          ৳<span th:text="${item.product.price * item.quantity}"
+                            >0</span
+                          >
                         </p>
-                        <span
-                          class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs px-2 py-1 rounded-full font-medium mt-2 inline-block"
-                          th:text="${order.status}"
-                          >STATUS</span
-                        >
+
+                        <!-- Order status -->
+                        <span th:switch="${item.status}">
+                          <span
+                            th:case="'PENDING'"
+                            class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium"
+                          >
+                            Pending
+                          </span>
+                          <span
+                            th:case="'SHIPPED'"
+                            class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium"
+                          >
+                            Shipped
+                          </span>
+                          <span
+                            th:case="'RECEIVED'"
+                            class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-medium"
+                          >
+                            Received
+                          </span>
+                        </span>
+
+                        <!-- Action Buttons -->
+                        <div class="flex space-x-2 mt-2">
+                          <!-- Mark as Shipped: for seller -->
+                          <form
+                            th:if="${((selectedFilter == 'orders_received') or (selectedFilter == 'rent_given')) and (item.status == 'PENDING')}"
+                            th:action="@{/profile/updateOrderStatus}"
+                            method="post"
+                          >
+                            <input
+                              type="hidden"
+                              name="orderItemId"
+                              th:value="${item.id}"
+                            />
+                            <input
+                              type="hidden"
+                              name="selectedFilter"
+                              th:value="${selectedFilter}"
+                            />
+                            <button
+                              type="submit"
+                              class="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+                            >
+                              <i data-lucide="truck" class="h-4 w-4"></i>
+                              <span>Mark as Shipped</span>
+                            </button>
+                          </form>
+
+                          <!-- Mark as Received: for buyer -->
+                          <form
+                            th:if="${((selectedFilter == 'buy') or (selectedFilter == 'taken_rent')) and (item.status == 'SHIPPED')}"
+                            th:action="@{/profile/updateOrderStatus}"
+                            method="post"
+                          >
+                            <input
+                              type="hidden"
+                              name="orderItemId"
+                              th:value="${item.id}"
+                            />
+                            <input
+                              type="hidden"
+                              name="selectedFilter"
+                              th:value="${selectedFilter}"
+                            />
+                            <button
+                              type="submit"
+                              class="bg-gradient-to-r from-accent to-primary hover:from-primary hover:to-accent text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+                            >
+                              <i data-lucide="check-circle" class="h-4 w-4"></i>
+                              <span>Mark as Received</span>
+                            </button>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -441,14 +540,57 @@
                     data-lucide="shopping-bag"
                     class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"
                   ></i>
+
                   <h3
                     class="text-lg font-semibold text-primary dark:text-primary-50 mb-2"
                   >
-                    No orders or items yet
+                    <span th:switch="${selectedFilter}">
+                      <span th:case="'buy'"
+                        >You haven't bought anything yet</span
+                      >
+                      <span th:case="'sell'"
+                        >You haven't listed any products yet</span
+                      >
+                      <span th:case="'taken_rent'"
+                        >You haven't taken any items on rent yet</span
+                      >
+                      <span th:case="'given_rent'"
+                        >You haven't given any items on rent yet</span
+                      >
+                      <span th:case="'orders_received'"
+                        >No orders received yet</span
+                      >
+                      <span th:case="*">No orders or items yet</span>
+                    </span>
                   </h3>
+
                   <p class="text-primary-200 dark:text-primary-100 mb-6">
-                    Start buying, selling, or renting items on CampusCart
+                    <span th:switch="${selectedFilter}">
+                      <span th:case="'buy'"
+                        >Browse the marketplace and place your first
+                        order!</span
+                      >
+                      <span th:case="'sell'"
+                        >Add products to start selling on CampusCart!</span
+                      >
+                      <span th:case="'taken_rent'"
+                        >Check available items for rent and take your first
+                        rental!</span
+                      >
+                      <span th:case="'given_rent'"
+                        >Add items for rent to let others use them!</span
+                      >
+                      <span th:case="'orders_received'"
+                        >Once someone orders your products, they will appear
+                        here.</span
+                      >
+                      <span th:case="*"
+                        >Start buying, selling, or renting items on
+                        CampusCart</span
+                      >
+                    </span>
                   </p>
+
                   <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
                       href="/marketplace"

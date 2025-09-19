@@ -1,7 +1,19 @@
 package com.noobs.CampusCart.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 // Product entity
 @Getter
@@ -39,11 +51,9 @@ public class Product {
     // Keep userId for queries
     // @Column(name = "user_id")
     // private Long userId;
-
     // Keep categoryId for queries (read-only, JPA manages via relation)
     // @Column(name = "category_id", insertable = false, updatable = false)
     // private Long categoryId;
-
     @Column(name = "quantity")
     private int quantity;
 

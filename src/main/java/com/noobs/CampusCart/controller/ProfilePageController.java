@@ -22,10 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.noobs.CampusCart.model.Category;
 import com.noobs.CampusCart.model.Order;
+import com.noobs.CampusCart.model.OrderItem;
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CategoryRepository;
 import com.noobs.CampusCart.repository.OrderRepository;
+import com.noobs.CampusCart.repository.OrderItemRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.service.UserService;
 
@@ -34,6 +36,9 @@ public class ProfilePageController {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -66,26 +71,26 @@ public class ProfilePageController {
             case "buy":
                 orders = orderRepository.findByUser(user).stream()
                         .map(order -> {
-                            order.setProducts(
-                                    order.getProducts().stream()
-                                            .filter(p -> p.getSellOrRent().equalsIgnoreCase("sell"))
+                            order.setOrderItems(
+                                    order.getOrderItems().stream()
+                                            .filter(oi -> oi.getProduct().getSellOrRent().equalsIgnoreCase("sell"))
                                             .toList());
                             return order;
                         })
-                        .filter(o -> !o.getProducts().isEmpty())
+                        .filter(o -> !o.getOrderItems().isEmpty())
                         .toList();
                 break;
 
             case "taken_rent":
                 orders = orderRepository.findByUser(user).stream()
                         .map(order -> {
-                            order.setProducts(
-                                    order.getProducts().stream()
-                                            .filter(p -> p.getSellOrRent().equalsIgnoreCase("rent"))
+                            order.setOrderItems(
+                                    order.getOrderItems().stream()
+                                            .filter(oi -> oi.getProduct().getSellOrRent().equalsIgnoreCase("rent"))
                                             .toList());
                             return order;
                         })
-                        .filter(o -> !o.getProducts().isEmpty())
+                        .filter(o -> !o.getOrderItems().isEmpty())
                         .toList();
                 break;
 
@@ -100,6 +105,20 @@ public class ProfilePageController {
                         .filter(p -> p.getUser().getId().equals(user.getId()))
                         .toList();
                 break;
+            case "orders_received":
+                orders = orderRepository.findAll().stream()
+                        .map(order -> {
+                            order.setOrderItems(
+                                    order.getOrderItems().stream()
+                                            .filter(oi -> oi.getProduct().getUser().getId().equals(user.getId()))
+                                            .toList()
+                            );
+                            return order;
+                        })
+                        .filter(o -> !o.getOrderItems().isEmpty())
+                        .toList();
+                break;
+
         }
 
         // Format dates for orders
@@ -108,6 +127,7 @@ public class ProfilePageController {
             order.setFormattedDate(order.getOrderDate().format(formatter));
         }
 
+        model.addAttribute("currentUser", user);
         model.addAttribute("user", user_data);
         model.addAttribute("orders", orders);
         model.addAttribute("products", products);
@@ -153,57 +173,56 @@ public class ProfilePageController {
     }
 
     @PostMapping("/profile/updateProduct")
-public String updateProduct(
-        @RequestParam("id") Long id,
-        @RequestParam("name") String name,
-        @RequestParam("price") Double price,
-        @RequestParam("status") String status,
-        @RequestParam("sellOrRent") String sellOrRent,
-        @RequestParam("categoryId") Long categoryId,
-        @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, // accept uploaded file
-        @RequestParam("quantity") Integer quantity,
-        RedirectAttributes redirectAttributes) {
+    public String updateProduct(
+            @RequestParam("id") Long id,
+            @RequestParam("name") String name,
+            @RequestParam("price") Double price,
+            @RequestParam("status") String status,
+            @RequestParam("sellOrRent") String sellOrRent,
+            @RequestParam("categoryId") Long categoryId,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, // accept uploaded file
+            @RequestParam("quantity") Integer quantity,
+            RedirectAttributes redirectAttributes) {
 
-    // Fetch existing product
-    Product existingProduct = productRepository.findById(id).orElse(null);
+        // Fetch existing product
+        Product existingProduct = productRepository.findById(id).orElse(null);
 
-    if (existingProduct != null) {
-        existingProduct.setName(name);
-        existingProduct.setPrice(price);
-        existingProduct.setStatus(status);
-        existingProduct.setQuantity(quantity);
-        existingProduct.setSellOrRent(sellOrRent);
+        if (existingProduct != null) {
+            existingProduct.setName(name);
+            existingProduct.setPrice(price);
+            existingProduct.setStatus(status);
+            existingProduct.setQuantity(quantity);
+            existingProduct.setSellOrRent(sellOrRent);
 
-        // Update category
-        if (categoryId != null && categoryId != 0) {
-            Category category = categoryRepository.findById(categoryId).orElse(null);
-            existingProduct.setCategory(category);
-        }
-
-        // Handle new image upload if provided
-        if (imageFile != null && !imageFile.isEmpty()) {
-            String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
-            Path uploadPath = Paths.get("uploads");
-            try {
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath);
-                }
-                Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-                existingProduct.setImage("/uploads/" + fileName); // store relative path for Thymeleaf
-            } catch (IOException e) {
-                throw new RuntimeException("Image upload failed", e);
+            // Update category
+            if (categoryId != null && categoryId != 0) {
+                Category category = categoryRepository.findById(categoryId).orElse(null);
+                existingProduct.setCategory(category);
             }
+
+            // Handle new image upload if provided
+            if (imageFile != null && !imageFile.isEmpty()) {
+                String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
+                Path uploadPath = Paths.get("uploads");
+                try {
+                    if (!Files.exists(uploadPath)) {
+                        Files.createDirectories(uploadPath);
+                    }
+                    Files.copy(imageFile.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                    existingProduct.setImage("/uploads/" + fileName); // store relative path for Thymeleaf
+                } catch (IOException e) {
+                    throw new RuntimeException("Image upload failed", e);
+                }
+            }
+
+            productRepository.save(existingProduct);
+            redirectAttributes.addFlashAttribute("success", "Product updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Product not found!");
         }
 
-        productRepository.save(existingProduct);
-        redirectAttributes.addFlashAttribute("success", "Product updated successfully!");
-    } else {
-        redirectAttributes.addFlashAttribute("error", "Product not found!");
+        return "redirect:/profile";
     }
-
-    return "redirect:/profile";
-}
-
 
     @PostMapping("/profile/rejectProduct")
     public String rejectProduct(@RequestParam("productId") Long productId,
@@ -226,6 +245,37 @@ public String updateProduct(
 
         redirectAttributes.addFlashAttribute("success", "Product rejected successfully!");
         return "redirect:/profile?filter=sell";
+    }
+
+    @PostMapping("/profile/updateOrderStatus")
+    public String updateOrderStatus(
+            @RequestParam("orderItemId") Long orderItemId,
+            @RequestParam(value = "selectedFilter", required = false) String selectedFilter,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+
+        OrderItem orderItem = orderItemRepository.findById(orderItemId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid Order Item ID"));
+
+        User currentUser = userService.getUserByEmail(principal.getName());
+        String currentStatus = orderItem.getStatus();
+
+        // Seller can change pending → shipped
+        if (currentStatus.equalsIgnoreCase("PENDING")
+                && orderItem.getProduct().getUser().getId().equals(currentUser.getId())) {
+            orderItem.setStatus("SHIPPED");
+        } // Buyer can change shipped → received
+        else if (currentStatus.equalsIgnoreCase("SHIPPED")
+                && orderItem.getOrder().getUser().getId().equals(currentUser.getId())) {
+            orderItem.setStatus("RECEIVED");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "You are not authorized to change this status!");
+            return "redirect:/profile" + (selectedFilter != null ? "?filter=" + selectedFilter : "");
+        }
+
+        orderItemRepository.save(orderItem);
+
+        return "redirect:/profile" + (selectedFilter != null ? "?filter=" + selectedFilter : "");
     }
 
 }

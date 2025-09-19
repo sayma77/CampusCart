@@ -13,16 +13,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.noobs.CampusCart.model.CartItem;
 import com.noobs.CampusCart.model.Order;
+import com.noobs.CampusCart.model.OrderItem;
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CartItemRepository;
 import com.noobs.CampusCart.repository.OrderRepository;
-import com.noobs.CampusCart.repository.UserRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
+import com.noobs.CampusCart.repository.UserRepository;
 import com.noobs.CampusCart.service.OrderService;
 
 @Controller
 public class OrderController {
+
     @Autowired
     private OrderRepository orderRepository;
 
@@ -41,7 +43,6 @@ public class OrderController {
     @GetMapping("/orders")
     public String viewOrders(Model model, Principal principal) {
         User user = userRepository.findByEmail(principal.getName()).get();
-        ;
         List<Order> orders = orderRepository.findByUser(user);
         model.addAttribute("orders", orders);
         return "orders"; // orders.html
@@ -55,7 +56,8 @@ public class OrderController {
         if (cartItems.isEmpty()) {
             return "redirect:/marketplace";
         }
-        // Validate stock for every item before placing order
+
+        // Validate stock
         for (CartItem item : cartItems) {
             Product product = productRepository.findById(item.getProduct().getId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -65,31 +67,44 @@ public class OrderController {
                 return "redirect:/cart";
             }
         }
+
         // Calculate total
         double total = cartItems.stream()
                 .mapToDouble(item -> item.getProduct().getPrice() * item.getQuantity())
                 .sum();
 
+        // Create new order
         Order order = new Order();
         order.setUser(user);
         order.setOrderDate(LocalDateTime.now());
         order.setStatus("PENDING");
         order.setTotalAmount(total);
 
-        // Map products
-        List<Product> products = cartItems.stream()
-                .map(CartItem::getProduct)
-                .toList();
-        order.setProducts(products);
+        // Create order items
+        List<OrderItem> orderItems = cartItems.stream().map(item -> {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setProduct(item.getProduct());
+            orderItem.setQuantity(item.getQuantity());
+            orderItem.setPrice(item.getProduct().getPrice()); // snapshot
+            orderItem.setStatus("PENDING");
+            return orderItem;
+        }).toList();
+
+        order.setOrderItems(orderItems);
+
+        // Update stock
         for (CartItem item : cartItems) {
             Product product = productRepository.findById(item.getProduct().getId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
             int newQty = Math.max(product.getQuantity() - item.getQuantity(), 0);
             product.setQuantity(newQty);
-            productRepository.save(product); // persist stock update
+            productRepository.save(product);
         }
 
+        // Save order (cascades orderItems)
         orderService.placeOrder(order);
+
         // Clear cart
         cartItemRepository.deleteAll(cartItems);
 
