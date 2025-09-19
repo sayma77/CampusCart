@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.noobs.CampusCart.model.Category;
 import com.noobs.CampusCart.model.Order;
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
+import com.noobs.CampusCart.repository.CategoryRepository;
 import com.noobs.CampusCart.repository.OrderRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.service.UserService;
@@ -29,6 +31,9 @@ public class ProfilePageController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     private final UserService userService;
 
@@ -101,6 +106,8 @@ public class ProfilePageController {
         model.addAttribute("orders", orders);
         model.addAttribute("products", products);
         model.addAttribute("selectedFilter", filter);
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
         return "profile";
     }
 
@@ -138,27 +145,68 @@ public class ProfilePageController {
         redirectAttributes.addFlashAttribute("success", "Profile updated successfully!");
         return "redirect:/profile";
     }
-    @PostMapping("/profile/rejectProduct")
-public String rejectProduct(@RequestParam("productId") Long productId,
-                            Principal principal,
-                            RedirectAttributes redirectAttributes) {
-    // Find product
-    Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
 
-    // Ensure only the owner can reject
-    User currentUser = userService.getUserByEmail(principal.getName());
-    if (!product.getUser().getId().equals(currentUser.getId())) {
-        redirectAttributes.addFlashAttribute("error", "You are not authorized to reject this product!");
-        return "redirect:/profile?filter=sell";
+    @PostMapping("/profile/updateProduct")
+    public String updateProduct(
+            @RequestParam("id") Long id,
+            @RequestParam("name") String name,
+            @RequestParam("price") Double price,
+            @RequestParam("status") String status,
+            @RequestParam("quantity") Integer quantity,
+            @RequestParam("sellOrRent") String sellOrRent,
+            @RequestParam("categoryId") Long categoryId,
+            @RequestParam("image") String image,
+            RedirectAttributes redirectAttributes) {
+
+        // Fetch existing product
+        Product existingProduct = productRepository.findById(id).orElse(null);
+
+        if (existingProduct != null) {
+            existingProduct.setName(name);
+            existingProduct.setPrice(price);
+            existingProduct.setStatus(status);
+            existingProduct.setQuantity(quantity);
+            existingProduct.setSellOrRent(sellOrRent);
+            existingProduct.setImage(image);
+
+            // Fetch category by ID
+            if (categoryId != null && categoryId != 0) {
+                Category category = categoryRepository.findById(categoryId).orElse(null);
+                existingProduct.setCategory(category);
+            } else {
+                existingProduct.setCategory(null); // or leave as-is
+            }
+
+            productRepository.save(existingProduct);
+            redirectAttributes.addFlashAttribute("success", "Product updated successfully!");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Product not found!");
+        }
+
+        return "redirect:/profile";
     }
 
-    // Mark as rejected
-    product.setValidity("rejected");
-    productRepository.save(product);
+    @PostMapping("/profile/rejectProduct")
+    public String rejectProduct(@RequestParam("productId") Long productId,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+        // Find product
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
 
-    redirectAttributes.addFlashAttribute("success", "Product rejected successfully!");
-    return "redirect:/profile?filter=sell";
-}
+        // Ensure only the owner can reject
+        User currentUser = userService.getUserByEmail(principal.getName());
+        if (!product.getUser().getId().equals(currentUser.getId())) {
+            redirectAttributes.addFlashAttribute("error", "You are not authorized to reject this product!");
+            return "redirect:/profile?filter=sell";
+        }
+
+        // Mark as rejected
+        product.setValidity("rejected");
+        productRepository.save(product);
+
+        redirectAttributes.addFlashAttribute("success", "Product rejected successfully!");
+        return "redirect:/profile?filter=sell";
+    }
 
 }
