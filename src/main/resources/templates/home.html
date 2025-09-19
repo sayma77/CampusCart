@@ -228,50 +228,130 @@
           </div>
         </div>
       </section>
-
-      <!-- Contact Section -->
-      <section id="contact" class="py-20 bg-white dark:bg-surface-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center mb-16">
-            <h2
-              class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
-            >
-              Get in Touch
-            </h2>
-            <p class="text-primary-200 dark:text-primary-100 text-lg">
-              Have questions or need support? We're here to help!
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Facebook -->
-            <div
-              class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
-            >
-              <div
-                class="flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-xl mb-4 mx-auto"
-              >
-                <i
-                  data-lucide="facebook"
-                  class="h-8 w-8 text-blue-600 dark:text-blue-400"
-                ></i>
-              </div>
-              <h3
-                class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
-              >
-                Facebook
-              </h3>
-              <p class="text-primary-200 dark:text-primary-100 mb-4">
-                Follow us for updates
+      <!-- Reviews Section -->
+        <section
+          id="reviews"
+          class="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-gray-900 dark:via-surface-dark dark:to-gray-800 relative overflow-hidden"
+        >
+          <!-- Background decorative elements -->
+          <div class="absolute top-0 left-0 w-72 h-72 bg-gradient-to-br from-blue-100/30 to-purple-100/30 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-accent/10 to-primary/10 dark:from-accent/5 dark:to-primary/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Header -->
+            <div class="text-center mb-16">
+              <h2 class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4">
+                Loved by CUETians
+              </h2>
+              <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Real stories from our community members who've experienced the CampusCart difference
               </p>
-              <a
-                href="https://www.facebook.com/YourPageName"
-                target="_blank"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
-              >
-                Visit Page
-              </a>
             </div>
+            <!-- Review Cards Container -->
+            <div class="relative">
+              <!-- Gradient overlays for scroll indication -->
+              <div class="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent dark:from-gray-900 dark:via-gray-900/80 z-10 pointer-events-none"></div>
+              <!-- Review Cards -->
+              <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 scrollbar-hide px-4">
+                <div
+                  th:each="review : ${reviews}"
+                  class="group min-w-[350px] max-w-sm bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-xl hover:shadow-2xl rounded-3xl p-8 snap-center flex flex-col justify-between border border-gray-200/50 dark:border-gray-700/50 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] relative overflow-hidden"
+                >
+                  <!-- Card background gradient -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-white/50 to-blue-50/30 dark:from-gray-800/50 dark:to-gray-700/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <!-- Content -->
+                  <div class="relative z-10">
+                    <div class="flex justify-between items-start mb-4">
+                      <!-- Stars -->
+                      <div class="flex items-center space-x-1">
+                        <span th:each="i : ${#numbers.sequence(1, review.rating)}" 
+                              class="text-yellow-400 text-lg">★</span>
+                        <span th:each="i : ${#numbers.sequence(review.rating+1, 5)}" 
+                              class="text-gray-300 dark:text-gray-600 text-lg">★</span>
+                      </div>
+                    </div>
+                    <!-- Comment -->
+                    <blockquote class="text-gray-700 dark:text-gray-300 text-base leading-relaxed mb-6 font-medium italic" th:text="${review.comment}">
+                    </blockquote>
+                    </div>
+                    <!-- User info -->
+                    <div class="relative z-10 mt-auto">
+                      <div class="flex items-center space-x-4">
+                        <div>
+                          <p class="font-bold text-gray-900 dark:text-gray-100 text-lg" 
+                            th:text="${review.user.username}">
+                          </p>
+                          <p class="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                            <i data-lucide="map-pin" class="h-3 w-3 mr-1"></i>
+                            CUET Student
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Leave Review Button -->
+                <div class="text-center mt-16">
+                  <!-- <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-gray-200/50 dark:border-gray-700/50 max-w-2xl mx-auto"> -->
+                    <h3 class="text-2xl font-medium text-gray-900 dark:text-gray-100 mb-4">
+                      Share Your Experience
+                    </h3>
+                    <button
+                      onclick="document.getElementById('reviewModal').classList.remove('hidden')"
+                      class="group bg-gradient-to-r from-accent to-primary hover:from-primary hover:to-accent text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center mx-auto space-x-2"
+                    >
+                      <i data-lucide="edit-3" class="h-5 w-5 group-hover:rotate-12 transition-transform duration-300"></i>
+                      <span>Write a Review</span>
+                    </button>
+                </div>
+              </div>
+            </section>
+      <!-- Contact Section -->
+      <section
+        id="contact"
+        class="py-20 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark"
+      >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-primary dark:text-primary-50 mb-4"
+          >
+            Get in Touch
+          </h2>
+          <p class="text-primary-200 dark:text-primary-100 text-lg">
+            Have questions or need support? We're here to help!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Facebook -->
+          <div
+            class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
+          >
+            <div
+              class="flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-xl mb-4 mx-auto"
+            >
+              <i
+                data-lucide="facebook"
+                class="h-8 w-8 text-blue-600 dark:text-blue-400"
+              ></i>
+            </div>
+            <h3
+              class="text-xl font-bold text-primary dark:text-primary-50 mb-2"
+            >
+              Facebook
+            </h3>
+            <p class="text-primary-200 dark:text-primary-100 mb-4">
+              Follow us for updates
+            </p>
+            <a
+              href="https://www.facebook.com/YourPageName"
+              target="_blank"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
+            >
+              Visit Page
+            </a>
+          </div>
 
             <!-- Email -->
             <div
@@ -300,7 +380,6 @@
                 Send Email
               </a>
             </div>
-
             <!-- Phone -->
             <div
               class="bg-gradient-to-br from-primary-50 to-accent-50 dark:from-surface-dark dark:to-background-dark rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-primary-100/20 dark:border-accent/20"
@@ -334,7 +413,7 @@
 
       <!-- Features Section -->
       <section
-        class="py-20 bg-gradient-to-r from-accent-50 to-primary-50 dark:from-background-dark dark:to-surface-dark"
+        class="py-20 bg-white dark:bg-surface-dark"
       >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center mb-16">
@@ -347,7 +426,6 @@
               Simple steps to start buying and selling on campus
             </p>
           </div>
-
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="text-center">
               <div
@@ -364,7 +442,6 @@
                 Create your account with your CUET email and join the community
               </p>
             </div>
-
             <div class="text-center">
               <div
                 class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg"
@@ -380,7 +457,6 @@
                 Explore products from fellow students and find great deals
               </p>
             </div>
-
             <div class="text-center">
               <div
                 class="flex items-center justify-center w-20 h-20 bg-accent rounded-full mb-6 mx-auto shadow-lg"
@@ -400,12 +476,99 @@
           </div>
         </div>
       </section>
+      <!-- Review Modal -->
+      <div
+        id="reviewModal"
+        class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      >
+        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl w-full max-w-lg transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
+          <!-- Modal Header -->
+          <div class="bg-gradient-to-r from-accent to-primary p-6 rounded-t-3xl">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                  <i data-lucide="star" class="h-5 w-5 text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Share Your Experience</h3>
+              </div>
+              <button
+                type="button"
+                onclick="closeReviewModal()"
+                class="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors duration-200"
+              >
+                <i data-lucide="x" class="h-4 w-4 text-white"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="p-6">
+            <form method="post" action="/reviews" class="space-y-6">
+              <!-- Rating -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                  How would you rate your experience?
+                </label>
+                <div class="flex items-center space-x-2">
+                  <input
+                    type="number"
+                    name="rating"
+                    min="1"
+                    max="5"
+                    required
+                    class="w-20 border-2 border-gray-200 dark:border-gray-600 rounded-xl p-3 text-center font-bold text-lg dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-200"
+                    placeholder="5"
+                  />
+                  <div class="flex text-yellow-400 ml-4">
+                    <i data-lucide="star" class="h-6 w-6"></i>
+                    <i data-lucide="star" class="h-6 w-6"></i>
+                    <i data-lucide="star" class="h-6 w-6"></i>
+                    <i data-lucide="star" class="h-6 w-6"></i>
+                    <i data-lucide="star" class="h-6 w-6"></i>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Comment -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
+                  Tell us about your experience
+                </label>
+                <textarea
+                  name="comment"
+                  rows="4"
+                  required
+                  placeholder="Share your thoughts about CampusCart..."
+                  class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-xl p-4 dark:bg-gray-700 dark:text-white focus:border-accent focus:ring-2 focus:ring-accent/20 transition-all duration-200 resize-none"
+                ></textarea>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex justify-end space-x-3 pt-4">
+                <button
+                  type="button"
+                  onclick="closeReviewModal()"
+                  class="px-6 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-semibold transition-all duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="px-8 py-3 rounded-xl bg-gradient-to-r from-accent to-primary text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+                >
+                  Submit Review
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       <script>
         $(document).ready(function () {
           // Only inject links if we are on the homepage
           if (window.location.pathname === "/") {
             $("#nav-links").append(`
-             <a
+            <a
               href="#about"
               class="text-primary dark:text-primary-50 hover:text-accent transition-colors duration-200"
             >
@@ -420,6 +583,33 @@
         `);
           }
         });
+      // Enhanced modal functionality
+      function closeReviewModal() {
+        const modal = document.getElementById('reviewModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          modalContent.classList.remove('scale-95', 'opacity-0');
+        }, 200);
+      }
+      // Show modal with animation
+      document.querySelector('[onclick*="reviewModal"]').onclick = function() {
+        const modal = document.getElementById('reviewModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+          modalContent.classList.remove('scale-95', 'opacity-0');
+        }, 10);
+      };
+      // Close modal when clicking outside
+      document.getElementById('reviewModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeReviewModal();
+        }
+      });
       </script>
     </main>
   </body>
