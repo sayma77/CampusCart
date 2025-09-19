@@ -1,6 +1,7 @@
 package com.noobs.CampusCart.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -151,8 +152,8 @@ public class AdminController {
     }
 
     @PostMapping("/admin/categories/add")
-    public String addCategory(@RequestParam String name,
-            @RequestParam String description,
+    public String addCategory(@RequestParam("name") String name,
+            @RequestParam("description") String description,
             RedirectAttributes redirectAttributes) {
         if (name != null && !name.isEmpty()) {
             Category category = new Category();
