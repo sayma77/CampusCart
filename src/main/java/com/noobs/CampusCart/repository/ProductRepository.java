@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.noobs.CampusCart.model.Product;
-import com.noobs.CampusCart.model.User;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -17,22 +16,22 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.validity) = 'approved'")
     List<Product> findAllApproved();
 
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
-           "WHERE p.category.name = :category AND LOWER(p.validity) = 'approved'")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user "
+            + "WHERE p.category.name = :category AND LOWER(p.validity) = 'approved'")
     List<Product> findByCategoryNameAndApproved(@Param("category") String category);
 
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
-           "WHERE LOWER(p.sellOrRent) = LOWER(:type) AND LOWER(p.validity) = 'approved'")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user "
+            + "WHERE LOWER(p.sellOrRent) = LOWER(:type) AND LOWER(p.validity) = 'approved'")
     List<Product> findByTypeAndApproved(@Param("type") String type);
 
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
-           "WHERE p.category.name = :category AND LOWER(p.sellOrRent) = LOWER(:type) " +
-           "AND LOWER(p.validity) = 'approved'")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user "
+            + "WHERE p.category.name = :category AND LOWER(p.sellOrRent) = LOWER(:type) "
+            + "AND LOWER(p.validity) = 'approved'")
     List<Product> findByCategoryAndTypeAndApproved(@Param("category") String category,
-                                                   @Param("type") String type);
+            @Param("type") String type);
 
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
-           "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) AND LOWER(p.validity) = 'approved'")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user "
+            + "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%')) AND LOWER(p.validity) = 'approved'")
     List<Product> findByNameContainingAndApproved(@Param("keyword") String keyword);
 
     // --- New methods for admin (all products, any validity) ---
@@ -45,13 +44,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user WHERE LOWER(p.validity) = LOWER(:validity)")
     List<Product> findByValidity(@Param("validity") String validity);
 
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
-           "WHERE p.category.id = :categoryId AND LOWER(p.validity) = LOWER(:validity)")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user "
+            + "WHERE p.category.id = :categoryId AND LOWER(p.validity) = LOWER(:validity)")
     List<Product> findByCategoryAndValidity(@Param("categoryId") Long categoryId,
-                                            @Param("validity") String validity);
+            @Param("validity") String validity);
 
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user " +
-           "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.user "
+            + "WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Product> findByNameContainingWithUserAndCategory(@Param("keyword") String keyword);
 }
-

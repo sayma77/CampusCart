@@ -6,10 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.noobs.CampusCart.model.WishlistItem;
-import com.noobs.CampusCart.model.Notification;
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
+import com.noobs.CampusCart.model.WishlistItem;
 import com.noobs.CampusCart.repository.WishlistItemRepository;
 
 @Service
