@@ -1,18 +1,20 @@
 package com.noobs.CampusCart.controller;
 
-import com.noobs.CampusCart.model.Review;
-import com.noobs.CampusCart.model.User;
-import com.noobs.CampusCart.repository.ReviewRepository;
-import com.noobs.CampusCart.repository.UserRepository;
+import java.security.Principal;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.time.LocalDateTime;
-import java.util.List;
+import com.noobs.CampusCart.model.Review;
+import com.noobs.CampusCart.model.User;
+import com.noobs.CampusCart.repository.ReviewRepository;
+import com.noobs.CampusCart.repository.UserRepository;
 
 @Controller
 public class ReviewController {
@@ -26,12 +28,12 @@ public class ReviewController {
     // Save a review
     @PostMapping("/reviews")
     public String addReview(@RequestParam int rating,
-                            @RequestParam String comment,
-                            Principal principal) {
+            @RequestParam String comment,
+            Principal principal) {
 
         // Find the logged-in user
         User user = userRepository.findByUsername(principal.getName())
-                                  .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         Review review = Review.builder()
                 .rating(rating)

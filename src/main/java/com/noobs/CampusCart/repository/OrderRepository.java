@@ -10,7 +10,4 @@ import com.noobs.CampusCart.model.User;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByUser(User user);
-
-    // Optional<Order> findByUserAndProducts(User user, Product product);
-    // List<Order> findDistinctByUserAndOrderItemsProduct(User user, Product product);
 }

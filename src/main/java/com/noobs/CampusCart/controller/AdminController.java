@@ -118,9 +118,9 @@ public class AdminController {
         product.setValidity("approved");
         productRepository.save(product);
         notificationService.createNotification(
-            product.getUser(),
-            "PRODUCT_APPROVED",
-            "Your product '" + product.getName() + "' has been approved."
+                product.getUser(),
+                "PRODUCT_APPROVED",
+                "Your product '" + product.getName() + "' has been approved."
         );
         return "redirect:/admin/products";
     }
@@ -132,9 +132,9 @@ public class AdminController {
         product.setValidity("rejected");
         productRepository.save(product);
         notificationService.createNotification(
-            product.getUser(),
-            "PRODUCT_REJECTED",
-            "Your product '" + product.getName() + "' has been rejected."
+                product.getUser(),
+                "PRODUCT_REJECTED",
+                "Your product '" + product.getName() + "' has been rejected."
         );
         return "redirect:/admin/products";
     }

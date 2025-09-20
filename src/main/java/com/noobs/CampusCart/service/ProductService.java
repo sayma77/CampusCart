@@ -34,4 +34,3 @@ public class ProductService {
         return productRepository.findByNameContainingAndApproved(keyword);
     }
 }
-

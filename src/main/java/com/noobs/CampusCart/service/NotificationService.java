@@ -18,26 +18,24 @@ public class NotificationService {
 
     // Create a new notification
     public void createNotification(User user, String type, String message) {
-    if (user == null) {
-        System.out.println("Notification not created: User is null");
-        return;
+        if (user == null) {
+            System.out.println("Notification not created: User is null");
+            return;
+        }
+
+        if (message == null || message.isEmpty()) {
+            message = type;
+        }
+
+        Notification notification = new Notification();
+        notification.setUser(user);
+        notification.setType(type);
+        notification.setMessage(message.length() > 500 ? message.substring(0, 500) : message);
+        notification.setRead(false);
+        notification.setCreatedAt(java.time.LocalDateTime.now());
+
+        notificationRepository.save(notification);
     }
-
-    if (message == null || message.isEmpty()) {
-        message = type;
-    }
-
-    Notification notification = new Notification();
-    notification.setUser(user);
-    notification.setType(type);
-    notification.setMessage(message.length() > 500 ? message.substring(0, 500) : message);
-    notification.setRead(false);
-    notification.setCreatedAt(java.time.LocalDateTime.now());
-
-    notificationRepository.save(notification);
-}
-
-
 
     // Get all notifications for a user, newest first
     public List<Notification> getNotificationsForUser(User user) {

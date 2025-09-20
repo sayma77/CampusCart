@@ -1,6 +1,9 @@
 package com.noobs.CampusCart.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
+import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -10,10 +13,7 @@ import com.noobs.CampusCart.service.CartService;
 import com.noobs.CampusCart.service.NotificationService;
 import com.noobs.CampusCart.service.WishlistService;
 
-import java.security.Principal;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class GlobalModelAttributes {
@@ -45,8 +45,8 @@ public class GlobalModelAttributes {
             model.addAttribute("wishlist_count", path.startsWith("/wishlist") ? 0 : wishlistService.getItemsInWishlist(user).size());
 
             // Notifications count (hide on /notifications)
-            long unread = path.startsWith("/notifications") ? 0 :
-                    notificationService.getNotificationsForUser(user).stream().filter(n -> !n.isRead()).count();
+            long unread = path.startsWith("/notifications") ? 0
+                    : notificationService.getNotificationsForUser(user).stream().filter(n -> !n.isRead()).count();
             model.addAttribute("unreadCount", unread);
 
         } else {
@@ -56,4 +56,3 @@ public class GlobalModelAttributes {
         }
     }
 }
-

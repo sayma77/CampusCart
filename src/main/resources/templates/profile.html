@@ -317,13 +317,6 @@
                             Item Name
                           </h4>
                           <div class="flex items-center space-x-3 mt-2">
-                            <!-- Type (Sell/Rent) -->
-                            <span
-                              class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium"
-                              th:text="${item.product.sellOrRent}"
-                            >
-                              TYPE
-                            </span>
                             <!-- Order Date -->
                             <span
                               class="text-sm text-primary-200 dark:text-primary-100"
@@ -470,19 +463,12 @@
                             </button>
                           </div>
                           <div class="flex items-center space-x-3 mt-1">
-                            <!-- TYPE or SOLD -->
+                            <!-- SOLD -->
                             <span
                               th:if="${product.quantity == 0}"
                               class="bg-red-600 text-white text-xs px-2 py-1 rounded-full font-medium"
                             >
                               Sold!
-                            </span>
-                            <span
-                              th:if="${product.quantity > 0}"
-                              class="bg-primary text-white text-xs px-2 py-1 rounded-full font-medium"
-                              th:text="${product.sellOrRent}"
-                            >
-                              TYPE
                             </span>
                             <!-- Category -->
                             <span

@@ -175,7 +175,7 @@
                 </form>
 
                 <!-- Delete -->
-                <form th:action="@{/admin/products/delete}" method="post">
+                <form th:action="@{/admin/products/reject}" method="post">
                   <input type="hidden" name="productId" th:value="${product.id}"/>
                   <button type="submit"
                           class="w-10 h-10 flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white rounded-xl">

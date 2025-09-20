@@ -18,7 +18,7 @@ public class OrderService {
     private final NotificationService notificationService;
 
     public OrderService(OrderRepository orderRepository,
-                        NotificationService notificationService) {
+            NotificationService notificationService) {
         this.orderRepository = orderRepository;
         this.notificationService = notificationService;
     }
@@ -48,11 +48,11 @@ public class OrderService {
             }
 
             notificationService.createNotification(
-                seller,
-                "ORDER_PLACED",
-                "Your product '" + product.getName() + 
-                "' (Qty: " + item.getQuantity() + 
-                ") has been ordered by " + order.getUser().getUsername() + "!"
+                    seller,
+                    "ORDER_PLACED",
+                    "Your product '" + product.getName()
+                    + "' (Qty: " + item.getQuantity()
+                    + ") has been ordered by " + order.getUser().getUsername() + "!"
             );
         }
 

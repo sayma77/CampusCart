@@ -17,25 +17,25 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // optional: enable for production
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/about",
-                                "/contactus")
-                        .permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                .requestMatchers("/", "/signup", "/signin", "/css/**", "/js/**", "/images/**", "/about",
+                        "/contactus")
+                .permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated())
                 .formLogin(form -> form
-                        .loginPage("/signin")
-                        .loginProcessingUrl("/signin") // where POST should go
-                        .usernameParameter("email") // match form input name
-                        .passwordParameter("password")
-                        .defaultSuccessUrl("/marketplace", true)
-                        .permitAll())
+                .loginPage("/signin")
+                .loginProcessingUrl("/signin") // where POST should go
+                .usernameParameter("email") // match form input name
+                .passwordParameter("password")
+                .defaultSuccessUrl("/marketplace", true)
+                .permitAll())
                 .logout(logout -> logout
-                        .logoutUrl("/signout")
-                        .logoutSuccessUrl("/signin?signout")
-                        .invalidateHttpSession(true) // Clear session
-                        .deleteCookies("JSESSIONID"))
+                .logoutUrl("/signout")
+                .logoutSuccessUrl("/signin?signout")
+                .invalidateHttpSession(true) // Clear session
+                .deleteCookies("JSESSIONID"))
                 .exceptionHandling(ex -> ex
-                        .accessDeniedPage("/403") // custom forbidden page
+                .accessDeniedPage("/403") // custom forbidden page
                 )
                 .build();
     }
