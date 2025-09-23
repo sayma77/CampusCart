@@ -27,12 +27,13 @@ public class ReviewController {
 
     // Save a review
     @PostMapping("/reviews")
-    public String addReview(@RequestParam int rating,
-            @RequestParam String comment,
+    public String addReview(
+            @RequestParam("rating") int rating,
+            @RequestParam("comment") String comment,
             Principal principal) {
 
         // Find the logged-in user
-        User user = userRepository.findByUsername(principal.getName())
+        User user = userRepository.findByEmail(principal.getName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Review review = Review.builder()
