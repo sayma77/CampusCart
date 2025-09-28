@@ -85,6 +85,7 @@ public class OrderController {
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setProduct(item.getProduct());
+            orderItem.getId().setProductId(item.getProduct().getId());
             orderItem.setQuantity(item.getQuantity());
             orderItem.setPrice(item.getProduct().getPrice()); // snapshot
             orderItem.setStatus("PENDING");

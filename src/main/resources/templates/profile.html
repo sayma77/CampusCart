@@ -367,21 +367,28 @@
                         <!-- Action Buttons -->
                         <div class="flex space-x-2 mt-2">
                           <!-- Mark as Shipped: for seller -->
+                          <!-- Mark as Shipped: for seller -->
                           <form
-                            th:if="${((selectedFilter == 'orders_received') or (selectedFilter == 'rent_given')) and (item.status == 'PENDING')}"
+                            th:if="${((selectedFilter == 'orders_received') or (selectedFilter == 'given_rent')) and (item.status == 'PENDING')}"
                             th:action="@{/profile/updateOrderStatus}"
                             method="post"
                           >
                             <input
                               type="hidden"
-                              name="orderItemId"
-                              th:value="${item.id}"
+                              name="orderId"
+                              th:value="${item.id.orderId}"
+                            />
+                            <input
+                              type="hidden"
+                              name="productId"
+                              th:value="${item.id.productId}"
                             />
                             <input
                               type="hidden"
                               name="selectedFilter"
                               th:value="${selectedFilter}"
                             />
+
                             <button
                               type="submit"
                               class="bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
@@ -399,14 +406,20 @@
                           >
                             <input
                               type="hidden"
-                              name="orderItemId"
-                              th:value="${item.id}"
+                              name="orderId"
+                              th:value="${item.id.orderId}"
+                            />
+                            <input
+                              type="hidden"
+                              name="productId"
+                              th:value="${item.id.productId}"
                             />
                             <input
                               type="hidden"
                               name="selectedFilter"
                               th:value="${selectedFilter}"
                             />
+
                             <button
                               type="submit"
                               class="bg-gradient-to-r from-accent to-primary hover:from-primary hover:to-accent text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"

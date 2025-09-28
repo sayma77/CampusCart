@@ -1,11 +1,10 @@
 package com.noobs.CampusCart.model;
 
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,24 +15,20 @@ import lombok.Setter;
 @Table(name = "order_products")
 public class OrderItem {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private OrderItemId id = new OrderItemId();
 
-    // Many order items belong to one order
     @ManyToOne
+    @MapsId("orderId") // maps to OrderItemId.orderId
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    // Many order items belong to one product
     @ManyToOne
+    @MapsId("productId") // maps to OrderItemId.productId
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     private int quantity;
-
-    // Price snapshot (useful for historical record)
     private double price;
-
     private String status;
 }

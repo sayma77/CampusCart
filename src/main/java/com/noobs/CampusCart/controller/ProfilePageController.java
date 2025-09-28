@@ -23,11 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.noobs.CampusCart.model.Category;
 import com.noobs.CampusCart.model.Order;
 import com.noobs.CampusCart.model.OrderItem;
+import com.noobs.CampusCart.model.OrderItemId;
 import com.noobs.CampusCart.model.Product;
 import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CategoryRepository;
-import com.noobs.CampusCart.repository.OrderRepository;
 import com.noobs.CampusCart.repository.OrderItemRepository;
+import com.noobs.CampusCart.repository.OrderRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
 import com.noobs.CampusCart.service.UserService;
 
@@ -249,11 +250,16 @@ public class ProfilePageController {
 
     @PostMapping("/profile/updateOrderStatus")
     public String updateOrderStatus(
-            @RequestParam("orderItemId") Long orderItemId,
+            @RequestParam("orderId") Long orderId,
+            @RequestParam("productId") Long productId,
             @RequestParam(value = "selectedFilter", required = false) String selectedFilter,
             Principal principal,
             RedirectAttributes redirectAttributes) {
 
+        // Build composite key
+        OrderItemId orderItemId = new OrderItemId(orderId, productId);
+
+        // Fetch order item by composite key
         OrderItem orderItem = orderItemRepository.findById(orderItemId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid Order Item ID"));
 
