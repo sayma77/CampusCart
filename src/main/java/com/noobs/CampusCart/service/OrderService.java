@@ -52,7 +52,8 @@ public class OrderService {
                     "ORDER_PLACED",
                     "Your product '" + product.getName()
                     + "' (Qty: " + item.getQuantity()
-                    + ") has been ordered by " + order.getUser().getUsername() + "!"
+                    + ") has been ordered by " + order.getUser().getUsername()
+                    + "| Email:" + order.getUser().getEmail()
             );
         }
 

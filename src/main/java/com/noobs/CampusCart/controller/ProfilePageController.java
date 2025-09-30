@@ -30,6 +30,7 @@ import com.noobs.CampusCart.repository.CategoryRepository;
 import com.noobs.CampusCart.repository.OrderItemRepository;
 import com.noobs.CampusCart.repository.OrderRepository;
 import com.noobs.CampusCart.repository.ProductRepository;
+import com.noobs.CampusCart.service.NotificationService;
 import com.noobs.CampusCart.service.UserService;
 
 @Controller
@@ -46,6 +47,9 @@ public class ProfilePageController {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     private final UserService userService;
 
@@ -266,14 +270,25 @@ public class ProfilePageController {
         User currentUser = userService.getUserByEmail(principal.getName());
         String currentStatus = orderItem.getStatus();
 
-        // Seller can change pending → shipped
+        // Seller: Pending → Shipped
         if (currentStatus.equalsIgnoreCase("PENDING")
-                && orderItem.getProduct().getUser().getId().equals(currentUser.getId())) {
-            orderItem.setStatus("SHIPPED");
-        } // Buyer can change shipped → received
+            && orderItem.getProduct().getUser().getId().equals(currentUser.getId())) {
+        orderItem.setStatus("SHIPPED");
+        orderItemRepository.save(orderItem);
+        // 🔔 Notify buyer
+        User buyer = orderItem.getOrder().getUser();
+        String msg = "Your order for product '" + orderItem.getProduct().getName() + "' has been shipped.";
+        notificationService.createNotification(buyer, "MARK_AS_SHIPPED", msg);
+        }
+        // Buyer: Shipped → Received
         else if (currentStatus.equalsIgnoreCase("SHIPPED")
                 && orderItem.getOrder().getUser().getId().equals(currentUser.getId())) {
             orderItem.setStatus("RECEIVED");
+            orderItemRepository.save(orderItem);
+            // Notify seller
+            User seller = orderItem.getProduct().getUser();
+            String msg = "Your product '" + orderItem.getProduct().getName() + "' has been received by buyer.";
+            notificationService.createNotification(seller, "MARK_AS_RECEIVED", msg);
         } else {
             redirectAttributes.addFlashAttribute("error", "You are not authorized to change this status!");
             return "redirect:/profile" + (selectedFilter != null ? "?filter=" + selectedFilter : "");
