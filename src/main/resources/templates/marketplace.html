@@ -205,6 +205,7 @@
               </p>
             </div>
 
+
             <!-- Submit Button -->
             <button
               type="submit"
@@ -214,6 +215,7 @@
               Post Item for Sale
             </button>
           </form>
+
 
           <!-- Tips Section -->
           <div
@@ -418,184 +420,121 @@
         </div>
 
         <!-- Products Grid -->
-<div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2"
-    th:if="${!#lists.isEmpty(products)}"
->
-    <div th:each="product : ${products}" th:id="'product-' + ${product.id}" class="group relative w-full h-80 overflow-hidden rounded-sm shadow-lg">
-        <!-- Product Card -->
-        <div class="relative w-full h-full overflow-hidden">
+        <div
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2"
+          th:if="${!#lists.isEmpty(products)}"
+        >
+                  <div th:each="product : ${products}" class="group relative w-full h-72 overflow-hidden">
+                      <!-- Product Card -->
+        <div class="group relative w-full h-72 overflow-hidden">
 
-            <!-- Product Image -->
-            <img
-                th:src="${product.image}"
-                th:alt="${product.name}"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'"
-            />
+          <!-- Product Image -->
+          <img
+            th:src="${product.image}"
+            th:alt="${product.name}"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            onerror="this.src='https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop'"
+          />
 
-            <!-- Overlay (appears on hover) -->
-            <div class="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
-
-                <!-- Top Labels + Review Button -->
-                <div class="flex justify-between items-start">
-                    <div class="flex flex-row gap-2">
-                        <span
-                            class="bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold w-fit"
-                            th:text="${product.status}"
-                        ></span>
-                        <span
-                            class="bg-accent text-white text-xs px-2 py-1 rounded-full font-semibold w-fit"
-                            th:text="${product.sellOrRent == 'sell'} ? 'For Sale' : (${product.sellOrRent == 'rent'} ? 'For Rent' : 'Sale/Rent')"
-                        ></span>
-                    </div>
-                    <!-- Review Button (top right) -->
-                    <button type="button"
-                        class="reviewBtn bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded-lg font-semibold text-xs transition-all duration-200 transform hover:scale-105 shadow-md"
-                        th:data-product-id="${product.id}">
-                        Review
-                    </button>
-                </div>
-
-                <!-- Product Info & Actions -->
-                <div class="flex flex-col gap-2">
-                    <h3 class="font-bold text-base line-clamp-2 leading-tight text-white" th:text="${product.name}"></h3>
-                    <p class="text-xl font-bold text-accent" th:text="'৳' + ${product.price}"></p>
-                    <p class="text-xs text-white/80" th:text="'Quantity: ' + ${product.quantity}"></p>
-
-                    <!-- Seller Info -->
-                    <div class="text-sm space-y-1 text-white">
-                        <div class="flex items-center">
-                            <i data-lucide="user" class="h-4 w-4 mr-2"></i>
-                            <span th:text="${product.user != null ? product.user.username : 'Unknown Seller'}"></span>
-                        </div>
-                        <div th:if="${product.user != null && product.user.hall != null}" class="flex items-center">
-                            <i data-lucide="map-pin" class="h-4 w-4 mr-2"></i>
-                            <span th:text="${product.user.hall}"></span>
-                        </div>
-                        <div th:if="${product.category != null}" class="flex items-center">
-                            <i data-lucide="tag" class="h-4 w-4 mr-2"></i>
-                            <span th:text="${product.category.name}"></span>
-                        </div>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="flex gap-2 mt-2">
-                        <form th:action="@{/wishlist}" method="post">
-                            <input type="hidden" name="productId" th:value="${product.id}" />
-                            <button
-                                type="submit"
-                                class="p-2 rounded-lg text-white bg-white/20 hover:bg-red-500/80 transition-all duration-200"
-                            >
-                                <i data-lucide="heart" class="h-5 w-5"></i>
-                            </button>
-                        </form>
-
-                        <form th:action="@{/cart}" method="post" class="flex-1">
-                            <input type="hidden" name="productId" th:value="${product.id}" />
-                            <input type="hidden" name="quantity" th:value="1" />
-                            <button
-                                type="submit"
-                                class="w-full bg-primary hover:bg-accent text-white py-2 rounded-lg font-semibold transition-all duration-200"
-                            >
-                                <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-1"></i>
-                                Add to Cart
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
+          <!-- Overlay (appears on hover) -->
+          <div
+            class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4"
+          >
+            <!-- Top Labels -->
+            <div class="flex gap-2">
+              <span
+                class="bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold"
+                th:text="${product.status}"
+              >
+                Condition
+              </span>
+              <span
+                class="bg-accent text-white text-xs px-2 py-1 rounded-full font-semibold"
+                th:text="${product.sellOrRent == 'sell'} ? 'For Sale' : (${product.sellOrRent == 'rent'} ? 'For Rent' : 'Sale/Rent')"
+              >
+                Type
+              </span>
             </div>
+
+            <!-- Product Info & Actions -->
+            <div class="text-white">
+              <h3
+                class="font-bold text-lg mb-1 line-clamp-2"
+                th:text="${product.name}"
+              >
+                Product Name
+              </h3>
+              <p class="text-xl font-bold mb-1" th:text="'৳' + ${product.price}">৳0</p>
+              <p class="text-sm  dark:text-primary-100 mb-3" th:text="'Quantity: ' + ${product.quantity}">Quantity: 0</p>
+
+              <!-- Seller Info -->
+              <div class="text-sm mb-3 space-y-1">
+                <div class="flex items-center">
+                  <i data-lucide="user" class="h-4 w-4 mr-2"></i>
+                  <span th:text="${product.user != null ? product.user.username : 'Unknown Seller'}">Seller</span>
+                </div>
+                <div th:if="${product.user != null && product.user.hall != null}" class="flex items-center">
+                  <i data-lucide="map-pin" class="h-4 w-4 mr-2"></i>
+                  <span th:text="${product.user.hall}">Hall</span>
+                </div>
+                <div th:if="${product.category != null}" class="flex items-center">
+                  <i data-lucide="tag" class="h-4 w-4 mr-2"></i>
+                  <span th:text="${product.category.name}">Category</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex gap-2">
+                <form th:action="@{/wishlist}" method="post">
+                  <input type="hidden" name="productId" th:value="${product.id}" />
+                  <button
+                    type="submit"
+                    class="p-2 rounded-lg bg-white/20 hover:bg-red-500/80 transition-all duration-200"
+                  >
+                    <i data-lucide="heart" class="h-5 w-5"></i>
+                  </button>
+                </form>
+
+                <form th:action="@{/cart}" method="post" class="flex-1">
+                  <input type="hidden" name="productId" th:value="${product.id}" />
+                  <input type="hidden" name="quantity" th:value="1" />
+                  <button
+                    type="submit"
+                    class="w-full bg-primary hover:bg-accent text-white py-2 rounded-lg font-semibold transition-all duration-200"
+                  >
+                    <i data-lucide="shopping-cart" class="h-4 w-4 inline mr-1"></i>
+                    Add to Cart
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- Review Modal (unique per product) -->
-        <div th:id="'reviewModal-' + ${product.id}" class="reviewModal fixed inset-0 flex items-center justify-center bg-black/50 z-50 hidden overflow-y-auto h-vh">
-            <div class="bg-white dark:bg-surface-dark rounded-2xl shadow-xl w-full max-w-3xl mx-auto my-8 p-6 relative">
-                <button class="closeReviewModalBtn absolute top-3 right-3 text-gray-500 hover:text-gray-700">✕</button>
-                <h2 class="text-2xl font-bold text-primary dark:text-primary-50 mb-4 text-center">
-                    Reviews for <span th:text="${product.name}"></span>
-                </h2>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <!-- Existing Reviews -->
-                    <div class="overflow-y-auto max-h-96 space-y-4">
-                        <div th:each="review : ${product.reviews}" class="p-4 bg-primary-50 dark:bg-accent/10 rounded-lg">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-semibold text-primary dark:text-primary-50" th:text="${review.user.name}"></span>
-                                <span class="flex items-center gap-1">
-                                    <i data-lucide="star" class="h-4 w-4 text-yellow-400"></i>
-                                    <span th:text="${review.rating}"></span>
-                                </span>
-                            </div>
-                            <p class="text-primary-200 dark:text-primary-100 text-sm" th:text="${review.comment}"></p>
-                            <span class="text-xs text-primary-300 dark:text-primary-200" th:text="${#temporals.format(review.reviewDate, 'dd MMM yyyy HH:mm')}"></span>
-                        </div>
-                        <div th:if="${#lists.isEmpty(product.reviews)}" class="text-center text-primary-200 dark:text-primary-100">
-                            No reviews yet
-                        </div>
-                    </div>
-
-                    <!-- Add Review Form -->
-                    <div class="p-4 bg-primary-50 dark:bg-accent/10 rounded-lg">
-                        <h3 class="font-semibold text-primary dark:text-primary-50 mb-2">Add Your Review</h3>
-                        <form method="post" th:action="@{/reviews}" class="space-y-4">
-                            <input type="hidden" name="productId" th:value="${product.id}" />
-                            <label class="block text-sm font-medium text-primary dark:text-primary-50">Rating</label>
-                            <select name="rating" class="w-full px-3 py-2 border border-primary-100 dark:border-accent/30 rounded-lg bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50" required>
-                                <option value="">Select rating</option>
-                                <option value="1">1 - Poor</option>
-                                <option value="2">2 - Fair</option>
-                                <option value="3">3 - Good</option>
-                                <option value="4">4 - Very Good</option>
-                                <option value="5">5 - Excellent</option>
-                            </select>
-                            <label class="block text-sm font-medium text-primary dark:text-primary-50">Comment</label>
-                            <textarea name="comment" rows="3" class="w-full px-3 py-2 border border-primary-100 dark:border-accent/30 rounded-lg bg-primary-50 dark:bg-background-dark text-primary dark:text-primary-50" placeholder="Write your review" required></textarea>
-                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-white py-2 rounded-xl font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">Submit Review</button>
-                        </form>
-                    </div>
-                </div>
             </div>
+          </div>
         </div>
-
-    </div>
-</div>
-
+      </div>
       <script>
-$(document).ready(function () {
-    // Open Sell Item modal
-    $("#openModalBtn").click(function () {
-        $("#sellModal").fadeIn();
-    });
+        $(document).ready(function () {
+          // Open modal
+          $("#openModalBtn").click(function () {
+            $("#sellModal").fadeIn();
+          });
 
-    // Close Sell Item modal
-    $("#closeModalBtn").click(function () {
-        $("#sellModal").fadeOut();
-    });
+          // Close modal
+          $("#closeModalBtn").click(function () {
+            $("#sellModal").fadeOut();
+          });
 
-    // Close Sell Item modal when clicking outside modal content
-    $("#sellModal").click(function (e) {
-        if (e.target === this) {
-            $(this).fadeOut();
-        }
-    });
-
-    // Review modal
-    $(".reviewBtn").click(function () {
-        const productId = $(this).data("product-id");
-        $("#reviewModal-" + productId).fadeIn();
-    });
-
-    $(".closeReviewModalBtn").click(function () {
-        $(this).closest(".reviewModal").fadeOut();
-    });
-
-    $(".reviewModal").click(function (e) {
-        if (e.target === this) $(this).fadeOut();
-    });
-});
-</script>
-
+          // Close when clicking outside modal content
+          $("#sellModal").click(function (e) {
+            if (e.target === this) {
+              $(this).fadeOut();
+            }
+          });
+        });
+      </script>
     </main>
   </body>
 </html>
-
