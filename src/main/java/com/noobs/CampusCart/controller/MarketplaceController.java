@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.noobs.CampusCart.model.CartItem;
 import com.noobs.CampusCart.model.Category;
 import com.noobs.CampusCart.model.Product;
+import com.noobs.CampusCart.model.Review;
 import com.noobs.CampusCart.model.User;
 import com.noobs.CampusCart.repository.CategoryRepository;
+import com.noobs.CampusCart.repository.ReviewRepository;
 import com.noobs.CampusCart.repository.UserRepository;
 import com.noobs.CampusCart.repository.WishlistItemRepository;
 import com.noobs.CampusCart.service.CartService;
@@ -40,6 +42,9 @@ public class MarketplaceController {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @GetMapping("/marketplace")
     public String showMarketplace(
@@ -83,7 +88,6 @@ public class MarketplaceController {
         List<Category> all_cat = categoryRepository.findAll();
         model.addAttribute("product", new Product());
         model.addAttribute("categories", all_cat);
-
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         model.addAttribute("selectedCategory", category);
@@ -91,7 +95,11 @@ public class MarketplaceController {
         model.addAttribute("search", search);
         model.addAttribute("cart_item_count", cart_count);
         model.addAttribute("wishlist_count", wishlist_count);
-
+        // Fetch reviews for each product
+        for (Product product : products) {
+            List<Review> reviews = reviewRepository.findByProductId(product.getId());
+            product.setReviews(reviews); // sets the reviews list for Thymeleaf to display
+        }
         return "marketplace";
     }
 }
