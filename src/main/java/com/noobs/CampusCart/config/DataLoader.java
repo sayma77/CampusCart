@@ -66,7 +66,7 @@ public class DataLoader implements CommandLineRunner {
                 User u10 = new User(null, "nupur", "u2204020@student.cuet.ac.bd", "Nusrat Jahan Nupur", "01374248117",
                                 passwordEncoder.encode("password8"), "ADMIN", "");
 
-                userRepository.saveAll(List.of(admin, u1, u2, u3, u4, u5, u6, u7, u8 , u9 , u10));
+                userRepository.saveAll(List.of(u1, u2, u3, u4, u5, u6, u7, u8 , u9 , u10));
                 // ----- Categories -----
                 Category c1 = new Category(null, "Electronics", "Devices, gadgets and accessories", new ArrayList<>());
                 Category c2 = new Category(null, "Books", "Textbooks, novels, and reference books", new ArrayList<>());
