@@ -35,7 +35,7 @@ public class Notification {
     private User user;
 
     @Column(nullable = false)
-    private String type; // ORDER_PLACED, PRODUCT_APPROVED, PRODUCT_REJECTED
+    private String type; // ORDER_PLACED, PRODUCT_APPROVED, PRODUCT_REJECTED, MARK_AS_SHIPPED, MARK_AS_RECEIVED
 
     @Column(nullable = false, length = 500)
     private String message;
