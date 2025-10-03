@@ -44,9 +44,6 @@ public class DataLoader implements CommandLineRunner {
                 if (userRepository.count() != 0 || categoryRepository.count() != 0 || productRepository.count() != 0) {
                         return;
                 }
-                User admin = new User(null, "admin", "admin@cuet.ac.bd", "admin", "01710000000",
-                                passwordEncoder.encode("admin"), "ADMIN", "");
-
                 User u1 = new User(null, "poushi45", "u2204045@student.cuet.ac.bd", "Poushi Das", "01710000001",
                                 passwordEncoder.encode("password1"), "USER", "Shamsen Nahar Khan Hall");
                 User u2 = new User(null, "mahadia61", "u2204061@student.cuet.ac.bd", "Mahadia Akter", "01710000002",
