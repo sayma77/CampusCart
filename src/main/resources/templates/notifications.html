@@ -85,54 +85,11 @@
 
         <div class="flex items-start justify-between">
             <div class="flex-1">
-                <!-- Notification Type + Unread -->
-                <div class="flex items-center mb-3">
-                    
-                    <!-- Type Badge -->
-                    <div th:switch="${notification.type}">
-                        <span th:case="'ORDER_PLACED'" 
-                            class="inline-flex items-center px-2 py-1 rounded-md bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-sm font-medium mr-2">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18v4H3zm3 7h12v11H6z"/>
-                            </svg>
-                            Order Placed
-                        </span>
-
-                        <span th:case="'PRODUCT_APPROVED'" 
-                            class="inline-flex items-center px-2 py-1 rounded-md bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 text-sm font-medium mr-2">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                            Approved
-                        </span>
-
-                        <span th:case="'PRODUCT_REJECTED'" 
-                            class="inline-flex items-center px-2 py-1 rounded-md bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300 text-sm font-medium mr-2">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                            Rejected
-                        </span>
-
-                        <span th:case="*"
-                            class="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300 text-sm font-medium mr-2"
-                            th:text="${notification.type}">
-                            Unknown
-                        </span>
-                    </div>
-                    <!-- Unread badge
-                    <span th:if="${!notification.isRead}" 
-                        class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary text-white">
-                        New
-                    </span> -->
-                </div>
-
                 <!-- Notification Message -->
                 <h3 class="text-gray-900 dark:text-white font-semibold mb-1"
                     th:text="${notification.message}">
                     Notification message goes here
                 </h3>
-
                 <!-- Timestamp -->
                 <p class="text-xs text-gray-500 dark:text-gray-400"
                     th:text="${#temporals.format(notification.createdAt, 'MMM dd, yyyy ''at'' HH:mm')}">
