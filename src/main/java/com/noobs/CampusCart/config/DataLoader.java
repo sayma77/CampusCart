@@ -61,11 +61,15 @@ public class DataLoader implements CommandLineRunner {
                                 passwordEncoder.encode("password6"),
                                 "USER", "shamshen_nahar_hall");
                 User u7 = new User(null, "Sadia", "u2204006@student.cuet.ac.bd", "Sadia", "01586238018",
-                                passwordEncoder.encode("project"), "USER", "Taposhi Rabeya Hall");
+                                passwordEncoder.encode("project"), "ADMIN", "Taposhi Rabeya Hall");
                 User u8 = new User(null, "sayma", "u2204008@student.cuet.ac.bd", "Sayma Akter", "01376248117",
-                                passwordEncoder.encode("hello"), "USER", "");
+                                passwordEncoder.encode("hello"), "ADMIN", "");
+                User u9 = new User(null, "anisha", "u2204026@student.cuet.ac.bd", "Wafeea Anisha", "01376240117",
+                                passwordEncoder.encode("password7"), "ADMIN", "");
+                User u10 = new User(null, "nupur", "u2204020@student.cuet.ac.bd", "Nusrat Jahan Nupur", "01374248117",
+                                passwordEncoder.encode("password8"), "ADMIN", "");
 
-                userRepository.saveAll(List.of(admin, u1, u2, u3, u4, u5, u6, u7, u8));
+                userRepository.saveAll(List.of(admin, u1, u2, u3, u4, u5, u6, u7, u8 , u9 , u10));
                 // ----- Categories -----
                 Category c1 = new Category(null, "Electronics", "Devices, gadgets and accessories", new ArrayList<>());
                 Category c2 = new Category(null, "Books", "Textbooks, novels, and reference books", new ArrayList<>());
