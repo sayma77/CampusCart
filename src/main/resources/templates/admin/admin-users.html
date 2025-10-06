@@ -7,34 +7,62 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: "class",
         theme: {
           extend: {
             colors: {
-              "dark-blue": {
-                50: "#f0f9ff",
-                100: "#e0f2fe",
-                200: "#bae6fd",
-                300: "#7dd3fc",
-                400: "#38bdf8",
-                500: "#0ea5e9",
-                600: "#0284c7",
-                700: "#0369a1",
-                800: "#075985",
-                900: "#0c4a6e",
-                950: "#082f49",
+              primary: {
+                DEFAULT: "#3D52A0",
+                50: "#EDE8F5",
+                100: "#ADBBDA",
+                200: "#8697C4",
+                300: "#7091E6",
+                400: "#3D52A0",
+                500: "#3D52A0",
+                600: "#2F4080",
+                700: "#233060",
+                800: "#172040",
+                900: "#0B1020",
               },
-              midnight: {
-                50: "#f8fafc",
-                100: "#f1f5f9",
-                200: "#e2e8f0",
-                300: "#cbd5e1",
-                400: "#94a3b8",
-                500: "#64748b",
-                600: "#475569",
-                700: "#334155",
-                800: "#1e293b",
-                900: "#0f172a",
-                950: "#020617",
+              accent: {
+                DEFAULT: "#7091E6",
+                50: "#EDE8F5",
+                100: "#ADBBDA",
+                200: "#8697C4",
+                300: "#7091E6",
+                400: "#5A7BD9",
+                500: "#4365CC",
+                600: "#364FA6",
+                700: "#293980",
+                800: "#1C235A",
+                900: "#0F1234",
+              },
+              surface: {
+                light: "#FFFFFF",
+                dark: "#2A2E45",
+              },
+              background: {
+                light: "#EDE8F5",
+                dark: "#1C1F33",
+              },
+            },
+            animation: {
+              "fade-in": "fadeIn 0.5s ease-in-out",
+              "slide-up": "slideUp 0.5s ease-out",
+              "bounce-gentle": "bounceGentle 2s infinite",
+            },
+            keyframes: {
+              fadeIn: {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              slideUp: {
+                "0%": { transform: "translateY(20px)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              bounceGentle: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-5px)" },
               },
             },
           },
@@ -54,53 +82,43 @@
         display: none !important;
       }
       body {
-        background: linear-gradient(
-          135deg,
-          #0f172a 0%,
-          #1e293b 50%,
-          #0c4a6e 100%
-        );
+        background-color: #EDE8F5;
         min-height: 100vh;
-      }
-      .glass-effect {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(56, 189, 248, 0.2);
       }
     </style>
   </head>
-  <body class="text-slate-100 min-h-screen">
+  <body class="text-gray-800 min-h-screen">
     <div th:insert="admin/admin-layout :: layout('users', ~{::content})">
       <div th:fragment="content" x-data="userManagement()">
         <!-- Page Header -->
         <div class="md:flex md:items-center md:justify-between mb-8">
           <div class="flex-1 min-w-0">
             <h2
-              class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
+              class="text-3xl font-bold bg-gradient-to-r from-primary-500 to-accent-400 bg-clip-text text-transparent"
             >
               User Management
             </h2>
-            <p class="mt-2 text-slate-400 text-lg">
+            <p class="mt-2 text-gray-600 text-lg">
               Manage and monitor all CampusCart users
             </p>
           </div>
         </div>
 
         <!-- Search and Filters -->
-        <div class="glass-effect rounded-2xl mb-8 border border-cyan-500/30">
+        <div class="bg-white rounded-2xl mb-8 border border-gray-200 shadow-md">
           <div class="px-8 py-6">
             <div class="relative">
               <div
                 class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
               >
-                <i class="fas fa-search text-slate-400"></i>
+                <i class="fas fa-search text-gray-400"></i>
               </div>
               <input
                 type="text"
                 x-model="searchQuery"
                 @input="filterUsers()"
                 placeholder="Search users by name, email, or role..."
-                class="w-full pl-12 pr-4 py-4 rounded-xl bg-dark-blue-900/50 border border-cyan-500/30 text-slate-100 placeholder-slate-400 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 focus:outline-none transition-all"
+                class="w-full pl-12 pr-4 py-4 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:border-primary-400 focus:ring-2 focus:ring-primary-200 focus:outline-none transition-all"
               />
             </div>
           </div>
@@ -108,29 +126,29 @@
 
         <!-- Users Table -->
         <div
-          class="glass-effect rounded-2xl overflow-hidden border border-cyan-500/30"
+          class="bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-md"
         >
           <div class="overflow-x-auto">
             <table class="min-w-full">
               <thead>
                 <tr>
                   <th
-                    class="px-8 py-6 text-left text-sm font-semibold text-cyan-300 uppercase tracking-wider border-b border-cyan-500/20"
+                    class="px-8 py-6 text-left text-sm font-semibold text-primary-600 uppercase tracking-wider border-b border-gray-200 bg-gray-50"
                   >
                     User Information
                   </th>
                   <th
-                    class="px-8 py-6 text-right text-sm font-semibold text-cyan-300 uppercase tracking-wider border-b border-cyan-500/20"
+                    class="px-8 py-6 text-right text-sm font-semibold text-primary-600 uppercase tracking-wider border-b border-gray-200 bg-gray-50"
                   >
                     Actions
                   </th>
                 </tr>
               </thead>
 
-              <tbody class="divide-y divide-slate-700/50">
+              <tbody class="divide-y divide-gray-200">
                 <tr
                   th:each="user : ${users}"
-                  class="hover:bg-dark-blue-800/30 transition-colors"
+                  class="hover:bg-gray-50 transition-colors"
                 >
                   <!-- User info -->
                   <td class="px-8 py-6 whitespace-nowrap">
@@ -138,19 +156,19 @@
                       <div class="ml-6">
                         <div
                           th:text="${user.name}"
-                          class="text-lg font-semibold text-white"
+                          class="text-lg font-semibold text-gray-800"
                         >
                           John Doe
                         </div>
                         <div
                           th:text="${user.email}"
-                          class="text-slate-400 mt-1"
+                          class="text-gray-600 mt-1"
                         >
                           john@example.com
                         </div>
                         <div class="flex items-center mt-2">
                           <span
-                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-700 text-slate-300"
+                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 text-primary-700"
                           >
                             <i class="fas fa-graduation-cap mr-2"></i>
                             Student
@@ -174,7 +192,7 @@
                       <!-- Styled delete button -->
                       <button
                         type="submit"
-                        class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-lg"
+                        class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg"
                       >
                         <i class="fas fa-trash mr-2"></i>
                         Delete
@@ -188,18 +206,18 @@
 
           <!-- Pagination -->
           <div
-            class="bg-gradient-to-r from-dark-blue-900/50 to-dark-blue-800/50 px-8 py-4 flex items-center justify-between border-t border-slate-700/50"
+            class="bg-gray-50 px-8 py-4 flex items-center justify-between border-t border-gray-200"
           >
             <div class="flex-1 flex justify-between sm:hidden">
               <button
                 th:disabled="${currentPage == 1}"
-                class="relative inline-flex items-center px-4 py-2 border border-slate-600 text-sm font-medium rounded-lg text-slate-300 bg-dark-blue-800 hover:bg-dark-blue-700 disabled:bg-slate-800 disabled:text-slate-500 transition-colors"
+                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 transition-colors"
               >
                 Previous
               </button>
               <button
                 th:disabled="${currentPage == totalPages}"
-                class="ml-3 relative inline-flex items-center px-4 py-2 border border-slate-600 text-sm font-medium rounded-lg text-slate-300 bg-dark-blue-800 hover:bg-dark-blue-700 disabled:bg-slate-800 disabled:text-slate-500 transition-colors"
+                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 disabled:bg-gray-100 disabled:text-gray-400 transition-colors"
               >
                 Next
               </button>
@@ -208,17 +226,17 @@
               class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between"
             >
               <div>
-                <p class="text-slate-400">
+                <p class="text-gray-600">
                   Showing
-                  <span th:text="${startIndex}" class="font-semibold text-white"
+                  <span th:text="${startIndex}" class="font-semibold text-gray-800"
                     >1</span
                   >
                   to
-                  <span th:text="${endIndex}" class="font-semibold text-white"
+                  <span th:text="${endIndex}" class="font-semibold text-gray-800"
                     >10</span
                   >
                   of
-                  <span th:text="${totalUsers}" class="font-semibold text-white"
+                  <span th:text="${totalUsers}" class="font-semibold text-gray-800"
                     >97</span
                   >
                   results
@@ -231,7 +249,7 @@
                   <button
                     th:each="page : ${#numbers.sequence(1, totalPages)}"
                     th:text="${page}"
-                    th:class="${page == currentPage} ? 'bg-gradient-to-r from-cyan-500 to-blue-500 border-cyan-500 text-white' : 'bg-dark-blue-800 border-slate-600 text-slate-300 hover:bg-dark-blue-700'"
+                    th:class="${page == currentPage} ? 'bg-gradient-to-r from-primary-500 to-accent-400 border-primary-500 text-white' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'"
                     class="relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors"
                   >
                     1
