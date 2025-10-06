@@ -246,7 +246,7 @@
                     <span th:case="'taken_rent'">Rented Items (Taken)</span>
                     <span th:case="'given_rent'">Rented Items (Given)</span>
                     <span th:case="'orders_received'">Orders Received</span>
-                    <span th:case="*">My Orders & Items</span>
+                    <span th:case="*">Welcome to CampusCart</span>
                   </span>
                 </h3>
 
@@ -535,10 +535,25 @@
                   th:if="${#lists.isEmpty(orders) and #lists.isEmpty(products)}"
                   class="text-center py-12"
                 >
+                  <!-- Icon for selected filters -->
                   <i
                     data-lucide="shopping-bag"
                     class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4"
-                  ></i>
+                    th:if="${selectedFilter == 'buy' or selectedFilter == 'sell' or selectedFilter == 'taken_rent' or selectedFilter == 'given_rent' or selectedFilter == 'orders_received'}"
+                  >
+                  </i>
+
+                  <!-- Icon for no filter selected -->
+                  <i
+                    data-lucide="sparkles"
+                    class="h-16 w-16 text-primary-200 dark:text-primary-100 mx-auto mb-4 animate-bounce"
+                    th:if="${!(selectedFilter == 'buy' 
+        or selectedFilter == 'sell' 
+        or selectedFilter == 'taken_rent' 
+        or selectedFilter == 'given_rent' 
+        or selectedFilter == 'orders_received')}"
+                  >
+                  </i>
 
                   <h3
                     class="text-lg font-semibold text-primary dark:text-primary-50 mb-2"
@@ -559,7 +574,13 @@
                       <span th:case="'orders_received'"
                         >No orders received yet</span
                       >
-                      <span th:case="*">No orders or items yet</span>
+                      <span th:case="*"
+                        >Welcome back,
+                        <span
+                          th:text="${user.name != null ? user.name : user.username}"
+                          >User</span
+                        >!</span
+                      >
                     </span>
                   </h3>
 
@@ -596,12 +617,6 @@
                       class="bg-primary hover:bg-accent text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
                     >
                       Browse Items
-                    </a>
-                    <a
-                      href="/sell"
-                      class="border-2 border-primary text-primary dark:text-accent dark:border-accent px-6 py-3 rounded-lg font-semibold hover:bg-primary hover:text-white dark:hover:bg-accent transition-all duration-200 transform hover:scale-105"
-                    >
-                      Sell Item
                     </a>
                   </div>
                 </div>
