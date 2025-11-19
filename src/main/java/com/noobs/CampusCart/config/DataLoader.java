@@ -20,7 +20,7 @@ import com.noobs.CampusCart.repository.ReviewRepository;
 import com.noobs.CampusCart.repository.UserRepository;
 
 @Configuration
-@Profile("dev")
+// @Profile("dev")
 public class DataLoader implements CommandLineRunner {
 
         @Autowired
