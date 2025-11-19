@@ -40,6 +40,33 @@ CampusCart is an online marketplace application designed specifically for the st
 2. Register as a new user or log in with your credentials.
 3. Start exploring, listing, or purchasing items.
 
+
+## Running with Docker
+
+1. **Build the Docker image**:
+```bash
+    docker build -t campuscart-demo .
+```
+
+2. **Run the container**:
+```bash
+    docker run -d --name campuscart-demo -p 80:80 campuscart-demo
+```
+3. **Explore the WebApp**:
+
+Wait a few seconds for all servers to startup.
+Then open `http://localhost` in browser and explore the Web App
+
+4. **To stop and clear the container**:
+
+Once you're done you can cleanup like following
+
+```bash
+    docker stop campuscart-demo
+    docker container rm campuscart-demo
+    docker image rm campuscart-demo
+```
+
 ## Contribution
 
 Contributions are welcome! Please fork the repository and submit a pull request.
