@@ -153,7 +153,16 @@ public class ProfilePageController {
             RedirectAttributes redirectAttributes) {
 
         // Fetch existing user
-        User user = userService.getUserByEmail(principal.getName());
+        User existingUser = userService.getUserByEmail(principal.getName());
+
+        // Create a copy / clone for updates
+        User user = new User();
+        user.setName(name);
+        user.setEmail(existingUser.getEmail()); // keep login email intact
+        user.setUsername(existingUser.getUsername());
+        user.setHall(hall);
+        user.setPassword(password); // raw password, will encode in service
+        user.setRole(existingUser.getRole()); // keep roles intact
 
         // Update only fields that are non-empty
         if (name != null && !name.isEmpty()) {
@@ -272,15 +281,14 @@ public class ProfilePageController {
 
         // Seller: Pending → Shipped
         if (currentStatus.equalsIgnoreCase("PENDING")
-            && orderItem.getProduct().getUser().getId().equals(currentUser.getId())) {
-        orderItem.setStatus("SHIPPED");
-        orderItemRepository.save(orderItem);
-        // 🔔 Notify buyer
-        User buyer = orderItem.getOrder().getUser();
-        String msg = "Your order for product '" + orderItem.getProduct().getName() + "' has been shipped.";
-        notificationService.createNotification(buyer, "MARK_AS_SHIPPED", msg);
-        }
-        // Buyer: Shipped → Received
+                && orderItem.getProduct().getUser().getId().equals(currentUser.getId())) {
+            orderItem.setStatus("SHIPPED");
+            orderItemRepository.save(orderItem);
+            // 🔔 Notify buyer
+            User buyer = orderItem.getOrder().getUser();
+            String msg = "Your order for product '" + orderItem.getProduct().getName() + "' has been shipped.";
+            notificationService.createNotification(buyer, "MARK_AS_SHIPPED", msg);
+        } // Buyer: Shipped → Received
         else if (currentStatus.equalsIgnoreCase("SHIPPED")
                 && orderItem.getOrder().getUser().getId().equals(currentUser.getId())) {
             orderItem.setStatus("RECEIVED");

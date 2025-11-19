@@ -1,5 +1,6 @@
 package com.noobs.CampusCart.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    @Autowired
+    private CustomAuthFailureHandler customAuthFailureHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -28,6 +31,7 @@ public class SecurityConfig {
                 .usernameParameter("email") // match form input name
                 .passwordParameter("password")
                 .defaultSuccessUrl("/marketplace", true)
+                .failureHandler(customAuthFailureHandler)
                 .permitAll())
                 .logout(logout -> logout
                 .logoutUrl("/signout")
